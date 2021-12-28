@@ -1,16 +1,17 @@
 package bgu.spl.net.srv;
 
-import bgu.spl.net.srv.Objects.RegisterCommand;
+import bgu.spl.net.srv.Objects.*;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Twitter {
     private int UserID;
     private ConcurrentHashMap<String, User> users;//registered users
     private ConcurrentHashMap<String, List<String>> followers;//all followers of a user
-    private ConcurrentHashMap<String,Boolean>loggedIn;// if the user is loggedIn
+    private ConcurrentHashMap<String,Boolean> loggedIn;// if the user is loggedIn
 
     public Twitter() {
         UserID = 0;
@@ -31,18 +32,6 @@ public class Twitter {
         }
     }
 
-    public void Logout(LogoutCommand cmd){
-        //todo
-    }
-
-    public void Post(PostCommand cmd){
-        if(users.containsKey(cmd.getName())){
-            for(String sUser : followers.get(cmd.getName())){
-                User user = users.get(sUser);
-            }
-        }
-    }
-
     public void Login(LoginCommand command){
         if(users.containsKey(command.getName())) {
             //todo send Error
@@ -57,6 +46,21 @@ public class Twitter {
                     //todo send Ack
                 }
             }
+        }
+    }
+
+    public void Logout(LogoutCommand cmd){
+        if(loggedIn.contains(cmd.getName())){
+            loggedIn.remove(cmd.getName());
+            users.remove(cmd.getName());
+            for(String sUser : followers.get(cmd.getName())){
+                User user = users.get(sUser);
+                user.setNumOfFollowing(user.getNumOfFollowing()-1);
+
+            }
+        }
+        else{
+            //todo ERROR
         }
     }
 
@@ -85,6 +89,19 @@ public class Twitter {
         }
     }
 
+    public void Post(PostCommand cmd){
+        if(users.containsKey(cmd.getName())){
+            for(String sUser : followers.get(cmd.getName())){
+                User user = users.get(sUser);
+                //todo send post request to followers
+            }
+            for(String sUser : cmd.getMentionedUsers()){
+                User user = users.get(sUser);
+                //todo send post request to users
+            }
+        }
+    }
+
     public void PrivateMessage(PrivateMessageCommand command){
         if(checkLoggedIn(command.getSenderName())){
             if(!users.containsKey(command.getContentName())){
@@ -102,6 +119,16 @@ public class Twitter {
         }
     }
 
+    public void LogStat(LogStatCommand cmd){
+        if(checkLoggedIn(cmd.getName())){
+            List<String> output = new Vector<>();
+            for(User user : users.values()){
+                output.add(user.getStats());
+            }
+            //todo send output to user
+        }
+    }
+
     public void Stats(StatsCommand command){
         if(!users.containsKey(command.getSenderName())){
             //todo send Error
@@ -109,6 +136,10 @@ public class Twitter {
         else if(checkLoggedIn(command.getSenderName())){
             // todo implement this
         }
+    }
+
+    public void Notify(NotificationCommand cmd){
+        //todo
     }
 
     public void Block(BlockCommand command){

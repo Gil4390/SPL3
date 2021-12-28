@@ -43,4 +43,9 @@ public class User {
         //todo
         return 0;
     }
+
+    public String getStats(){
+        //todo
+        return "";
+    }
 }
