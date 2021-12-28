@@ -5,7 +5,6 @@ public class User {
     final private String name;
     final private String password;
     final private String Birthday;
-    private int numOfFollowers;
     private int numOfFollowing;
 
     public User(int id, String name, String password, String birthday) {
@@ -13,7 +12,6 @@ public class User {
         this.name = name;
         this.password = password;
         this.Birthday = birthday;
-        this.numOfFollowers = 0;
         this.numOfFollowing = 0;
     }
 
@@ -27,14 +25,6 @@ public class User {
 
     public String getBirthday() {
         return Birthday;
-    }
-
-    public int getNumOfFollowers() {
-        return numOfFollowers;
-    }
-
-    public void setNumOfFollowers(int numOfFollowers) {
-        this.numOfFollowers = numOfFollowers;
     }
 
     public int getNumOfFollowing() {
