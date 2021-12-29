@@ -1,15 +1,17 @@
 package bgu.spl.net.srv.Objects;
 
 import bgu.spl.net.srv.Command;
+import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class LogoutCommand extends Command {
     private String name;
 
-    public LogoutCommand(int opCode, String name) {
+    public LogoutCommand(int opCode) {
         super(opCode);
-        this.name = name;
     }
-
+    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
+        c.decodeNextByte(nextByte,this);
+    }
     public String getName() {
         return name;
     }

@@ -1,6 +1,7 @@
 package bgu.spl.net.srv.Objects;
 
 import bgu.spl.net.srv.Command;
+import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class BlockCommand extends Command {
     private String clientName;
@@ -13,7 +14,9 @@ public class BlockCommand extends Command {
     public String getClientName() {
         return clientName;
     }
-
+    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
+        c.decodeNextByte(nextByte,this);
+    }
     public void setClientName(String clientName) {
         this.clientName = clientName;
     }

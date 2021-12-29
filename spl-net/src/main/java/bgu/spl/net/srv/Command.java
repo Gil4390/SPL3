@@ -6,4 +6,6 @@ public abstract class Command {
     public Command(int opCode) {
         this.opCode = opCode;
     }
+
+    abstract public void decodeNextByte(byte nextByte,CommandEncoderDecoder c);
 }

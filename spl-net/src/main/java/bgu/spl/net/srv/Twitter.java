@@ -83,7 +83,7 @@ public class Twitter {
         }
     }
 
-    public void UnFollow(UnFollowCommand command){
+    public void UnFollow(FollowCommand command){
         if(checkLoggedIn(command.getClientName())) {
             if (!followers.get(command.getClientName()).contains(command.getUnFollowName())) {
                 //todo Error

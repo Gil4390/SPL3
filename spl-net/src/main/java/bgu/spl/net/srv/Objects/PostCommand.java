@@ -1,19 +1,20 @@
 package bgu.spl.net.srv.Objects;
 
 import bgu.spl.net.srv.Command;
+import bgu.spl.net.srv.CommandEncoderDecoder;
 
 import java.util.List;
 
 public class PostCommand extends Command {
-    final private String content;
-    final private String name;
+    private String content;
+    private String name;
 
-    public PostCommand(int opCode, String content, String name) {
+    public PostCommand(int opCode) {
         super(opCode);
-        this.content = content;
-        this.name = name;
     }
-
+    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
+        c.decodeNextByte(nextByte,this);
+    }
     public String getContent() {
         return content;
     }

@@ -1,19 +1,20 @@
 package bgu.spl.net.srv.Objects;
 
 import bgu.spl.net.srv.Command;
+import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class NotificationCommand extends Command {
     private String type; //PM or Public
     private String postingUserName;
     private String content;
 
-    public NotificationCommand(int opCode, String type, String postingUserName, String content) {
+    public NotificationCommand(int opCode) {
         super(opCode);
-        this.type = type;
-        this.postingUserName = postingUserName;
-        this.content = content;
     }
 
+    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
+        c.decodeNextByte(nextByte,this);
+    }
     public String getType() {
         return type;
     }

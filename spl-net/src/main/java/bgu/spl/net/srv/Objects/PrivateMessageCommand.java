@@ -1,6 +1,7 @@
 package bgu.spl.net.srv.Objects;
 
 import bgu.spl.net.srv.Command;
+import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class PrivateMessageCommand extends Command {
     private String senderName;
@@ -8,6 +9,9 @@ public class PrivateMessageCommand extends Command {
     private String sendingDate;
     private String content;
 
+    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
+        c.decodeNextByte(nextByte,this);
+    }
     public PrivateMessageCommand(int opCode) {
         super(opCode);
     }

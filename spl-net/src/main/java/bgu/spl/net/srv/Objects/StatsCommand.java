@@ -1,6 +1,7 @@
 package bgu.spl.net.srv.Objects;
 
 import bgu.spl.net.srv.Command;
+import bgu.spl.net.srv.CommandEncoderDecoder;
 
 import java.util.List;
 
@@ -15,6 +16,10 @@ public class StatsCommand extends Command {
 
     public String getSenderName() {
         return senderName;
+    }
+
+    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
+        c.decodeNextByte(nextByte,this);
     }
 
     public void setSenderName(String senderName) {

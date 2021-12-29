@@ -1,12 +1,15 @@
 package bgu.spl.net.srv.Objects;
 
 import bgu.spl.net.srv.Command;
+import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class LoginCommand extends Command {
     private String name;
     private String password;
     private int Captcha;
-
+    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
+        c.decodeNextByte(nextByte,this);
+    }
     public LoginCommand(int opCode) {
         super(opCode);
     }

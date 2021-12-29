@@ -1,11 +1,14 @@
 package bgu.spl.net.srv.Objects;
 
 import bgu.spl.net.srv.Command;
+import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class FollowCommand extends Command {
     private String followName;
     private String clientName;
-
+    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
+        c.decodeNextByte(nextByte,this);
+    }
     public FollowCommand(int opCode) {
         super(opCode);
     }
