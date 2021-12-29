@@ -23,6 +23,14 @@ public class PostCommand extends Command {
         return name;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<String> getMentionedUsers(){
         //todo
         return null;

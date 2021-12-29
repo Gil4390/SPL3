@@ -60,16 +60,55 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
 
     }
     public void decodeNextByte(byte nextByte, LogoutCommand command){
-
+        if(nextByte == 0) {
+            byte [] temp = new byte[fieldBytes.size()];
+            for (int i=0;i<fieldBytes.size();i++) {
+                temp[i]=fieldBytes.elementAt(i);
+            }
+            ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
+            command.setName(bb.toString());
+            fieldCounter++;
+            fieldBytes=new Vector<>();
+        }
+        else{
+            fieldBytes.add(nextByte);
+        }
     }
     public void decodeNextByte(byte nextByte, LogStatCommand command){
-
+        if(nextByte == 0) {
+            byte [] temp = new byte[fieldBytes.size()];
+            for (int i=0;i<fieldBytes.size();i++) {
+                temp[i]=fieldBytes.elementAt(i);
+            }
+            ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
+            command.setName(bb.toString());
+            fieldCounter++;
+            fieldBytes=new Vector<>();
+        }
+        else{
+            fieldBytes.add(nextByte);
+        }
     }
     public void decodeNextByte(byte nextByte, NotificationCommand command){
 
     }
     public void decodeNextByte(byte nextByte, PostCommand command){
-
+        if(nextByte == 0) {
+            byte [] temp = new byte[fieldBytes.size()];
+            for (int i=0;i<fieldBytes.size();i++) {
+                temp[i]=fieldBytes.elementAt(i);
+            }
+            ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
+            if (fieldCounter == 1)
+                command.setContent(bb.toString());
+            else
+                command.setName(bb.toString());
+            fieldCounter++;
+            fieldBytes=new Vector<>();
+        }
+        else{
+            fieldBytes.add(nextByte);
+        }
     }
     public void decodeNextByte(byte nextByte, PrivateMessageCommand command){
 
