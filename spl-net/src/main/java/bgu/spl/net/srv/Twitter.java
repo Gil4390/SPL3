@@ -13,14 +13,16 @@ public class Twitter {
     private ConcurrentHashMap<String, User> users;//registered users
     private ConcurrentHashMap<String, List<String>> followers;//all followers of a user
     private ConcurrentHashMap<String,Boolean>loggedIn;// if the user is loggedIn
-    private List<Message> privateMessages;
+    private ConcurrentHashMap<String,List<Message>> privateMessages;
+    private ConcurrentHashMap<String,List<String>> blockedUsers;
     private List<String>filteredWords;
 
     public Twitter() {
         UserID = 0;
         this.followers = new ConcurrentHashMap<>();
         this.users = new ConcurrentHashMap<>();
-        privateMessages=new LinkedList<>();
+        privateMessages=new ConcurrentHashMap<>();
+        blockedUsers= new ConcurrentHashMap<>();
     }
 
     public void Register(RegisterCommand cmd){
@@ -32,6 +34,7 @@ public class Twitter {
             users.put(user.getName(), user);
             followers.put(user.getName(),new LinkedList<>());
             loggedIn.put(user.getName(),false);
+            blockedUsers.put(user.getName(),new LinkedList<>());
             //todo send ACK
         }
     }
@@ -56,11 +59,10 @@ public class Twitter {
     public void Logout(LogoutCommand cmd){
         if(loggedIn.contains(cmd.getName())){
             loggedIn.remove(cmd.getName());
-            users.remove(cmd.getName());
+            users.remove(cmd.getName());//todo ask gil why
             for(String sUser : followers.get(cmd.getName())){
                 User user = users.get(sUser);
                 user.setNumOfFollowing(user.getNumOfFollowing()-1);
-
             }
         }
         else{
@@ -72,11 +74,11 @@ public class Twitter {
         if(checkLoggedIn(command.getClientName())) {
             if (followers.get(command.getClientName()).contains(command.getFollowName())) {
                 //todo Error
-            } else {//todo check follow name is registered
+            } else {
                 if (!users.containsKey(command.getFollowName())) {
                     // todo send Error
                 }
-                else {
+                else if(!BlockedUser(command.getClientName(),command.getFollowName())){
                     followers.get(command.getClientName()).add(command.getFollowName());
                 }
             }
@@ -85,15 +87,15 @@ public class Twitter {
 
     public void UnFollow(FollowCommand command){
         if(checkLoggedIn(command.getClientName())) {
-            if (!followers.get(command.getClientName()).contains(command.getUnFollowName())) {
+            if (!followers.get(command.getClientName()).contains(command.getFollowName())) {
                 //todo Error
             } else {
-                followers.get(command.getClientName()).remove(command.getUnFollowName());
+                followers.get(command.getClientName()).remove(command.getFollowName());
             }
         }
     }
 
-    public void Post(PostCommand cmd){
+    public void Post(PostCommand cmd){//todo ask gil if implement blocked user?
         if(users.containsKey(cmd.getName())){
             for(String sUser : followers.get(cmd.getName())){
                 User user = users.get(sUser);
@@ -108,18 +110,26 @@ public class Twitter {
 
     public void PrivateMessage(PrivateMessageCommand command){
         if(checkLoggedIn(command.getSenderName())){
-            if(!users.containsKey(command.getContentName())){
+            if(!users.containsKey(command.getReceiveName())){
                 //todo send Error
             }
             else{
-                if(!followers.get(command.getSenderName()).contains(command.getContentName())){
+                if(!followers.get(command.getSenderName()).contains(command.getReceiveName())){
                     //todo send Error
                 }
-                else{
-                    String filterdContent=command.getContent();
-                    //message
-                    //todo save the pm, filtered it
-                    // todo send Ack
+                else if(!BlockedUser(command.getReceiveName(),command.getSenderName())){
+                    String filteredContent=command.getContent();
+                    filteredContent=FilterString(filteredContent);
+                    Message m = new Message(false,filteredContent);
+                    if(privateMessages.containsKey(command.getSendingDate()))
+                        privateMessages.get(command.getSendingDate()).add(m);
+                    else{
+                        List <Message> temp = new LinkedList<>();
+                        temp.add(m);
+                        privateMessages.put(command.getSendingDate(),temp);
+                    }
+                    //todo send notification?
+                    //todo send Ack?
                 }
             }
         }
@@ -140,7 +150,14 @@ public class Twitter {
             //todo send Error
         }
         else if(checkLoggedIn(command.getSenderName())){
-            // todo implement this
+            for (String user:command.getUserNameList()) {
+                if(!users.containsKey(user)) {
+                    //todo send error
+                }
+                if(!BlockedUser(command.getSenderName(),user)) {
+                    //todo send ack
+                }
+            }
         }
     }
 
@@ -152,20 +169,39 @@ public class Twitter {
         if(!users.containsKey(command.getBlockedName())){
             //todo Error
         }
-        else{
+        else{//todo check if user have to be logged in
             if (users.containsKey(command.getClientName())) {
                 followers.getOrDefault(command.getClientName(),new LinkedList<>()).remove(command.getBlockedName());
                 followers.getOrDefault(command.getBlockedName(),new LinkedList<>()).remove(command.getClientName());
-                // todo add both to blocked users
+                if(!BlockedUser(command.getClientName(),command.getBlockedName())){
+                    blockedUsers.get(command.getClientName()).add(command.getBlockedName());
+                    blockedUsers.get(command.getBlockedName()).add(command.getClientName());
+                }
             }
         }
     }
 
     private boolean checkLoggedIn(String name){
-        if(loggedIn.get(name)){
+        if(!loggedIn.get(name)){
             //todo send Error
             return false;
         }
         return true;
+    }
+
+    private boolean BlockedUser(String client, String client2){
+        for (String str:blockedUsers.get(client)) {
+            if(client2==str)
+                return true;
+        }
+        return false;
+    }
+
+    private String FilterString(String unFilteredStr){
+        String filteredString=unFilteredStr;
+        for (String str:filteredWords) {
+            filteredString = filteredString.replace(str,"");
+        }
+        return filteredString;
     }
 }

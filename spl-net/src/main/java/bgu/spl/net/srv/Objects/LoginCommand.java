@@ -7,11 +7,13 @@ public class LoginCommand extends Command {
     private String name;
     private String password;
     private int Captcha;
-    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
-        c.decodeNextByte(nextByte,this);
-    }
+
     public LoginCommand(int opCode) {
         super(opCode);
+    }
+
+    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
+        c.decodeNextByte(nextByte,this);
     }
 
     public String getName() {
