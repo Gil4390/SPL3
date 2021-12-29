@@ -6,6 +6,7 @@ public class PrivateMessageCommand extends Command {
     private String senderName;
     private String contentName;
     private String sendingDate;
+    private String content;
 
     public PrivateMessageCommand(int opCode) {
         super(opCode);
@@ -33,5 +34,13 @@ public class PrivateMessageCommand extends Command {
 
     public void setSendingDate(String sendingDate) {
         this.sendingDate = sendingDate;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

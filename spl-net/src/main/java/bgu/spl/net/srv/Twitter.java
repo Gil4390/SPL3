@@ -12,11 +12,14 @@ public class Twitter {
     private ConcurrentHashMap<String, User> users;//registered users
     private ConcurrentHashMap<String, List<String>> followers;//all followers of a user
     private ConcurrentHashMap<String,Boolean>loggedIn;// if the user is loggedIn
+    private List<Message> privateMessages;
+    private List<String>filteredWords;
 
     public Twitter() {
         UserID = 0;
         this.followers = new ConcurrentHashMap<>();
         this.users = new ConcurrentHashMap<>();
+        privateMessages=new LinkedList<>();
     }
 
     public void Register(RegisterCommand cmd){
@@ -53,7 +56,8 @@ public class Twitter {
         if(checkLoggedIn(command.getClientName())) {
             if (followers.get(command.getClientName()).contains(command.getFollowName())) {
                 //todo Error
-            } else {//todo check follow name is registered
+            }
+            else {
                 if (!users.containsKey(command.getFollowName())) {
                     // todo send Error
                 }
@@ -84,6 +88,8 @@ public class Twitter {
                     //todo send Error
                 }
                 else{
+                    String filterdContent=command.getContent();
+                    //message
                     //todo save the pm, filtered it
                     // todo send Ack
                 }

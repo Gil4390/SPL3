@@ -6,6 +6,7 @@ public class User {
     final private String password;
     final private String Birthday;
     private int numOfFollowing;
+    private int numPostedPost;
 
     public User(int id, String name, String password, String birthday) {
         this.ID = id;
@@ -13,6 +14,7 @@ public class User {
         this.password = password;
         this.Birthday = birthday;
         this.numOfFollowing = 0;
+        this.numPostedPost=0;
     }
 
     public String getName() {
@@ -37,6 +39,14 @@ public class User {
 
     public int getID() {
         return ID;
+    }
+
+    public int getNumPostedPost() {
+        return numPostedPost;
+    }
+
+    public void setNumPostedPost(int numPostedPost) {
+        this.numPostedPost = numPostedPost;
     }
 
     public int getAge(){
