@@ -5,6 +5,7 @@ import bgu.spl.net.srv.Objects.RegisterCommand;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Twitter {
@@ -52,12 +53,26 @@ public class Twitter {
         }
     }
 
+    public void Logout(LogoutCommand cmd){
+        if(loggedIn.contains(cmd.getName())){
+            loggedIn.remove(cmd.getName());
+            users.remove(cmd.getName());
+            for(String sUser : followers.get(cmd.getName())){
+                User user = users.get(sUser);
+                user.setNumOfFollowing(user.getNumOfFollowing()-1);
+
+            }
+        }
+        else{
+            //todo ERROR
+        }
+    }
+
     public void Follow(FollowCommand command){
         if(checkLoggedIn(command.getClientName())) {
             if (followers.get(command.getClientName()).contains(command.getFollowName())) {
                 //todo Error
-            }
-            else {
+            } else {//todo check follow name is registered
                 if (!users.containsKey(command.getFollowName())) {
                     // todo send Error
                 }
@@ -74,6 +89,19 @@ public class Twitter {
                 //todo Error
             } else {
                 followers.get(command.getClientName()).remove(command.getUnFollowName());
+            }
+        }
+    }
+
+    public void Post(PostCommand cmd){
+        if(users.containsKey(cmd.getName())){
+            for(String sUser : followers.get(cmd.getName())){
+                User user = users.get(sUser);
+                //todo send post request to followers
+            }
+            for(String sUser : cmd.getMentionedUsers()){
+                User user = users.get(sUser);
+                //todo send post request to users
             }
         }
     }
@@ -97,6 +125,16 @@ public class Twitter {
         }
     }
 
+    public void LogStat(LogStatCommand cmd){
+        if(checkLoggedIn(cmd.getName())){
+            List<String> output = new Vector<>();
+            for(User user : users.values()){
+                output.add(user.getStats());
+            }
+            //todo send output to user
+        }
+    }
+
     public void Stats(StatsCommand command){
         if(!users.containsKey(command.getSenderName())){
             //todo send Error
@@ -104,6 +142,10 @@ public class Twitter {
         else if(checkLoggedIn(command.getSenderName())){
             // todo implement this
         }
+    }
+
+    public void Notify(NotificationCommand cmd){
+        //todo
     }
 
     public void Block(BlockCommand command){
