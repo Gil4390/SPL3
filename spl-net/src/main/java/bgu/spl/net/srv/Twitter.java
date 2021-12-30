@@ -25,9 +25,11 @@ public class Twitter {
         blockedUsers= new ConcurrentHashMap<>();
     }
 
-    public void Register(RegisterCommand cmd){
+    public Command Register(RegisterCommand cmd){
         if(users.containsKey(cmd.getName())){
-            //todo send ERROR
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            errcmd.setMsgOpCode(1);
+            return errcmd;
         }
         else{
             User user = new User(UserID++, cmd.getName(), cmd.getPassword(), cmd.getBirthday());
@@ -35,13 +37,19 @@ public class Twitter {
             followers.put(user.getName(),new LinkedList<>());
             loggedIn.put(user.getName(),false);
             blockedUsers.put(user.getName(),new LinkedList<>());
-            //todo send ACK
+
+            AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
+            ackcmd.setMsgOpCode(1);
+            ackcmd.setOptionalData("Register Successful");
+            return ackcmd;
         }
     }
 
     public void Login(LoginCommand command){
         if(users.containsKey(command.getName())) {
-            //todo send Error
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            errcmd.setMsgOpCode(2);
+            //return errcmd;
         }
         else {
             if (!users.get(command.getName()).getPassword().equals(command.getPassword())) {
@@ -91,7 +99,7 @@ public class Twitter {
     }
 
     public void Post(PostCommand cmd){//todo ask gil if implement blocked user?
-        if(users.containsKey(cmd.getName())){
+        if(checkLoggedIn(cmd.getName())){
             for(String sUser : followers.get(cmd.getName())){
                 User user = users.get(sUser);
                 //todo send post request to followers

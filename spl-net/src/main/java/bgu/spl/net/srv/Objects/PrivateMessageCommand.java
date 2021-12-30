@@ -3,7 +3,7 @@ package bgu.spl.net.srv.Objects;
 import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
-public class PrivateMessageCommand extends Command {
+public class PrivateMessageCommand extends ReceivedCommand {
     private String senderName;
     private String receiveName;
     private String sendingDate;

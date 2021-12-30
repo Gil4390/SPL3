@@ -5,7 +5,7 @@ import bgu.spl.net.srv.CommandEncoderDecoder;
 
 import java.util.List;
 
-public class StatsCommand extends Command {
+public class StatsCommand extends ReceivedCommand {
 
     private String senderName;
     private List<String> userNameList;

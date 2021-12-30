@@ -3,7 +3,7 @@ package bgu.spl.net.srv.Objects;
 import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
-public class NotificationCommand extends Command {
+public class NotificationCommand extends ReturnCommand {
     private String type; //PM or Public
     private String postingUserName;
     private String content;
@@ -12,7 +12,7 @@ public class NotificationCommand extends Command {
         super(opCode);
     }
 
-    public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
+    public void encodeNextByte(byte nextByte, CommandEncoderDecoder c) {
         c.decodeNextByte(nextByte,this);
     }
     public String getType() {

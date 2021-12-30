@@ -3,7 +3,7 @@ package bgu.spl.net.srv.Objects;
 import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
-public class RegisterCommand extends Command {
+public class RegisterCommand extends ReceivedCommand {
     private String name;
     private String password;
     private String Birthday;

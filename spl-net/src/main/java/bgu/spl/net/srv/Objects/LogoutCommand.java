@@ -3,7 +3,7 @@ package bgu.spl.net.srv.Objects;
 import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
-public class LogoutCommand extends Command {
+public class LogoutCommand extends ReceivedCommand {
     private String name;
 
     public LogoutCommand(int opCode) {

@@ -12,7 +12,7 @@ import java.util.Vector;
 
 public class CommandEncoderDecoder implements MessageEncoderDecoder {
 
-    private Command command;
+    private ReceivedCommand command;
     private byte [] opCode = new byte[2];
     private Vector <Byte> fieldBytes;
     private int opCodeCount=0;
@@ -20,7 +20,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     private String clientUserName;
 
     @Override
-    public Command decodeNextByte(byte nextByte) {
+    public ReceivedCommand decodeNextByte(byte nextByte) {
         if(nextByte == ';')
             return returnCommand();
         else if(command==null){
@@ -30,7 +30,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             }
             else{
                 ByteBuffer bb = ByteBuffer.wrap(opCode).order(ByteOrder.BIG_ENDIAN);
-                command=CommandFactory.makeCommand(bb.getInt());
+                command=CommandFactory.makeReceivedCommand(bb.getInt());
             }
         }
         else{
@@ -100,6 +100,27 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             fieldBytes.add(nextByte);
         }
     }
+
+    public void decodeNextByte(byte nextByte, FollowCommand command){
+        if(fieldCounter==1){
+            command.setUnFollow(nextByte);
+            fieldCounter++;
+        }
+        else{
+            if(nextByte==0){
+                byte[] temp = new byte[fieldBytes.size()];
+                for (int i = 0; i < fieldBytes.size(); i++) {
+                    temp[i] = fieldBytes.elementAt(i);
+                }
+                ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
+                command.setFollowName(bb.toString());
+                command.setClientName(clientUserName);
+            }
+            else
+                fieldBytes.add(nextByte);
+        }
+    }
+
     public void decodeNextByte(byte nextByte, LogStatCommand command){
         if(nextByte == 0) {
             byte [] temp = new byte[fieldBytes.size()];
@@ -213,8 +234,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         return new byte[0];
     }
 
-    private Command returnCommand(){
-        Command temp=command;
+    private ReceivedCommand returnCommand(){
+        ReceivedCommand temp=command;
         command=null;
         opCode=new byte[2];
         opCodeCount=0;

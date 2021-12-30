@@ -3,7 +3,7 @@ package bgu.spl.net.srv.Objects;
 import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
-public class BlockCommand extends Command {
+public class BlockCommand extends ReceivedCommand {
     private String clientName;
     private String BlockedName;
 

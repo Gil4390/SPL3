@@ -5,7 +5,7 @@ import bgu.spl.net.srv.CommandEncoderDecoder;
 
 import java.util.List;
 
-public class PostCommand extends Command {
+public class PostCommand extends ReceivedCommand {
     private String content;
     private String name;
 
