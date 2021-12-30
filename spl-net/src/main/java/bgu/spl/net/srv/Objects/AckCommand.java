@@ -1,6 +1,5 @@
 package bgu.spl.net.srv.Objects;
 
-import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class AckCommand extends ReturnCommand {
@@ -11,7 +10,10 @@ public class AckCommand extends ReturnCommand {
     public AckCommand(int opCode) {
         super(opCode);
     }
-    public void encodeNextByte(byte nextByte, CommandEncoderDecoder c) {}
+
+    public byte[] encode(CommandEncoderDecoder c) {
+        return c.encode(this);
+    }
 
     public int getMsgOpCode() {
         return msgOpCode;

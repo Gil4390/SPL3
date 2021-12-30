@@ -8,5 +8,5 @@ public abstract class ReturnCommand extends Command {
         super(opCode);
     }
 
-    abstract public void encodeNextByte(byte nextByte, CommandEncoderDecoder c);
+    abstract public byte[] encode(CommandEncoderDecoder c);
 }

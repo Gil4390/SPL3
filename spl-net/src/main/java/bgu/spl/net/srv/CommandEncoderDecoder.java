@@ -19,6 +19,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     private int fieldCounter=1;
     private String clientUserName;
 
+
     @Override
     public ReceivedCommand decodeNextByte(byte nextByte) {
         if(nextByte == ';')
@@ -205,13 +206,6 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             fieldBytes.add(nextByte);
         }
     }
-    public void decodeNextByte(byte nextByte, AckCommand command){
-
-    }
-
-    public void decodeNextByte(byte nextByte, NotificationCommand command){
-
-    }
 
     public void decodeNextByte(byte nextByte, BlockCommand command){
         if(nextByte == 0) {
@@ -228,11 +222,24 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         }
     }
 
-
     @Override
     public byte[] encode(Object message) {
-        return new byte[0];
+        return ((ReturnCommand)message).encode(this);
     }
+
+    public byte[] encode(AckCommand command){
+        return (command.getOpCode() + command.getMsgOpCode() + command.getOptionalData() + ";").getBytes();
+    }
+
+    public byte[] encode(ErrorCommand command){
+        return (command.getOpCode() + command.getMsgOpCode() +";").getBytes();
+    }
+
+    public byte[] encode(NotificationCommand command){
+        return (command.getOpCode() + command.getType() + command.getPostingUserName() + "0"
+                + command.getContent() +"0;").getBytes();
+    }
+
 
     private ReceivedCommand returnCommand(){
         ReceivedCommand temp=command;

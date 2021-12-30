@@ -1,10 +1,9 @@
 package bgu.spl.net.srv.Objects;
 
-import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class NotificationCommand extends ReturnCommand {
-    private String type; //PM or Public
+    private int type; //PM-0 or Public-1
     private String postingUserName;
     private String content;
 
@@ -12,10 +11,10 @@ public class NotificationCommand extends ReturnCommand {
         super(opCode);
     }
 
-    public void encodeNextByte(byte nextByte, CommandEncoderDecoder c) {
-        c.decodeNextByte(nextByte,this);
+    public byte[] encode(CommandEncoderDecoder c) {
+        return c.encode(this);
     }
-    public String getType() {
+    public int getType() {
         return type;
     }
 
@@ -25,5 +24,17 @@ public class NotificationCommand extends ReturnCommand {
 
     public String getContent() {
         return content;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setPostingUserName(String postingUserName) {
+        this.postingUserName = postingUserName;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
