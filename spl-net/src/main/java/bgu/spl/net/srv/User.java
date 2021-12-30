@@ -55,6 +55,14 @@ public class User {
         this.numPostedPost = numPostedPost;
     }
 
+    public int getNumOfFollowers() {
+        return numOfFollowers;
+    }
+
+    public void setNumOfFollowers(int numOfFollowers) {
+        this.numOfFollowers = numOfFollowers;
+    }
+
     public int getAge(){
         LocalDate today = LocalDate.now();
         LocalDate birthday = LocalDate.parse(Birthday);
