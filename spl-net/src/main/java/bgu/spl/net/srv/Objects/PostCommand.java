@@ -4,6 +4,7 @@ import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
 import java.util.List;
+import java.util.Vector;
 
 public class PostCommand extends ReceivedCommand {
     private String content;
@@ -31,7 +32,7 @@ public class PostCommand extends ReceivedCommand {
         this.name = name;
     }
 
-    public List<String> getMentionedUsers(){
+    public Vector<String> getMentionedUsers(){
         //todo
         return null;
     }

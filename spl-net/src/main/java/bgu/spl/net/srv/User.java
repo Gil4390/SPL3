@@ -1,11 +1,17 @@
 package bgu.spl.net.srv;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
+
 public class User {
     final private int ID;
     final private String name;
     final private String password;
     final private String Birthday;
     private int numOfFollowing;
+    private int numOfFollowers; //todo
     private int numPostedPost;
 
     public User(int id, String name, String password, String birthday) {
@@ -50,12 +56,13 @@ public class User {
     }
 
     public int getAge(){
-        //todo
-        return 0;
+        LocalDate today = LocalDate.now();
+        LocalDate birthday = LocalDate.parse(Birthday);
+        Period p = Period.between(birthday, today);
+        return p.getYears();
     }
 
     public String getStats(){
-        //todo
-        return "";
+        return "<" + getAge() + "><" + numPostedPost + "><" + numOfFollowers + "><" + "><" + numOfFollowing + ">";
     }
 }

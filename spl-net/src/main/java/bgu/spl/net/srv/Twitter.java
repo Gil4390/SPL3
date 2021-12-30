@@ -25,11 +25,12 @@ public class Twitter {
         blockedUsers= new ConcurrentHashMap<>();
     }
 
-    public Command Register(RegisterCommand cmd){
-        if(users.containsKey(cmd.getName())){
+    public Vector<Command> Register(RegisterCommand cmd){
+        Vector<Command> result = new Vector<>();
+        if(users.containsKey(cmd.getName())){ //already registered
             ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
             errcmd.setMsgOpCode(1);
-            return errcmd;
+            result.add(errcmd);
         }
         else{
             User user = new User(UserID++, cmd.getName(), cmd.getPassword(), cmd.getBirthday());
@@ -41,8 +42,9 @@ public class Twitter {
             AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
             ackcmd.setMsgOpCode(1);
             ackcmd.setOptionalData("Register Successful");
-            return ackcmd;
+            result.add(ackcmd);
         }
+        return result;
     }
 
     public void Login(LoginCommand command){
@@ -64,13 +66,21 @@ public class Twitter {
         }
     }
 
-    public void Logout(LogoutCommand cmd){
+    public Vector<Command> Logout(LogoutCommand cmd){
+        Vector<Command> result = new Vector<>();
         if(loggedIn.contains(cmd.getName())){
             loggedIn.put(cmd.getName(),false);
+            AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
+            ackcmd.setMsgOpCode(3);
+            ackcmd.setOptionalData("Logout Successful");
+            result.add(ackcmd);
         }
         else{
-            //todo ERROR
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            errcmd.setMsgOpCode(3);
+            result.add(errcmd);
         }
+        return result;
     }
 
     public void Follow(FollowCommand command){
@@ -98,17 +108,42 @@ public class Twitter {
         }
     }
 
-    public void Post(PostCommand cmd){//todo ask gil if implement blocked user?
-        if(checkLoggedIn(cmd.getName())){
+    public Vector<Command> Post(PostCommand cmd){
+        Vector<Command> result = new Vector<>();
+        if(loggedIn.containsKey(cmd.getName())){
+            User user = users.get(cmd.getName());
+            user.setNumPostedPost(user.getNumPostedPost()+1);
+
+            Vector<String> usersToNotify = cmd.getMentionedUsers();
             for(String sUser : followers.get(cmd.getName())){
-                User user = users.get(sUser);
-                //todo send post request to followers
+                if(!usersToNotify.contains(sUser))
+                    usersToNotify.add(sUser);
             }
-            for(String sUser : cmd.getMentionedUsers()){
-                User user = users.get(sUser);
-                //todo send post request to users
+            for(String sUser : usersToNotify){
+                if(!BlockedUser(cmd.getName(), sUser)) {
+                    usersToNotify.remove(sUser);
+                    NotificationCommand notificationCommand = (NotificationCommand) CommandFactory.makeReturnCommand(9);
+                    notificationCommand.setType(1);
+                    notificationCommand.setPostingUserName(cmd.getName());
+                    notificationCommand.setContent(cmd.getContent());
+                    result.add(notificationCommand);
+                }
+                else{//if the user mentioned someone that blocked them
+                    user.setNumPostedPost(user.getNumPostedPost()-1);
+                    result = new Vector<>();
+                    ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+                    errcmd.setMsgOpCode(5);
+                    result.add(errcmd);
+                    break;
+                }
             }
         }
+        else{
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            errcmd.setMsgOpCode(5);
+            result.add(errcmd);
+        }
+        return result;
     }
 
     public void PrivateMessage(PrivateMessageCommand command){
@@ -138,14 +173,22 @@ public class Twitter {
         }
     }
 
-    public void LogStat(LogStatCommand cmd){
-        if(checkLoggedIn(cmd.getName())){
-            List<String> output = new Vector<>();
+    public Vector<Command> LogStat(LogStatCommand cmd){
+        Vector<Command> result = new Vector<>();
+        if(loggedIn.containsKey(cmd.getName())){//if not logged in, then definitely not registered
             for(User user : users.values()){
-                output.add(user.getStats());
+                AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
+                ackcmd.setMsgOpCode(7);
+                ackcmd.setOptionalData(user.getStats());
+                result.add(ackcmd);
             }
-            //todo send output to user
         }
+        else{
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            errcmd.setMsgOpCode(7);
+            result.add(errcmd);
+        }
+        return result;
     }
 
     public void Stats(StatsCommand command){
@@ -193,7 +236,7 @@ public class Twitter {
     }
 
     private boolean BlockedUser(String client, String client2){
-        for (String str:blockedUsers.get(client)) {
+        for (String str : blockedUsers.get(client)) {
             if(client2==str)
                 return true;
         }
