@@ -58,12 +58,7 @@ public class Twitter {
 
     public void Logout(LogoutCommand cmd){
         if(loggedIn.contains(cmd.getName())){
-            loggedIn.remove(cmd.getName());
-            users.remove(cmd.getName());//todo ask gil why
-            for(String sUser : followers.get(cmd.getName())){
-                User user = users.get(sUser);
-                user.setNumOfFollowing(user.getNumOfFollowing()-1);
-            }
+            loggedIn.put(cmd.getName(),false);
         }
         else{
             //todo ERROR

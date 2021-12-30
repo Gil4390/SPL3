@@ -85,8 +85,6 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             fieldBytes.add(nextByte);
         }
     }
-
-    }
     public void decodeNextByte(byte nextByte, LogoutCommand command){
         if(nextByte == 0) {
             byte [] temp = new byte[fieldBytes.size()];
@@ -116,9 +114,6 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         else{
             fieldBytes.add(nextByte);
         }
-    }
-    public void decodeNextByte(byte nextByte, NotificationCommand command){
-
     }
     public void decodeNextByte(byte nextByte, PostCommand command){
         if(nextByte == 0) {
@@ -162,10 +157,6 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         }
     }
 
-    public void decodeNextByte(byte nextByte, LogStatCommand command){
-
-    }
-
     public void decodeNextByte(byte nextByte, StatsCommand command){
         if(nextByte == 0) {
             byte [] temp = new byte[fieldBytes.size()];
@@ -196,6 +187,11 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     public void decodeNextByte(byte nextByte, AckCommand command){
 
     }
+
+    public void decodeNextByte(byte nextByte, NotificationCommand command){
+
+    }
+
     public void decodeNextByte(byte nextByte, BlockCommand command){
         if(nextByte == 0) {
             byte [] temp = new byte[fieldBytes.size()];
