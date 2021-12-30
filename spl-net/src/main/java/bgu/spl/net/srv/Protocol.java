@@ -60,6 +60,7 @@ public class Protocol implements BidiMessagingProtocol {
                 System.out.println("error in protocol process");
         }
 
+        //todo check if this needs to be here
         CommandEncoderDecoder encoderDecoder = new CommandEncoderDecoder();
         if(!processedMessage.isEmpty()){
             for (Command cmd : processedMessage){
@@ -67,6 +68,7 @@ public class Protocol implements BidiMessagingProtocol {
                 connections.send(connectionId,bytes);
             }
         }
+
     }
 
     @Override
