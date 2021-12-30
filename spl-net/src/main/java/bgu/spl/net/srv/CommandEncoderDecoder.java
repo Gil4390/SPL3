@@ -22,8 +22,12 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
 
     @Override
     public ReceivedCommand decodeNextByte(byte nextByte) {
-        if(nextByte == ';')
+        if(nextByte == ';') {
+            if(command instanceof FollowCommand) {
+                decodeNextByte(("0").getBytes()[0], ((FollowCommand) command));
+            }
             return returnCommand();
+        }
         else if(command==null){
             if(opCodeCount<2) {
                 opCode[opCodeCount]=nextByte;
