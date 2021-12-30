@@ -1,6 +1,7 @@
 package bgu.spl.net.srv;
 
 import bgu.spl.net.api.bidi.Connections;
+import bgu.spl.net.srv.bidi.ConnectionHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,16 +9,19 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ConnectionsImp implements Connections<Command> {
 
-    private ConcurrentHashMap<Integer,NonBlockingConnectionHandler<Command>> connections;
+    private ConcurrentHashMap<Integer, ConnectionHandler<Command>> connections;
 
     private static class ConnectionHolder{
-        private static ConnectionsImp clusterInstance = new ConnectionsImp();
+        private static ConnectionsImp connectionsInstance = new ConnectionsImp();
     }
 
     public static ConnectionsImp getInstance() {
-        return ConnectionHolder.clusterInstance;
+        return ConnectionHolder.connectionsInstance;
     }
 
+    public void connect(int connectionId, ConnectionHandler con){
+        connections.put(connectionId,con);
+    }
 
     @Override
     public boolean send(int connectionId, Command msg) {
@@ -30,7 +34,7 @@ public class ConnectionsImp implements Connections<Command> {
 
     @Override
     public void broadcast(Command msg) {
-        for(NonBlockingConnectionHandler<Command> client : connections.values()){
+        for(ConnectionHandler<Command> client : connections.values()){
             client.send(msg);
         }
     }
