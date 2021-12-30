@@ -6,11 +6,21 @@ import bgu.spl.net.srv.CommandEncoderDecoder;
 public class FollowCommand extends Command {
     private String followName;
     private String clientName;
+    private boolean isUnFollow;
+    public FollowCommand(int opCode) {
+        super(opCode);
+    }
+
     public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
         c.decodeNextByte(nextByte,this);
     }
-    public FollowCommand(int opCode) {
-        super(opCode);
+
+    public boolean isUnFollow() {
+        return isUnFollow;
+    }
+
+    public void setUnFollow(byte unFollow) {
+        isUnFollow = unFollow==1;
     }
 
     public String getFollowName() {
