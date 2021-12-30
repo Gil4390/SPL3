@@ -4,6 +4,8 @@ import bgu.spl.net.api.bidi.BidiMessagingProtocol;
 import bgu.spl.net.api.bidi.Connections;
 import bgu.spl.net.srv.Objects.*;
 
+import java.util.Vector;
+
 public class Protocol implements BidiMessagingProtocol {
     private Twitter twit;
     private Connections connections;
@@ -24,37 +26,46 @@ public class Protocol implements BidiMessagingProtocol {
     @Override
     public void process(Object message) {
         Command com = (Command) message;
+        Vector<Command> processedMessage = new Vector<>();
         switch (com.getOpCode()){
             case 1:
-                twit.Register(((RegisterCommand)com));
+                processedMessage = twit.Register(((RegisterCommand)com));
                 break;
             case 2:
-                twit.Login(((LoginCommand)com));
+                processedMessage = twit.Login(((LoginCommand)com));
                 break;
             case 3:
-                twit.Logout(((LogoutCommand)com));
+                processedMessage = twit.Logout(((LogoutCommand)com));
                 shouldTerminate=true; // todo check if this happened after client receive ack message
                 break;
             case 4:
-                twit.Follow(((FollowCommand)com));
+                processedMessage = twit.Follow(((FollowCommand)com));
                 break;
             case 5:
-                twit.Post(((PostCommand)com));
+                processedMessage = twit.Post(((PostCommand)com));
                 break;
             case 6:
-                twit.PrivateMessage(((PrivateMessageCommand)com));
+                processedMessage = twit.PrivateMessage(((PrivateMessageCommand)com));
                 break;
             case 7:
-                twit.LogStat(((LogStatCommand)com));
+                processedMessage = twit.LogStat(((LogStatCommand)com));
                 break;
             case 8:
-                twit.Stats(((StatsCommand)com));
+                processedMessage = twit.Stats(((StatsCommand)com));
                 break;
             case 12:
-                twit.Block(((BlockCommand)com));
+                processedMessage = twit.Block(((BlockCommand)com));
                 break;
             default:
                 System.out.println("error in protocol process");
+        }
+
+        CommandEncoderDecoder encoderDecoder = new CommandEncoderDecoder();
+        if(!processedMessage.isEmpty()){
+            for (Command cmd : processedMessage){
+                byte[] bytes = encoderDecoder.encode(cmd);
+                connections.send(connectionId,bytes);
+            }
         }
     }
 

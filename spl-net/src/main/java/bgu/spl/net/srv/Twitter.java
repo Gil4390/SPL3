@@ -94,7 +94,7 @@ public class Twitter {
                     user.setNumOfFollowers(user.getNumOfFollowers()+1);
                     AckCommand ack = new AckCommand(10);
                     ack.setMsgOpCode(command.getOpCode());
-                    ack.setOptionalData(command.getFollowName()+"0");
+                    ack.setOptionalData(command.getFollowName()+"0");//todo amen
                     result.add(ack);
                     return result;
                 }

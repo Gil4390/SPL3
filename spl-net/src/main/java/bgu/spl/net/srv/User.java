@@ -71,6 +71,6 @@ public class User {
     }
 
     public String getStats(){
-        return "<" + getAge() + "><" + numPostedPost + "><" + numOfFollowers + "><" + "><" + numOfFollowing + ">";
+        return "" +  getAge() + numPostedPost + numOfFollowers + numOfFollowing;
     }
 }

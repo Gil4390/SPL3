@@ -240,8 +240,11 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     }
 
     public byte[] encode(NotificationCommand command){
-        return (command.getOpCode() + command.getType() + command.getPostingUserName() + "0"
+        byte[] result =  (command.getOpCode() + command.getType() + command.getPostingUserName() + "0"
                 + command.getContent() +"0;").getBytes();
+        //todo
+        //result[0] = command.getOpCode();
+        return result;
     }
 
 
