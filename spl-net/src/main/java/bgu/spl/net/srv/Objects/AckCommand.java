@@ -9,6 +9,7 @@ public class AckCommand extends ReturnCommand {
 
     public AckCommand(int opCode) {
         super(opCode);
+        OptionalData="";
     }
 
     public byte[] encode(CommandEncoderDecoder c) {
