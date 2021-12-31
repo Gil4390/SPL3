@@ -10,9 +10,9 @@ public class User {
     final private String name;
     final private String password;
     final private String Birthday;
-    private int numOfFollowing;
-    private int numOfFollowers; //todo
-    private int numPostedPost;
+    private short numOfFollowing;
+    private short numOfFollowers; //todo
+    private short numPostedPost;
 
     public User(int id, String name, String password, String birthday) {
         this.ID = id;
@@ -20,6 +20,7 @@ public class User {
         this.password = password;
         this.Birthday = birthday;
         this.numOfFollowing = 0;
+        this.numOfFollowers = 0;
         this.numPostedPost=0;
     }
 
@@ -35,32 +36,32 @@ public class User {
         return Birthday;
     }
 
-    public int getNumOfFollowing() {
-        return numOfFollowing;
-    }
-
-    public void setNumOfFollowing(int numOfFollowing) {
-        this.numOfFollowing = numOfFollowing;
-    }
-
     public int getID() {
         return ID;
     }
 
-    public int getNumPostedPost() {
-        return numPostedPost;
+    public short getNumOfFollowing() {
+        return numOfFollowing;
     }
 
-    public void setNumPostedPost(int numPostedPost) {
-        this.numPostedPost = numPostedPost;
+    public void setNumOfFollowing(short numOfFollowing) {
+        this.numOfFollowing = numOfFollowing;
     }
 
-    public int getNumOfFollowers() {
+    public short getNumOfFollowers() {
         return numOfFollowers;
     }
 
-    public void setNumOfFollowers(int numOfFollowers) {
+    public void setNumOfFollowers(short numOfFollowers) {
         this.numOfFollowers = numOfFollowers;
+    }
+
+    public short getNumPostedPost() {
+        return numPostedPost;
+    }
+
+    public void setNumPostedPost(short numPostedPost) {
+        this.numPostedPost = numPostedPost;
     }
 
     public int getAge(){

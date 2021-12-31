@@ -91,7 +91,7 @@ public class Twitter {
                 if (users.containsKey(command.getFollowName()) || !BlockedUser(command.getClientName(),command.getFollowName())) {
                     followers.get(command.getClientName()).add(command.getFollowName());
                     User user = users.get(command.getClientName());
-                    user.setNumOfFollowers(user.getNumOfFollowers()+1);
+                    user.setNumOfFollowers((short)(user.getNumOfFollowers()+1));
                     AckCommand ack = new AckCommand(10);
                     ack.setMsgOpCode(command.getOpCode());
                     ack.setOptionalData(command.getFollowName()+"0");//todo amen
@@ -112,7 +112,7 @@ public class Twitter {
             if (followers.get(command.getClientName()).contains(command.getFollowName())) {
                 followers.get(command.getClientName()).remove(command.getFollowName());
                 User user = users.get(command.getClientName());
-                user.setNumOfFollowers(user.getNumOfFollowers()-1);
+                user.setNumOfFollowers((short)(user.getNumOfFollowers()-1));
                 AckCommand ack = new AckCommand(10);
                 ack.setMsgOpCode(command.getOpCode());
                 ack.setOptionalData(command.getFollowName()+"0");
@@ -130,7 +130,7 @@ public class Twitter {
         Vector<Command> result = new Vector<>();
         if(loggedIn.containsKey(cmd.getName())){
             User user = users.get(cmd.getName());
-            user.setNumPostedPost(user.getNumPostedPost()+1);
+            user.setNumPostedPost((short)(user.getNumPostedPost()+1));
 
             Vector<String> usersToNotify = cmd.getMentionedUsers();
             for(String sUser : followers.get(cmd.getName())){
@@ -147,7 +147,7 @@ public class Twitter {
                     result.add(notificationCommand);
                 }
                 else{//if the user mentioned someone that blocked them
-                    user.setNumPostedPost(user.getNumPostedPost()-1);
+                    user.setNumPostedPost((short)(user.getNumPostedPost()-1));
                     result = new Vector<>();
                     ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
                     errcmd.setMsgOpCode(5);
@@ -199,14 +199,15 @@ public class Twitter {
     }
 
     public Vector<Command> LogStat(LogStatCommand cmd){
-        //todo rework
         Vector<Command> result = new Vector<>();
         if(loggedIn.containsKey(cmd.getName())){//if not logged in, then definitely not registered
             for(User user : users.values()){
-                AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
-                ackcmd.setMsgOpCode(7);
-                ackcmd.setOptionalData(user.getStats());
-                result.add(ackcmd);
+                if(!blockedUsers.get(user.getName()).contains(cmd.getName())){
+                    AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
+                    ackcmd.setMsgOpCode(7);
+                    ackcmd.setOptionalData(user.getStats());
+                    result.add(ackcmd);
+                }
             }
         }
         else{
