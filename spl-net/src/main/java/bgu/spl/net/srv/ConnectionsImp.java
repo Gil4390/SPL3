@@ -10,7 +10,7 @@ public class ConnectionsImp implements Connections<Command> {
     private ConcurrentHashMap<Integer, ConnectionHandler<Command>> connections;
 
     private static class ConnectionHolder{
-        private static ConnectionsImp connectionsInstance = new ConnectionsImp();
+        private static ConnectionsImp connectionsInstance = new <Command> ConnectionsImp();
     }
 
     public static ConnectionsImp getInstance() {
@@ -18,7 +18,8 @@ public class ConnectionsImp implements Connections<Command> {
     }
 
     public void connect(int connectionId, ConnectionHandler con){
-        connections.put(connectionId,con);
+        if(!connections.containsKey(connectionId))
+            connections.put(connectionId,con);
     }
 
     @Override
