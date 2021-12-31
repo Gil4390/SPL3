@@ -6,9 +6,8 @@ import bgu.spl.net.srv.Objects.*;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Vector;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class CommandEncoderDecoder implements MessageEncoderDecoder {
 
@@ -239,13 +238,34 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         return (command.getOpCode() + command.getMsgOpCode() +";").getBytes();
     }
 
-    public byte[] encode(NotificationCommand command){
-        byte[] result =  (command.getOpCode() + command.getType() + command.getPostingUserName() + "0"
-                + command.getContent() +"0;").getBytes();
-        //todo
-        //result[0] = command.getOpCode();
-        return result;
-    }
+//    public byte[] encode(NotificationCommand command){
+//        byte [] opCode = shortToBytes((short)command.getOpCode());
+//        byte [] type = shortToBytes((short)command.getType());
+//        byte [] PostingUserName = command.getPostingUserName().getBytes(StandardCharsets.UTF_8);
+//        byte [] content = command.getContent().getBytes(StandardCharsets.UTF_8);
+//        byte [] zero = shortToBytes((short)0);
+//
+//        byte [] result = new byte[20];
+//        List <Byte> resultList=new LinkedList<>();
+//        Collections.addAll(resultList,opCode,type,PostingUserName,content,zero);
+//
+//
+//        return resultList.toArray();
+//    }
+
+//    static <T> T[] concatWithCollection(T[] array1, T[] array2) {
+//        List<T> resultList = new ArrayList<>(array1.length + array2.length);
+//        Collections.addAll(resultList, array1);
+//        Collections.addAll(resultList, array2);
+//
+//        @SuppressWarnings("unchecked")
+//        //the type cast is safe as the array1 has the type T[]
+//        T[] resultArray = (T[]) Array.newInstance(array1.getClass().getComponentType(), 0);
+//        return resultList.toArray(resultArray);
+//    }
+
+
+
 
     public byte[] shortToBytes(short num)
     {
