@@ -230,41 +230,50 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     }
 
     public byte[] encode(AckCommand command){
-        return (command.getOpCode() + command.getMsgOpCode() + command.getOptionalData() + ";").getBytes();
+        byte [] opCode = shortToBytes((short)command.getOpCode());
+        byte [] msgOpCode = shortToBytes((short)command.getMsgOpCode());
+        byte [] optional = (command.getOptionalData()+";").getBytes(StandardCharsets.UTF_8);
+
+        byte [] result = addArray(opCode,msgOpCode);
+        result = addArray(result,optional);
+        return result;
     }
 
     public byte[] encode(ErrorCommand command){
-        return (command.getOpCode() + command.getMsgOpCode() +";").getBytes();
+        byte [] opCode = shortToBytes((short)command.getOpCode());
+        byte [] msgOpCode = shortToBytes((short)command.getMsgOpCode());
+        byte [] end = ";".getBytes(StandardCharsets.UTF_8);
+
+        byte [] result = addArray(opCode,msgOpCode);
+        result = addArray(result,end);
+        return result;
     }
 
-//    public byte[] encode(NotificationCommand command){
-//        byte [] opCode = shortToBytes((short)command.getOpCode());
-//        byte [] type = shortToBytes((short)command.getType());
-//        byte [] PostingUserName = command.getPostingUserName().getBytes(StandardCharsets.UTF_8);
-//        byte [] content = command.getContent().getBytes(StandardCharsets.UTF_8);
-//        byte [] zero = shortToBytes((short)0);
-//
-//        byte [] result = new byte[20];
-//        List <Byte> resultList=new LinkedList<>();
-//        Collections.addAll(resultList,opCode,type,PostingUserName,content,zero);
-//
-//
-//        return resultList.toArray();
-//    }
-
-//    static <T> T[] concatWithCollection(T[] array1, T[] array2) {
-//        List<T> resultList = new ArrayList<>(array1.length + array2.length);
-//        Collections.addAll(resultList, array1);
-//        Collections.addAll(resultList, array2);
-//
-//        @SuppressWarnings("unchecked")
-//        //the type cast is safe as the array1 has the type T[]
-//        T[] resultArray = (T[]) Array.newInstance(array1.getClass().getComponentType(), 0);
-//        return resultList.toArray(resultArray);
-//    }
+    public byte[] encode(NotificationCommand command){
+        byte [] opCode = shortToBytes((short)command.getOpCode());
+        byte [] type = shortToBytes((short)command.getType());
+        byte [] PostingUserName = command.getPostingUserName().getBytes(StandardCharsets.UTF_8);
+        byte [] content = command.getContent().getBytes(StandardCharsets.UTF_8);
+        byte [] zero = shortToBytes((short)0);
 
 
+        byte [] result = addArray(opCode,type);
+        result = addArray(result,PostingUserName);
+        result = addArray(result,content);
+        result = addArray(result,zero);
+        return result;
+    }
 
+    private byte [] addArray(byte [] first, byte [] second){
+        byte [] result = new byte[first.length+second.length];
+        for(int i=0; i<first.length+second.length;i++) {
+            if(i<first.length)
+                result[i] =first[i];
+            else
+                result[i]=second[i];
+        }
+        return result;
+    }
 
     public byte[] shortToBytes(short num)
     {
@@ -273,7 +282,6 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         bytesArr[1] = (byte)(num & 0xFF);
         return bytesArr;
     }
-
 
     private ReceivedCommand returnCommand(){
         ReceivedCommand temp=command;
