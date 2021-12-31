@@ -10,9 +10,9 @@ public class User {
     final private String name;
     final private String password;
     final private String Birthday;
-    private short numOfFollowing;
-    private short numOfFollowers; //todo
-    private short numPostedPost;
+    private int numOfFollowing;
+    private int numOfFollowers; //todo
+    private int numPostedPost;
 
     public User(int id, String name, String password, String birthday) {
         this.ID = id;
@@ -40,27 +40,27 @@ public class User {
         return ID;
     }
 
-    public short getNumOfFollowing() {
+    public int getNumOfFollowing() {
         return numOfFollowing;
     }
 
-    public void setNumOfFollowing(short numOfFollowing) {
+    public void setNumOfFollowing(int numOfFollowing) {
         this.numOfFollowing = numOfFollowing;
     }
 
-    public short getNumOfFollowers() {
+    public int getNumOfFollowers() {
         return numOfFollowers;
     }
 
-    public void setNumOfFollowers(short numOfFollowers) {
+    public void setNumOfFollowers(int numOfFollowers) {
         this.numOfFollowers = numOfFollowers;
     }
 
-    public short getNumPostedPost() {
+    public int getNumPostedPost() {
         return numPostedPost;
     }
 
-    public void setNumPostedPost(short numPostedPost) {
+    public void setNumPostedPost(int numPostedPost) {
         this.numPostedPost = numPostedPost;
     }
 
