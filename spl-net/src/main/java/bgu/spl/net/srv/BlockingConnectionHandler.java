@@ -3,12 +3,14 @@ package bgu.spl.net.srv;
 import bgu.spl.net.api.MessageEncoderDecoder;
 import bgu.spl.net.api.MessagingProtocol;
 import bgu.spl.net.api.bidi.BidiMessagingProtocol;
+import bgu.spl.net.api.bidi.Connections;
 import bgu.spl.net.srv.bidi.ConnectionHandler;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.LinkedList;
 
 public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler<T> {
 
@@ -18,11 +20,18 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
     private BufferedInputStream in;
     private BufferedOutputStream out;
     private volatile boolean connected = true;
+    private int connectionId;
+    private Connections connections;
 
     public BlockingConnectionHandler(Socket sock, MessageEncoderDecoder<T> reader, MessagingProtocol<T> protocol) {
         this.sock = sock;
         this.encdec = reader;
         this.protocol = protocol;
+    }
+
+    public void initiate(int connectionId, Connections connections){
+        this.connectionId=connectionId;
+        this.connections=connections;
     }
 
     @Override
@@ -36,8 +45,11 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
             while (!protocol.shouldTerminate() && connected && (read = in.read()) >= 0) {
                 T nextMessage = encdec.decodeNextByte((byte) read);
                 if (nextMessage != null) {
-                    if(protocol instanceof BidiMessagingProtocol)
+                    if(protocol instanceof BidiMessagingProtocol) {
+                        ((BidiMessagingProtocol<?>) protocol).start(connectionId,connections);
+                        connections.connect(connectionId,this);
                         protocol.process(nextMessage);
+                    }
                     else{
                         T response = protocol.process(nextMessage);
                         if(response != null){
