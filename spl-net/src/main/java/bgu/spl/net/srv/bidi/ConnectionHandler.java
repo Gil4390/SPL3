@@ -1,4 +1,4 @@
-package bgu.spl.net.api.bidi;
+package bgu.spl.net.srv.bidi;
 
 import java.io.Closeable;
 import java.io.IOException;

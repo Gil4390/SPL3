@@ -5,7 +5,7 @@ import bgu.spl.net.impl.echo.LineMessageEncoderDecoder;
 import bgu.spl.net.srv.BaseServer;
 import bgu.spl.net.srv.Server;
 
-public class TCPMain {
+public class TPCMain {
     public static void main(String[] args) {
         try(Server<String> server = Server.threadPerClient(7777,()->new EchoProtocol(),()->new LineMessageEncoderDecoder());){
             server.serve();

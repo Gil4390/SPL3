@@ -1,7 +1,7 @@
 package bgu.spl.net.srv;
 
 import bgu.spl.net.api.bidi.Connections;
-import bgu.spl.net.api.bidi.ConnectionHandler;
+import bgu.spl.net.srv.bidi.ConnectionHandler;
 
 import java.util.concurrent.ConcurrentHashMap;
 

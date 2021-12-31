@@ -1,4 +1,4 @@
-package bgu.spl.net.srv.Objects;
+package bgu.spl.net.srv;
 
 public class Message {
     final private boolean postMessage;
