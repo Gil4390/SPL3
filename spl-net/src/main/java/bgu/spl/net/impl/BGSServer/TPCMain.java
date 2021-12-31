@@ -13,7 +13,7 @@ public class TPCMain {
             e.printStackTrace();
         }
 
-
+*/
         Twitter twitter = new Twitter();
 
         try(Server<Command> server = Server.threadPerClient(7777,()->new Protocol(twitter),()->new CommandEncoderDecoder());){
@@ -21,6 +21,6 @@ public class TPCMain {
         }catch(Exception e){
             e.printStackTrace();
         }
-*/
+
     }
 }
