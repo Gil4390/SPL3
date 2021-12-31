@@ -1,10 +1,8 @@
 package bgu.spl.net.srv;
 
 import bgu.spl.net.api.bidi.Connections;
-import bgu.spl.net.srv.bidi.ConnectionHandler;
+import bgu.spl.net.api.bidi.ConnectionHandler;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ConnectionsImp implements Connections<Command> {
