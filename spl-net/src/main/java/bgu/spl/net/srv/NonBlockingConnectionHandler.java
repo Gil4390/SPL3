@@ -3,6 +3,7 @@ package bgu.spl.net.srv;
 import bgu.spl.net.api.MessageEncoderDecoder;
 import bgu.spl.net.api.MessagingProtocol;
 import bgu.spl.net.api.bidi.BidiMessagingProtocol;
+import bgu.spl.net.api.bidi.Connections;
 import bgu.spl.net.srv.bidi.ConnectionHandler;
 
 import java.io.IOException;
@@ -22,6 +23,8 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
     private final Queue<ByteBuffer> writeQueue = new ConcurrentLinkedQueue<>();
     private final SocketChannel chan;
     private final Reactor reactor;
+    private int connectionId;
+    private Connections connections;
 
     public NonBlockingConnectionHandler(
             MessageEncoderDecoder<T> reader,
@@ -32,6 +35,11 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
         this.encdec = reader;
         this.protocol = protocol;
         this.reactor = reactor;
+    }
+
+    public void initiate(int connectionId, Connections connections){
+        this.connectionId=connectionId;
+        this.connections=connections;
     }
 
     public Runnable continueRead() {
@@ -51,8 +59,11 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
                     while (buf.hasRemaining()) {
                         T nextMessage = encdec.decodeNextByte(buf.get());
                         if (nextMessage != null) {
-                            if(protocol instanceof BidiMessagingProtocol)
+                            if(protocol instanceof BidiMessagingProtocol) {
+                                ((BidiMessagingProtocol<?>) protocol).start(connectionId, connections);
+                                connections.connect(connectionId, this);
                                 protocol.process(nextMessage);
+                            }
                             else{
                                 T response = protocol.process(nextMessage);
                                 if(response != null){
