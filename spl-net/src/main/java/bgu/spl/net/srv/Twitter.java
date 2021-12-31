@@ -247,9 +247,18 @@ public class Twitter {
     public Vector<Command> Block(BlockCommand command){
         Vector<Command> result = new Vector<>();
         if(users.containsKey(command.getBlockedName())){
-            //todo user followers following
-            followers.getOrDefault(command.getClientName(),new LinkedList<>()).remove(command.getBlockedName());
-            followers.getOrDefault(command.getBlockedName(),new LinkedList<>()).remove(command.getClientName());
+            User user_1 = users.get(command.getClientName());
+            User user_2 = users.get(command.getBlockedName());
+            if(followers.get(user_1.getName()).contains(user_2.getName())){
+                followers.get(user_1.getName()).remove(user_2.getName());
+                user_1.setNumOfFollowers(user_1.getNumOfFollowers()-1);
+                user_2.setNumOfFollowing(user_2.getNumOfFollowing()-1);
+            }
+            if(followers.get(user_2.getName()).contains(user_1.getName())){
+                followers.get(user_2.getName()).remove(user_1.getName());
+                user_2.setNumOfFollowers(user_2.getNumOfFollowers()-1);
+                user_1.setNumOfFollowing(user_1.getNumOfFollowing()-1);
+            }
             if(!BlockedUser(command.getClientName(),command.getBlockedName())) {
 
                 blockedUsers.get(command.getClientName()).add(command.getBlockedName());
