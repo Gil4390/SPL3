@@ -43,7 +43,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     }
 
     public void decodeNextByte(byte nextByte, RegisterCommand command){
-        if(nextByte == 0) {
+        if(nextByte == '\0') {
             byte [] temp = new byte[fieldBytes.size()];
             for (int i=0;i<fieldBytes.size();i++) {
                 temp[i]=fieldBytes.elementAt(i);
@@ -65,7 +65,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         }
     }
     public void decodeNextByte(byte nextByte, LoginCommand command){
-        if(nextByte == 0 | fieldCounter == 3) {
+        if(nextByte == '\0' | fieldCounter == 3) {
             if(fieldCounter != 3) {
                 byte[] temp = new byte[fieldBytes.size()];
                 for (int i = 0; i < fieldBytes.size(); i++) {
@@ -89,7 +89,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         }
     }
     public void decodeNextByte(byte nextByte, LogoutCommand command){
-        if(nextByte == 0) {
+        if(nextByte == '\0') {
             byte [] temp = new byte[fieldBytes.size()];
             for (int i=0;i<fieldBytes.size();i++) {
                 temp[i]=fieldBytes.elementAt(i);
@@ -110,7 +110,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             fieldCounter++;
         }
         else{
-            if(nextByte==0){
+            if(nextByte=='\0'){
                 byte[] temp = new byte[fieldBytes.size()];
                 for (int i = 0; i < fieldBytes.size(); i++) {
                     temp[i] = fieldBytes.elementAt(i);
@@ -125,7 +125,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     }
 
     public void decodeNextByte(byte nextByte, LogStatCommand command){
-        if(nextByte == 0) {
+        if(nextByte == '\0') {
             byte [] temp = new byte[fieldBytes.size()];
             for (int i=0;i<fieldBytes.size();i++) {
                 temp[i]=fieldBytes.elementAt(i);
@@ -140,7 +140,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         }
     }
     public void decodeNextByte(byte nextByte, PostCommand command){
-        if(nextByte == 0) {
+        if(nextByte == '\0') {
             byte [] temp = new byte[fieldBytes.size()];
             for (int i=0;i<fieldBytes.size();i++) {
                 temp[i]=fieldBytes.elementAt(i);
@@ -159,7 +159,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     }
 
     public void decodeNextByte(byte nextByte, PrivateMessageCommand command){
-        if(nextByte == 0) {
+        if(nextByte == '\0') {
             byte [] temp = new byte[fieldBytes.size()];
             for (int i=0;i<fieldBytes.size();i++) {
                 temp[i]=fieldBytes.elementAt(i);
@@ -182,7 +182,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     }
 
     public void decodeNextByte(byte nextByte, StatsCommand command){
-        if(nextByte == 0) {
+        if(nextByte == '\0') {
             byte [] temp = new byte[fieldBytes.size()];
             for (int i=0;i<fieldBytes.size();i++) {
                 temp[i]=fieldBytes.elementAt(i);
@@ -210,7 +210,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     }
 
     public void decodeNextByte(byte nextByte, BlockCommand command){
-        if(nextByte == 0) {
+        if(nextByte == '\0') {
             byte [] temp = new byte[fieldBytes.size()];
             for (int i=0;i<fieldBytes.size();i++) {
                 temp[i]=fieldBytes.elementAt(i);
