@@ -1,7 +1,7 @@
 #include "EncoderDecoder.h"
 #include <iostream>
 
-EncoderDeconder::EncoderDeconder()
+EncoderDecoder::EncoderDecoder()
 {
     byteCounter = 0;
     zeroCounter = 0;
@@ -10,7 +10,7 @@ EncoderDeconder::EncoderDeconder()
     optional = "";
 }
 
-string EncoderDeconder::decodeNextByte(byte nextByte)
+string EncoderDecoder::decodeNextByte(byte nextByte)
 {
     if ((char)nextByte != ';') {
         if (byteCounter <= 1) {
@@ -89,7 +89,7 @@ string EncoderDeconder::decodeNextByte(byte nextByte)
     */
 	return string();
 }
-string EncoderDeconder::encode(string str)
+string EncoderDecoder::encode(string str)
 {
 	vector<string> vecOfInput = split(str, " ");
     char zero = '\0';
@@ -172,20 +172,20 @@ string EncoderDeconder::encode(string str)
 	return result;
 }
 
-void EncoderDeconder::shortToBytes(short num, char* bytesArr)
+void EncoderDecoder::shortToBytes(short num, char* bytesArr)
 {
 	bytesArr[0] = ((num >> 8) & 0xFF);
 	bytesArr[1] = (num & 0xFF);
 }
 
-short EncoderDeconder::bytesToShort(char* bytesArr)
+short EncoderDecoder::bytesToShort(char* bytesArr)
 {
 	short result = (short)((bytesArr[0] & 0xff) << 8);
 	result += (short)(bytesArr[1] & 0xff);
 	return result;
 }
 
-vector<string> EncoderDeconder::split(string s, string delimiter)
+vector<string> EncoderDecoder::split(string s, string delimiter)
 {
     size_t pos_start = 0, pos_end, delim_len = delimiter.length();
     string token;

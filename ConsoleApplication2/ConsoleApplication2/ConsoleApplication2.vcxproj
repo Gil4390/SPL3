@@ -117,6 +117,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\gil43\Downloads\boost_1_77_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,10 +144,14 @@
     <ClCompile Include="connectionHandler.cpp" />
     <ClCompile Include="echoClient.cpp" />
     <ClCompile Include="EncoderDecoder.cpp" />
+    <ClCompile Include="Listener.cpp" />
+    <ClCompile Include="InputReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="connectionHandler.h" />
     <ClInclude Include="EncoderDecoder.h" />
+    <ClInclude Include="Listener.h" />
+    <ClInclude Include="InputReader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

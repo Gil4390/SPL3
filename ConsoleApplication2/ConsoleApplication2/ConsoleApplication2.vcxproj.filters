@@ -24,12 +24,24 @@
     <ClCompile Include="EncoderDecoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Listener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="connectionHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EncoderDecoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Listener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

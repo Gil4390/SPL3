@@ -2,15 +2,13 @@
 
 #include <rpcndr.h>
 #include <vector>
-#ifndef ENCODERDECODER_H_
-#define ENCODERDECODER_H_
 
 using namespace std;
 
-class EncoderDeconder
+class EncoderDecoder
 {
 public:
-	EncoderDeconder();
+	EncoderDecoder();
 	string decodeNextByte(byte nextByte);
 	string encode(string str);
 private:
@@ -26,6 +24,3 @@ private:
 
 
 };
-
-#endif
-
