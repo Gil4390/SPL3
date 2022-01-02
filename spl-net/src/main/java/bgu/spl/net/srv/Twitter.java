@@ -50,24 +50,26 @@ public class Twitter {
     public Vector<ReturnCommand> Login(LoginCommand command){
         Vector<ReturnCommand> result = new Vector<>();
         if(!checkLoggedIn(command.getName())) {
-            if (users.get(command.getName()).getPassword().equals(command.getPassword())) {
-                if (checkLoggedIn(command.getName())) {
-                    loggedIn.put(command.getName(),true);
-                    AckCommand ack = new AckCommand(10);
-                    ack.setMsgOpCode(command.getOpCode());
-                    ack.setOptionalData("Login successful");
-                    result.add(ack);
+            synchronized (users.get(command.getName())) {
+                if (users.get(command.getName()).getPassword().equals(command.getPassword())) {
+                    if (checkLoggedIn(command.getName())) {
+                        loggedIn.put(command.getName(), true);
+                        AckCommand ack = new AckCommand(10);
+                        ack.setMsgOpCode(command.getOpCode());
+                        ack.setOptionalData("Login successful");
+                        result.add(ack);
 
-                    User user = users.get(command.getName());
-                    for (Message msg : user.getUnreadMsgAndReset()){
-                        NotificationCommand notificationCmd = new NotificationCommand(9);
-                        notificationCmd.setContent(msg.getContent());
-                        notificationCmd.setPostingUserName(msg.getSenderName());
-                        notificationCmd.setType(msg.getType());
-                        result.add(notificationCmd);
+                        User user = users.get(command.getName());
+                        for (Message msg : user.getUnreadMsgAndReset()) {
+                            NotificationCommand notificationCmd = new NotificationCommand(9);
+                            notificationCmd.setContent(msg.getContent());
+                            notificationCmd.setPostingUserName(msg.getSenderName());
+                            notificationCmd.setType(msg.getType());
+                            result.add(notificationCmd);
+                        }
+
+                        return result;
                     }
-
-                    return result;
                 }
             }
         }
@@ -140,6 +142,7 @@ public class Twitter {
         //todo save post message
         //todo only add the notification of the receiving user is logged in
         //todo        add this     ackcmd.setDestUserID(user.getID());
+        //todo sync users.get(senderName) with logIn and PM
         Vector<ReturnCommand> result = new Vector<>();
         if(loggedIn.containsKey(cmd.getName())){
             User user = users.get(cmd.getName());
@@ -178,8 +181,6 @@ public class Twitter {
     }
 
     public Vector<ReturnCommand> PrivateMessage(PrivateMessageCommand command){
-        //todo only add the notification of the receiving user is logged in
-        //todo        add this     ackcmd.setDestUserID(user.getID());
         Vector<ReturnCommand> result = new Vector<>();
         if(checkLoggedIn(command.getSenderName())){
             if(users.containsKey(command.getReceiveName())){
@@ -202,6 +203,14 @@ public class Twitter {
                     notCommand.setType(0);
                     notCommand.setPostingUserName(command.getSenderName());
                     notCommand.setContent(command.getContent());
+                    synchronized (users.get(command.getSenderName())) {
+                        if (!checkLoggedIn(command.getReceiveName())) {
+                            Message mes = new Message(0, command.getContent(), command.getSenderName());
+                            users.get(command.getReceiveName()).addUnreadMsg(mes);
+                            notCommand.setDestUserID(users.get(command.getReceiveName()).getID());
+                        }
+                    }
+
                     result.add(notCommand);
                     return result;
                 }

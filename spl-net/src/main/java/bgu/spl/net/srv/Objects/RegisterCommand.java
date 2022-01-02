@@ -7,7 +7,7 @@ public class RegisterCommand extends ReceivedCommand {
     private String name;
     private String password;
     private String Birthday;
-
+ 
     public RegisterCommand(int opCode) {
         super(opCode);
     }
