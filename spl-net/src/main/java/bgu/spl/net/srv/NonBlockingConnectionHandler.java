@@ -59,7 +59,7 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
                     while (buf.hasRemaining()) {
                         T nextMessage = encdec.decodeNextByte(buf.get());
                         if (nextMessage != null) {
-                            ((BidiMessagingProtocol<?>) protocol).start(connectionId, connections);
+                            protocol.start(connectionId, connections);
                             connections.connect(connectionId, this);
                             protocol.process(nextMessage);
                         }

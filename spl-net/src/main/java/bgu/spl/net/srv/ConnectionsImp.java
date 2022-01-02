@@ -5,12 +5,12 @@ import bgu.spl.net.srv.bidi.ConnectionHandler;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ConnectionsImp implements Connections<Command> {
+public class ConnectionsImp<T> implements Connections<T> {
 
-    private ConcurrentHashMap<Integer, ConnectionHandler<Command>> connections;
+    private ConcurrentHashMap<Integer, ConnectionHandler<T>> connections = new ConcurrentHashMap<>();
 
     private static class ConnectionHolder{
-        private static ConnectionsImp connectionsInstance = new <Command> ConnectionsImp();
+        private static ConnectionsImp connectionsInstance = new ConnectionsImp();
     }
 
     public static ConnectionsImp getInstance() {
@@ -23,8 +23,8 @@ public class ConnectionsImp implements Connections<Command> {
     }
 
     @Override
-    public boolean send(int connectionId, Command msg) {
-        if(connections.contains(connectionId)) {
+    public boolean send(int connectionId, T msg) {
+        if(connections.containsKey(connectionId)) {
             connections.get(connectionId).send(msg);
             return true;
         }
@@ -32,8 +32,8 @@ public class ConnectionsImp implements Connections<Command> {
     }
 
     @Override
-    public void broadcast(Command msg) {
-        for(ConnectionHandler<Command> client : connections.values()){
+    public void broadcast(T msg) {
+        for(ConnectionHandler<T> client : connections.values()){
             client.send(msg);
         }
     }

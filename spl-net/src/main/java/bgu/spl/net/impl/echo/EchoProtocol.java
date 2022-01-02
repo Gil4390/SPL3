@@ -23,13 +23,14 @@ public class EchoProtocol implements BidiMessagingProtocol<String> {
     public void process(String msg) {
         shouldTerminate = "bye".equals(msg);
         System.out.println("[" + LocalDateTime.now() + "]: " + msg);
-        connections.send(conId, createEcho(msg));
+        String echo = createEcho(msg);
+        connections.send(conId, echo);
         //return createEcho(msg);
     }
 
     private String createEcho(String message) {
         String echoPart = message.substring(Math.max(message.length() - 2, 0), message.length());
-        return message + " .. " + echoPart + " .. " + echoPart + " ..";
+        return (message + " .. " + echoPart + " .. " + echoPart + " ..");
     }
 
     @Override
