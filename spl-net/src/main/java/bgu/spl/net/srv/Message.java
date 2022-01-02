@@ -1,19 +1,25 @@
 package bgu.spl.net.srv;
 
 public class Message {
-    final private boolean postMessage;
+    final private int type; //PM-0 or Public-1
     final private String content;
+    final private String senderName;
 
-    public Message(boolean postMessage, String content){
-        this.postMessage=postMessage;
+    public Message(int type, String content, String senderName){
+        this.type=type;
         this.content=content;
+        this.senderName = senderName;
     }
 
-    public boolean isPostMessage() {
-        return postMessage;
+    public int getType() {
+        return type;
     }
 
     public String getContent() {
         return content;
+    }
+
+    public String getSenderName() {
+        return senderName;
     }
 }

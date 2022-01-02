@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Date;
+import java.util.Vector;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class User {
     final private int ID;
@@ -13,6 +15,7 @@ public class User {
     private int numOfFollowing;
     private int numOfFollowers; //todo
     private int numPostedPost;
+    private ConcurrentLinkedQueue<Message> unreadMsg;
 
     public User(int id, String name, String password, String birthday) {
         this.ID = id;
@@ -22,6 +25,7 @@ public class User {
         this.numOfFollowing = 0;
         this.numOfFollowers = 0;
         this.numPostedPost=0;
+        unreadMsg = new ConcurrentLinkedQueue<>();
     }
 
     public String getName() {
@@ -73,5 +77,16 @@ public class User {
 
     public String getStats(){
         return "" +  getAge() + numPostedPost + numOfFollowers + numOfFollowing;
+    }
+
+    public synchronized ConcurrentLinkedQueue<Message> getUnreadMsgAndReset() {
+        ConcurrentLinkedQueue<Message> tmp = this.unreadMsg;
+        this.unreadMsg = new ConcurrentLinkedQueue<>();
+        return tmp;
+    }
+
+
+    public synchronized void addUnreadMsg(Message msg){
+        this.unreadMsg.add(msg);
     }
 }

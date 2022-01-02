@@ -26,7 +26,7 @@ public class Protocol implements BidiMessagingProtocol<Command> {
     @Override
     public void process(Command message) {
         Command com = message;
-        Vector<Command> processedMessage = new Vector<>();
+        Vector<ReturnCommand> processedMessage = new Vector<>();
         switch (com.getOpCode()){
             case 1:
                 processedMessage = twit.Register(((RegisterCommand)com));
@@ -36,7 +36,7 @@ public class Protocol implements BidiMessagingProtocol<Command> {
                 break;
             case 3:
                 processedMessage = twit.Logout(((LogoutCommand)com));
-                shouldTerminate=true; // todo check if this happened after client receive ack message
+                //shouldTerminate=true; // todo check if this happened after client receive ack message
                 break;
             case 4:
                 processedMessage = twit.Follow(((FollowCommand)com));
@@ -60,12 +60,14 @@ public class Protocol implements BidiMessagingProtocol<Command> {
                 System.out.println("error in protocol process");
         }
 
-        //todo check if this needs to be here
-        CommandEncoderDecoder encoderDecoder = new CommandEncoderDecoder();
         if(!processedMessage.isEmpty()){
-            for (Command cmd : processedMessage){
-                byte[] bytes = encoderDecoder.encode(cmd);
-                connections.send(connectionId,bytes);
+            for (ReturnCommand cmd : processedMessage){
+                if(cmd.getDestUserID() == -1){
+                    connections.send(connectionId, cmd);
+                }
+                else{
+                    connections.send(cmd.getDestUserID(), cmd);
+                }
             }
         }
 

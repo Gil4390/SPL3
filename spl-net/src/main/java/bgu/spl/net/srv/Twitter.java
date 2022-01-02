@@ -25,8 +25,8 @@ public class Twitter {
         blockedUsers= new ConcurrentHashMap<>();
     }
 
-    public Vector<Command> Register(RegisterCommand cmd){
-        Vector<Command> result = new Vector<>();
+    public Vector<ReturnCommand> Register(RegisterCommand cmd){
+        Vector<ReturnCommand> result = new Vector<>();
         if(users.containsKey(cmd.getName())){ //already registered
             ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
             errcmd.setMsgOpCode(1);
@@ -47,8 +47,8 @@ public class Twitter {
         return result;
     }
 
-    public Vector<Command> Login(LoginCommand command){
-        Vector<Command> result = new Vector<>();
+    public Vector<ReturnCommand> Login(LoginCommand command){
+        Vector<ReturnCommand> result = new Vector<>();
         if(!checkLoggedIn(command.getName())) {
             if (users.get(command.getName()).getPassword().equals(command.getPassword())) {
                 if (checkLoggedIn(command.getName())) {
@@ -57,6 +57,16 @@ public class Twitter {
                     ack.setMsgOpCode(command.getOpCode());
                     ack.setOptionalData("Login successful");
                     result.add(ack);
+
+                    User user = users.get(command.getName());
+                    for (Message msg : user.getUnreadMsgAndReset()){
+                        NotificationCommand notificationCmd = new NotificationCommand(9);
+                        notificationCmd.setContent(msg.getContent());
+                        notificationCmd.setPostingUserName(msg.getSenderName());
+                        notificationCmd.setType(msg.getType());
+                        result.add(notificationCmd);
+                    }
+
                     return result;
                 }
             }
@@ -67,8 +77,8 @@ public class Twitter {
         return result;
     }
 
-    public Vector<Command> Logout(LogoutCommand cmd){
-        Vector<Command> result = new Vector<>();
+    public Vector<ReturnCommand> Logout(LogoutCommand cmd){
+        Vector<ReturnCommand> result = new Vector<>();
         if(loggedIn.contains(cmd.getName())){
             loggedIn.put(cmd.getName(),false);
             AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
@@ -84,8 +94,8 @@ public class Twitter {
         return result;
     }
 
-    public Vector<Command> Follow(FollowCommand command){
-        Vector<Command> result = new Vector<>();
+    public Vector<ReturnCommand> Follow(FollowCommand command){
+        Vector<ReturnCommand> result = new Vector<>();
         if(checkLoggedIn(command.getClientName())){
             if (!followers.get(command.getClientName()).contains(command.getFollowName())) {
                 if (users.containsKey(command.getFollowName()) || !BlockedUser(command.getClientName(),command.getFollowName())) {
@@ -106,8 +116,8 @@ public class Twitter {
         return result;
     }
 
-    public Vector<Command> UnFollow(FollowCommand command){
-        Vector<Command> result = new Vector<>();
+    public Vector<ReturnCommand> UnFollow(FollowCommand command){
+        Vector<ReturnCommand> result = new Vector<>();
         if(checkLoggedIn(command.getClientName())) {
             if (followers.get(command.getClientName()).contains(command.getFollowName())) {
                 followers.get(command.getClientName()).remove(command.getFollowName());
@@ -126,8 +136,11 @@ public class Twitter {
         return result;
     }
 
-    public Vector<Command> Post(PostCommand cmd){
-        Vector<Command> result = new Vector<>();
+    public Vector<ReturnCommand> Post(PostCommand cmd){
+        //todo save post message
+        //todo only add the notification of the receiving user is logged in
+        //todo        add this     ackcmd.setDestUserID(user.getID());
+        Vector<ReturnCommand> result = new Vector<>();
         if(loggedIn.containsKey(cmd.getName())){
             User user = users.get(cmd.getName());
             user.setNumPostedPost((user.getNumPostedPost()+1));
@@ -164,15 +177,17 @@ public class Twitter {
         return result;
     }
 
-    public Vector<Command> PrivateMessage(PrivateMessageCommand command){
-        Vector<Command> result = new Vector<>();
+    public Vector<ReturnCommand> PrivateMessage(PrivateMessageCommand command){
+        //todo only add the notification of the receiving user is logged in
+        //todo        add this     ackcmd.setDestUserID(user.getID());
+        Vector<ReturnCommand> result = new Vector<>();
         if(checkLoggedIn(command.getSenderName())){
             if(users.containsKey(command.getReceiveName())){
                 if(followers.get(command.getSenderName()).contains(command.getReceiveName())
                         || !BlockedUser(command.getReceiveName(),command.getSenderName())){
                     String filteredContent=command.getContent();
                     filteredContent=FilterString(filteredContent);
-                    Message m = new Message(false,filteredContent);
+                    Message m = new Message(0,filteredContent, command.getSenderName());
                     if(privateMessages.containsKey(command.getSendingDate()))
                         privateMessages.get(command.getSendingDate()).add(m);
                     else{
@@ -198,8 +213,8 @@ public class Twitter {
         return result;
     }
 
-    public Vector<Command> LogStat(LogStatCommand cmd){
-        Vector<Command> result = new Vector<>();
+    public Vector<ReturnCommand> LogStat(LogStatCommand cmd){
+        Vector<ReturnCommand> result = new Vector<>();
         if(loggedIn.containsKey(cmd.getName())){//if not logged in, then definitely not registered
             for(User user : users.values()){
                 if(!blockedUsers.get(user.getName()).contains(cmd.getName())){
@@ -218,8 +233,8 @@ public class Twitter {
         return result;
     }
 
-    public Vector<Command> Stats(StatsCommand command){
-        Vector<Command> result = new Vector<>();
+    public Vector<ReturnCommand> Stats(StatsCommand command){
+        Vector<ReturnCommand> result = new Vector<>();
         if(checkLoggedIn(command.getSenderName())){
             for (String user:command.getUserNameList()) {
                 if(!users.containsKey(user) || BlockedUser(command.getSenderName(),user)) {
@@ -245,8 +260,8 @@ public class Twitter {
         return result;
     }
 
-    public Vector<Command> Block(BlockCommand command){
-        Vector<Command> result = new Vector<>();
+    public Vector<ReturnCommand> Block(BlockCommand command){
+        Vector<ReturnCommand> result = new Vector<>();
         if(users.containsKey(command.getBlockedName())){
             User user_1 = users.get(command.getClientName());
             User user_2 = users.get(command.getBlockedName());
@@ -296,5 +311,9 @@ public class Twitter {
             filteredString = filteredString.replace(str,"<filtered>");
         }
         return filteredString;
+    }
+
+    public User getUserByName(String name){
+        return users.get(name);
     }
 }
