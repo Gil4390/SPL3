@@ -12,6 +12,7 @@ EncoderDecoder::EncoderDecoder()
 
 string EncoderDecoder::decodeNextByte(byte nextByte)
 {
+    /*
     if ((char)nextByte != ';') {
         if (byteCounter <= 1) {
             opCode = opCode + (char)nextByte;
@@ -65,7 +66,7 @@ string EncoderDecoder::decodeNextByte(byte nextByte)
     }
 
     byteCounter++;
-    /*
+    
     if (nextByte == ';') {
         if (command instanceof FollowCommand) {
             decodeNextByte(("0").getBytes()[0], ((FollowCommand)command));
@@ -91,14 +92,7 @@ string EncoderDecoder::decodeNextByte(byte nextByte)
 }
 
 string EncoderDecoder::decodeLine(string line) {
-    int charCount = 0;
-    int zeroCounter = 0;
-    string opCode = "";
-    string msgOpCode = "";
-    string optional = "";
-
     string result = "";
-
     opCode = line.substr(0, 2);
     if (opCode == "09") { //Notification
         string msgType = "";
@@ -109,41 +103,19 @@ string EncoderDecoder::decodeLine(string line) {
         vector<string> lineSplit = split(line, 0);
         string postingUser = lineSplit[0];
         string content = lineSplit[1];
-
         result = "NOTIFICATION " + msgType + " " + postingUser + " " + content;
     }
     else if (opCode == "10") { //ACK
-        
+        string msgOpCode = line.substr(2, 3);
+        string optional = line.substr(4, line.size()-1);
+        result = "ACK " + msgOpCode + " " + optional;
     }
     else { //Error
-        msgOpCode = msgOpCode + (char)nextByte;
+        string msgOpCode = line.substr(2, 3);
+        result = "ACK " + msgOpCode;
     }
     
-    for (int i = 0; i < line.size(); i++) {
-        if (charCount <= 1) {
-            opCode = opCode + (char)nextByte;
-        }
-    }
-        if (byteCounter <= 1) {
-            opCode = opCode + (char)nextByte;
-        }
-        else {
-            
-
-        }
-        return nullptr;
-    }
-
-        if (opCode[0] == '0') {
-            opCode = opCode[1];
-        }
-        if (msgOpCode[0] == '0') {
-            msgOpCode = msgOpCode[1];
-        }
-        return opCode + " " + msgOpCode + " " + optional;
-
-    byteCounter++;
-    return string();
+    return result;
 }
 
 string EncoderDecoder::encode(string str)

@@ -1,0 +1,343 @@
+﻿  echoClient.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(34,25): error C3646: 'LookupContext': unknown override specifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(34,38): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(35,25): error C3646: 'ProposedHandle': unknown override specifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(35,39): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(36,23): error C2143: syntax error: missing ';' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(36,23): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(36,33): error C2238: unexpected token(s) preceding ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(45,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(44,1): error C2146: syntax error: missing ';' before identifier 'RPC_STATUS'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(52,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(50,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(51,1): error C2146: syntax error: missing ';' before identifier 'RPC_STATUS'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(60,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(58,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(62,1): error C2146: syntax error: missing ';' before identifier 'I_RpcNsRaiseException'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(63,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(63,8): error C2065: 'PRPC_MESSAGE': undeclared identifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(63,21): error C2146: syntax error: missing ')' before identifier 'Message'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(69,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(67,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(68,1): error C2146: syntax error: missing ';' before identifier 'RPC_STATUS'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(76,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(74,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(75,1): error C2146: syntax error: missing ';' before identifier 'RPC_STATUS'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(83,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(81,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(82,1): error C2146: syntax error: missing ';' before identifier 'RPC_STATUS'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(89,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(90,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(88,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(90,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(90,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(91,1): error C2146: syntax error: missing ';' before identifier 'I_NsClientBindDone'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(93,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238,20): error C2146: syntax error: missing ';' before identifier 'MIDL_user_allocate'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238,57): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(239,13): error C2182: '__RPC_USER': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(239,13): error C2040: '__RPC_USER': 'int' differs in levels of indirection from 'void *'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(239,24): error C2146: syntax error: missing ';' before identifier 'MIDL_user_free'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(239,80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(243,8): error C2086: 'void *__RPC_USER': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238): message : see declaration of '__RPC_USER'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(243,19): error C2146: syntax error: missing ';' before identifier 'I_RpcDefaultAllocate'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(244,19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(244,10): error C2065: 'handle_t': undeclared identifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(244,19): error C2146: syntax error: missing ')' before identifier 'bh'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(246,6): error C2182: '__RPC_USER': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(246,6): error C2040: '__RPC_USER': 'int' differs in levels of indirection from 'void *'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(246,17): error C2146: syntax error: missing ';' before identifier 'I_RpcDefaultFree'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(247,19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(247,10): error C2065: 'handle_t': undeclared identifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(247,19): error C2146: syntax error: missing ')' before identifier 'bh'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(285,27): error C2143: syntax error: missing ')' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(285,27): error C2143: syntax error: missing ';' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(285,27): error C2378: '__RPC_USER': redefinition; symbol cannot be overloaded with a typedef
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238): message : see declaration of '__RPC_USER'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(285,40): error C2059: syntax error: ')'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(285,58): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(287,27): error C2143: syntax error: missing ')' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(287,27): error C2143: syntax error: missing ';' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(287,27): error C2378: '__RPC_USER': redefinition; symbol cannot be overloaded with a typedef
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238): message : see declaration of '__RPC_USER'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(287,47): error C2059: syntax error: ')'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(287,54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(289,27): error C2143: syntax error: missing ')' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(289,27): error C2143: syntax error: missing ';' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(289,27): error C2378: '__RPC_USER': redefinition; symbol cannot be overloaded with a typedef
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238): message : see declaration of '__RPC_USER'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(289,48): error C2059: syntax error: ')'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(289,63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(298,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(297,1): error C2146: syntax error: missing ';' before identifier 'RPC_BINDING_HANDLE'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(304,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(305,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(303,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(305,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(305,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(306,1): error C2146: syntax error: missing ';' before identifier 'NDRCContextMarshall'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(309,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(312,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(313,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(311,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(313,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(313,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(314,1): error C2146: syntax error: missing ';' before identifier 'NDRCContextUnmarshall'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(316,11): error C2061: syntax error: identifier 'RPC_BINDING_HANDLE'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(319,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(322,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(323,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(321,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(323,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(323,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(324,1): error C2146: syntax error: missing ';' before identifier 'NDRCContextUnmarshall2'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(326,11): error C2061: syntax error: identifier 'RPC_BINDING_HANDLE'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(329,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(332,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(333,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(331,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(333,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(333,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(334,1): error C2146: syntax error: missing ';' before identifier 'NDRSContextMarshall'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(337,11): error C2061: syntax error: identifier 'NDR_RUNDOWN'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(338,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(342,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(340,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(341,1): error C2146: syntax error: missing ';' before identifier 'NDR_SCONTEXT'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(349,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(350,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(348,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(350,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(350,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(351,1): error C2146: syntax error: missing ';' before identifier 'NDRSContextMarshallEx'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(352,31): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(352,11): error C2065: 'RPC_BINDING_HANDLE': undeclared identifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(352,31): error C2146: syntax error: missing ')' before identifier 'BindingHandle'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(359,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(360,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(358,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(360,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(360,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(361,1): error C2146: syntax error: missing ';' before identifier 'NDRSContextMarshall2'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(362,31): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(362,11): error C2065: 'RPC_BINDING_HANDLE': undeclared identifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(362,31): error C2146: syntax error: missing ')' before identifier 'BindingHandle'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(372,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(370,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(371,1): error C2146: syntax error: missing ';' before identifier 'NDR_SCONTEXT'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(381,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(379,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(380,1): error C2146: syntax error: missing ';' before identifier 'NDR_SCONTEXT'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(391,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(392,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(390,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(392,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(392,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(393,1): error C2146: syntax error: missing ';' before identifier 'RpcSsDestroyClientContext'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(395,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(557,27): error C2143: syntax error: missing ')' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(557,27): error C2143: syntax error: missing ';' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(557,27): error C2378: '__RPC_USER': redefinition; symbol cannot be overloaded with a typedef
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238): message : see declaration of '__RPC_USER'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(557,27): fatal error C1003: error count exceeds 100; stopping compilation
+  EncoderDecoder.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(34,25): error C3646: 'LookupContext': unknown override specifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(34,38): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(35,25): error C3646: 'ProposedHandle': unknown override specifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(35,39): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(36,23): error C2143: syntax error: missing ';' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(36,23): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(36,33): error C2238: unexpected token(s) preceding ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(45,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(44,1): error C2146: syntax error: missing ';' before identifier 'RPC_STATUS'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(52,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(50,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(51,1): error C2146: syntax error: missing ';' before identifier 'RPC_STATUS'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(60,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(58,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(62,1): error C2146: syntax error: missing ';' before identifier 'I_RpcNsRaiseException'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(63,8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(63,5): error C2065: 'IN': undeclared identifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(63,8): error C2146: syntax error: missing ')' before identifier 'PRPC_MESSAGE'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(69,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(67,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(68,1): error C2146: syntax error: missing ';' before identifier 'RPC_STATUS'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(76,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(74,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(75,1): error C2146: syntax error: missing ';' before identifier 'RPC_STATUS'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(83,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(81,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(82,1): error C2146: syntax error: missing ';' before identifier 'RPC_STATUS'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(89,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(90,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(88,1): error C2086: 'int RPCNSAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(43): message : see declaration of 'RPCNSAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(90,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(90,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(91,1): error C2146: syntax error: missing ';' before identifier 'I_NsClientBindDone'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(93,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238,20): error C2146: syntax error: missing ';' before identifier 'MIDL_user_allocate'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238,57): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(239,13): error C2182: '__RPC_USER': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(239,13): error C2040: '__RPC_USER': 'int' differs in levels of indirection from 'void *'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(239,24): error C2146: syntax error: missing ';' before identifier 'MIDL_user_free'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(239,80): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(243,8): error C2086: 'void *__RPC_USER': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238): message : see declaration of '__RPC_USER'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(243,19): error C2146: syntax error: missing ';' before identifier 'I_RpcDefaultAllocate'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(244,19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(244,10): error C2065: 'handle_t': undeclared identifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(244,19): error C2146: syntax error: missing ')' before identifier 'bh'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(246,6): error C2182: '__RPC_USER': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(246,6): error C2040: '__RPC_USER': 'int' differs in levels of indirection from 'void *'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(246,17): error C2146: syntax error: missing ';' before identifier 'I_RpcDefaultFree'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(247,19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(247,10): error C2065: 'handle_t': undeclared identifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(247,19): error C2146: syntax error: missing ')' before identifier 'bh'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(285,27): error C2143: syntax error: missing ')' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(285,27): error C2143: syntax error: missing ';' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(285,27): error C2378: '__RPC_USER': redefinition; symbol cannot be overloaded with a typedef
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238): message : see declaration of '__RPC_USER'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(285,40): error C2059: syntax error: ')'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(285,58): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(287,27): error C2143: syntax error: missing ')' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(287,27): error C2143: syntax error: missing ';' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(287,27): error C2378: '__RPC_USER': redefinition; symbol cannot be overloaded with a typedef
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238): message : see declaration of '__RPC_USER'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(287,47): error C2059: syntax error: ')'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(287,54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(289,27): error C2143: syntax error: missing ')' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(289,27): error C2143: syntax error: missing ';' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(289,27): error C2378: '__RPC_USER': redefinition; symbol cannot be overloaded with a typedef
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238): message : see declaration of '__RPC_USER'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(289,48): error C2059: syntax error: ')'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(289,63): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(298,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(297,1): error C2146: syntax error: missing ';' before identifier 'RPC_BINDING_HANDLE'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(304,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(305,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(303,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(305,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(305,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(306,1): error C2146: syntax error: missing ';' before identifier 'NDRCContextMarshall'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(309,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(312,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(313,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(311,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(313,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(313,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(314,1): error C2146: syntax error: missing ';' before identifier 'NDRCContextUnmarshall'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(316,11): error C2061: syntax error: identifier 'RPC_BINDING_HANDLE'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(319,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(322,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(323,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(321,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(323,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(323,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(324,1): error C2146: syntax error: missing ';' before identifier 'NDRCContextUnmarshall2'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(326,11): error C2061: syntax error: identifier 'RPC_BINDING_HANDLE'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(329,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(332,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(333,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(331,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(333,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(333,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(334,1): error C2146: syntax error: missing ';' before identifier 'NDRSContextMarshall'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(337,11): error C2061: syntax error: identifier 'NDR_RUNDOWN'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(338,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(342,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(340,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(341,1): error C2146: syntax error: missing ';' before identifier 'NDR_SCONTEXT'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(349,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(350,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(348,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(350,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(350,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(351,1): error C2146: syntax error: missing ';' before identifier 'NDRSContextMarshallEx'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(352,31): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(352,11): error C2065: 'RPC_BINDING_HANDLE': undeclared identifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(352,31): error C2146: syntax error: missing ')' before identifier 'BindingHandle'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(359,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(360,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(358,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(360,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(360,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(361,1): error C2146: syntax error: missing ';' before identifier 'NDRSContextMarshall2'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(362,31): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(362,11): error C2065: 'RPC_BINDING_HANDLE': undeclared identifier
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(362,31): error C2146: syntax error: missing ')' before identifier 'BindingHandle'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(372,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(370,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(371,1): error C2146: syntax error: missing ';' before identifier 'NDR_SCONTEXT'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(381,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(379,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(380,1): error C2146: syntax error: missing ';' before identifier 'NDR_SCONTEXT'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(391,1): error C2144: syntax error: 'void' should be preceded by ';'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(392,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(390,1): error C2086: 'int RPCRTAPI': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(296): message : see declaration of 'RPCRTAPI'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(392,1): error C2182: 'RPC_ENTRY': illegal use of type 'void'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(392,1): error C2086: 'int RPC_ENTRY': redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\rpcnsip.h(61): message : see declaration of 'RPC_ENTRY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(393,1): error C2146: syntax error: missing ';' before identifier 'RpcSsDestroyClientContext'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(395,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(557,27): error C2143: syntax error: missing ')' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(557,27): error C2143: syntax error: missing ';' before '*'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(557,27): error C2378: '__RPC_USER': redefinition; symbol cannot be overloaded with a typedef
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(238): message : see declaration of '__RPC_USER'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\rpcndr.h(557,27): fatal error C1003: error count exceeds 100; stopping compilation
+  Generating Code...
