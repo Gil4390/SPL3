@@ -10,6 +10,7 @@ class EncoderDecoder
 public:
 	EncoderDecoder();
 	string decodeNextByte(byte nextByte);
+	string decodeLine(string line);
 	string encode(string str);
 private:
 	void shortToBytes(short num, char* bytesArr);

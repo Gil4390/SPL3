@@ -89,6 +89,63 @@ string EncoderDecoder::decodeNextByte(byte nextByte)
     */
 	return string();
 }
+
+string EncoderDecoder::decodeLine(string line) {
+    int charCount = 0;
+    int zeroCounter = 0;
+    string opCode = "";
+    string msgOpCode = "";
+    string optional = "";
+
+    string result = "";
+
+    opCode = line.substr(0, 2);
+    if (opCode == "09") { //Notification
+        string msgType = "";
+        if (line[3] == '0') msgType = "PM";
+        else msgType = "Public";
+
+        line = line.substr(3);
+        vector<string> lineSplit = split(line, 0);
+        string postingUser = lineSplit[0];
+        string content = lineSplit[1];
+
+        result = "NOTIFICATION " + msgType + " " + postingUser + " " + content;
+    }
+    else if (opCode == "10") { //ACK
+        
+    }
+    else { //Error
+        msgOpCode = msgOpCode + (char)nextByte;
+    }
+    
+    for (int i = 0; i < line.size(); i++) {
+        if (charCount <= 1) {
+            opCode = opCode + (char)nextByte;
+        }
+    }
+        if (byteCounter <= 1) {
+            opCode = opCode + (char)nextByte;
+        }
+        else {
+            
+
+        }
+        return nullptr;
+    }
+
+        if (opCode[0] == '0') {
+            opCode = opCode[1];
+        }
+        if (msgOpCode[0] == '0') {
+            msgOpCode = msgOpCode[1];
+        }
+        return opCode + " " + msgOpCode + " " + optional;
+
+    byteCounter++;
+    return string();
+}
+
 string EncoderDecoder::encode(string str)
 {
 	vector<string> vecOfInput = split(str, " ");

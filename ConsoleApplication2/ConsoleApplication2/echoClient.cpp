@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
                     std::cout << "Disconnected. Exiting...\n" << std::endl;
                     break;
                 }
-                //string decodedLine = encdec
+                string decodedLine = encdec.decodeLine(answer);
                 //========================================================continue here
                 len = answer.length();
                 answer.resize(len - 1);

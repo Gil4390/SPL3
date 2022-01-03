@@ -15,6 +15,7 @@ void InputReader::run()
         std::string line(buf);
         int len = line.length();
         
+        
         _mutex.lock();
         _sendQueue.emplace_back(line);
         _mutex.unlock(); 
