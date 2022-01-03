@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::vector<string>* sendList = nullptr;
+    std::vector<string>* sendList = new vector<string>;
     std::mutex mutex;
     InputReader inputReader(sendList, mutex);
     std::thread th1(&InputReader::run, &inputReader);

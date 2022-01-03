@@ -9,7 +9,7 @@ private:
 	bool _terminate;
 public:
 	InputReader(std::vector<std::string>* sendQueue, std::mutex& mutex);
-	std::vector<std::string> _sendQueue;
+	std::vector<std::string>* _sendQueue;
 	void run();
 	void Terminate();
 };
