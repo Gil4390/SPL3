@@ -1,6 +1,4 @@
 #include <string>
-
-#include <rpcndr.h>
 #include <vector>
 
 using namespace std;
@@ -9,7 +7,6 @@ class EncoderDecoder
 {
 public:
 	EncoderDecoder();
-	string decodeNextByte(byte nextByte);
 	string decodeLine(string line);
 	string encode(string str);
 private:

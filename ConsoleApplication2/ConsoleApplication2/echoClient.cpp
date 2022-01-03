@@ -3,8 +3,6 @@
 #include "InputReader.h"
 #include "EncoderDecoder.h"
 using namespace std;
-typedef unsigned char byte;
-
 
 /**
 * This code assumes that the server replies the exact text the client sent it (as opposed to the practical session example)
@@ -30,7 +28,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::vector<string>* sendList;
+    std::vector<string>* sendList = nullptr;
     std::mutex mutex;
     InputReader inputReader(sendList, mutex);
     std::thread th1(&InputReader::run, &inputReader);
