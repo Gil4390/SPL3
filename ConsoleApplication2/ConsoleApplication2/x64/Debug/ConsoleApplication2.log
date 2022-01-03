@@ -6,6 +6,4 @@
 C:\Users\gil43\Desktop\SPL3\ConsoleApplication2\ConsoleApplication2\echoClient.cpp(51,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\gil43\Desktop\SPL3\ConsoleApplication2\ConsoleApplication2\echoClient.cpp(68,38): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\gil43\Desktop\SPL3\ConsoleApplication2\ConsoleApplication2\echoClient.cpp(87,38): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  EncoderDecoder.cpp
-  Generating Code...
   ConsoleApplication2.vcxproj -> C:\Users\gil43\Desktop\SPL3\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe
