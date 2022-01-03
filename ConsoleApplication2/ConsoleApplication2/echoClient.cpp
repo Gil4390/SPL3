@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
     InputReader inputReader(sendList, mutex);
     std::thread th1(&InputReader::run, &inputReader);
     EncoderDecoder encdec;
-    std::string answer;
+    std::string answer="";
     bool bye = false;
 
     while (1) {
@@ -48,12 +48,11 @@ int main(int argc, char* argv[]) {
         mutex.unlock();
 
         if (line != "") {
-            int len = line.size();
-            string encodedLine = encdec.encode(line);
+            char encodedLine[1024];
+            int len = encdec.encode(line, encodedLine);
 
-            if (!connectionHandler.sendLine(encodedLine)) {
+            if (!connectionHandler.sendBytes(encodedLine, len)) {
                 std::cout << "Disconnected. Exiting...\n" << std::endl;
-                inputReader.Terminate();
                 bye = true;
                 break;
             }
@@ -64,6 +63,7 @@ int main(int argc, char* argv[]) {
                     bye = true;
                     break;
                 }
+
                 string decodedLine = encdec.decodeLine(answer);
                 len = answer.length();
                 std::cout << "Reply: " << answer << " " << len << " bytes " << std::endl << std::endl;
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
             }
         }
     }
-
+    inputReader.Terminate();
     while (!bye)
     {
         if(encdec.decodeLine(answer) == "ACK 3"){

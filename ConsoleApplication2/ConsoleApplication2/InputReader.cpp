@@ -8,7 +8,7 @@ InputReader::InputReader(std::vector<std::string>* sendQueue, std::mutex& mutex)
 
 void InputReader::run()
 {
-    while (_terminate) {
+    while (!_terminate) {
         const short bufsize = 1024;
         char buf[bufsize];
         std::cin.getline(buf, bufsize);

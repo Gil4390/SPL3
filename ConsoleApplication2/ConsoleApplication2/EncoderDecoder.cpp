@@ -37,30 +37,73 @@ string EncoderDecoder::decodeLine(string line) {
     return result;
 }
 
-string EncoderDecoder::encode(string str)
+int EncoderDecoder::encode(string str, char* chararray)
 {
 	vector<string> vecOfInput = split(str, " ");
-    char zero = '\0';
-    string opcode;
-    string result = "";
+    short opcode;
+    //vector<char> result;
+    int len = 0;
 
     if (vecOfInput[0] == "REGISTER") {
-        opcode = "01";
+        opcode = 1;
         string username = vecOfInput[1];
         string password = vecOfInput[2];
         string birthday = vecOfInput[3];
+        char const* usernamearr = username.c_str();
+        char const* passwordarr = password.c_str();
+        char const* birthdayarr = birthday.c_str();
+        char opchar[2];
+        shortToBytes(opcode, opchar);
+        len = 2;
 
-        result = opcode + username + zero + password + zero + birthday + zero;
-    }
+        int size = (*(&usernamearr + 1) - usernamearr);
+
+        cout << size << endl;
+        cout << (sizeof(usernamearr[4])) << endl;
+        cout << sizeof(birthdayarr) << endl;
+
+
+        chararray[0] = opchar[0];
+        chararray[1] = opchar[1];
+        for (int i = 0; i < (sizeof(*usernamearr)/(2)); i++) {
+            chararray[len] = usernamearr[i];
+            len++;
+        }
+        chararray[len] = '\0';
+        len++;
+        for (int i = 0; i < (sizeof(*passwordarr) / (2)); i++) {
+            chararray[len] = passwordarr[i];
+            len++;
+        }
+        chararray[len] = '\0';
+        len++;
+        for (int i = 0; i < (sizeof(*birthdayarr) / (2)); i++) {
+            chararray[len] = birthdayarr[i];
+            len++;
+        }
+        return len;
+    }/*
     else if (vecOfInput[0] == "LOGIN") {
-        opcode = "02";
-
+        opcode = 2;
         string username = vecOfInput[1];
         string password = vecOfInput[2];
         char captcha = '\1';
 
-        result = opcode + username + zero + password + zero + captcha;
+        char opchar[2];
+        shortToBytes(opcode, opchar);
+        //result.push_back(opchar[0]);
+        //result.push_back(opchar[1]);
+        for (char c : username) {
+            result.push_back(c);
+        }
+        result.push_back('\0');
+        for (char c : password) {
+            result.push_back(c);
+        }
+        result.push_back('\0');
+        result.push_back('\1');
     }
+    
     else if (vecOfInput[0] == "LOGOUT") {
         opcode = "03";
 
@@ -114,10 +157,11 @@ string EncoderDecoder::encode(string str)
     else {
         cout << "illegal command";
     }
+    */
 
-    result = result + ";";
+    //result.push_back(';');
 
-	return result;
+	return -1;
 }
 
 void EncoderDecoder::shortToBytes(short num, char* bytesArr)

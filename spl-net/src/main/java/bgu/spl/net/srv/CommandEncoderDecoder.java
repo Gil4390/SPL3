@@ -17,6 +17,10 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     private int fieldCounter=1;
     private String clientUserName;
 
+    public CommandEncoderDecoder() {
+        fieldBytes = new Vector<>();
+    }
+
 
     @Override
     public ReceivedCommand decodeNextByte(byte nextByte) {
@@ -27,13 +31,16 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             return returnCommand();
         }
         else if(command==null){
-            if(opCodeCount<2) {
+            if(opCodeCount==0) {
                 opCode[opCodeCount]=nextByte;
                 opCodeCount++;
             }
-            else{
-                ByteBuffer bb = ByteBuffer.wrap(opCode).order(ByteOrder.BIG_ENDIAN);
-                command=CommandFactory.makeReceivedCommand(bb.getInt());
+            else if(opCodeCount == 1){
+                opCode[opCodeCount]=nextByte;
+                opCodeCount++;
+                ByteBuffer bb = ByteBuffer.wrap(opCode);
+                int num = bb.getShort();
+                command=CommandFactory.makeReceivedCommand(num);
             }
         }
         else{
@@ -281,6 +288,13 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         bytesArr[0] = (byte)((num >> 8) & 0xFF);
         bytesArr[1] = (byte)(num & 0xFF);
         return bytesArr;
+    }
+
+    public short bytesToShort(byte[] byteArr)
+    {
+        short result = (short)((byteArr[0] & 0xff) << 8);
+        result += (short)(byteArr[1] & 0xff);
+        return result;
     }
 
     private ReceivedCommand returnCommand(){

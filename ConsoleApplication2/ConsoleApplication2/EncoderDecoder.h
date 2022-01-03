@@ -8,7 +8,7 @@ class EncoderDecoder
 public:
 	EncoderDecoder();
 	string decodeLine(string line);
-	string encode(string str);
+	int encode(string str, char* chararray);
 private:
 	void shortToBytes(short num, char* bytesArr);
 	short bytesToShort(char* bytesArr);
