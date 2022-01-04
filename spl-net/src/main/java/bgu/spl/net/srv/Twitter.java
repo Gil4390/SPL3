@@ -149,9 +149,6 @@ public class Twitter {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         cmd.setSendingDate(formatter.format(date));
 
-        //todo save post message
-        //todo only add the notification of the receiving user is logged in
-        //todo sync users.get(senderName) with logIn and PM
         Vector<ReturnCommand> result = new Vector<>();
         if(loggedIn.containsKey(cmd.getName())){
             String filteredContent=cmd.getContent();
@@ -184,7 +181,15 @@ public class Twitter {
                     notificationCommand.setPostingUserName(cmd.getName());
                     notificationCommand.setContent(cmd.getContent());
                     notificationCommand.setDestUserID(users.get(sUser).getID());
-                    result.add(notificationCommand);
+                    synchronized (users.get(cmd.getName())) {
+                        if (!checkLoggedIn(sUser)) {
+                            users.get(sUser).addUnreadMsg(m);
+                        }
+                        else{
+                            result.add(notificationCommand);
+                        }
+                    }
+                    return result;
                 }
                 else{//if the user mentioned someone that blocked them
                     user.setNumPostedPost((user.getNumPostedPost()-1));
@@ -234,13 +239,12 @@ public class Twitter {
                     notCommand.setDestUserID(users.get(command.getReceiveName()).getID());
                     synchronized (users.get(command.getSenderName())) {
                         if (!checkLoggedIn(command.getReceiveName())) {
-                            Message mes = new Message(0, command.getContent(), command.getSenderName(), command.getSendingDate());
-                            users.get(command.getReceiveName()).addUnreadMsg(mes);
-                            notCommand.setDestUserID(users.get(command.getReceiveName()).getID());
+                            users.get(command.getReceiveName()).addUnreadMsg(m);
+                        }
+                        else{
+                            result.add(notCommand);
                         }
                     }
-
-                    result.add(notCommand);
                     return result;
                 }
             }
