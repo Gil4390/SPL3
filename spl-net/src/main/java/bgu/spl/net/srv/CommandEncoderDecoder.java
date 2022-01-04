@@ -57,13 +57,13 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
             if (fieldCounter == 1) {
-                clientUserName=bb.toString();
-                command.setName(bb.toString());
+                clientUserName=StandardCharsets.UTF_8.decode(bb).toString();
+                command.setName(clientUserName);
             }
             else if (fieldCounter == 2)
-                command.setPassword(bb.toString());
+                command.setPassword(StandardCharsets.UTF_8.decode(bb).toString());
             else
-                command.setBirthday(bb.toString());
+                command.setBirthday(StandardCharsets.UTF_8.decode(bb).toString());
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
@@ -81,11 +81,11 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 }
                 ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
                 if (fieldCounter == 1) {
-                    clientUserName=bb.toString();
-                    command.setName(bb.toString());
+                    clientUserName=StandardCharsets.UTF_8.decode(bb).toString();
+                    command.setName(clientUserName);
                 }
                 else if (fieldCounter == 2)
-                    command.setPassword(bb.toString());
+                    command.setPassword(StandardCharsets.UTF_8.decode(bb).toString());
                 fieldCounter++;
                 fieldBytes = new Vector<>();
             }
@@ -103,7 +103,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-            command.setName(bb.toString());
+            command.setName(StandardCharsets.UTF_8.decode(bb).toString());
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
@@ -124,7 +124,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                     temp[i] = fieldBytes.elementAt(i);
                 }
                 ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-                command.setFollowName(bb.toString());
+                command.setFollowName(StandardCharsets.UTF_8.decode(bb).toString());
                 command.setClientName(clientUserName);
             }
             else
@@ -139,7 +139,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-            command.setName(bb.toString());
+            command.setName(StandardCharsets.UTF_8.decode(bb).toString());
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
@@ -155,9 +155,9 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
             if (fieldCounter == 1)
-                command.setContent(bb.toString());
+                command.setContent(StandardCharsets.UTF_8.decode(bb).toString());
             else
-                command.setName(bb.toString());
+                command.setName(StandardCharsets.UTF_8.decode(bb).toString());
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
@@ -174,13 +174,13 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
             if (fieldCounter == 1) {
-                clientUserName=bb.toString();
-                command.setSenderName(bb.toString());
+                clientUserName=StandardCharsets.UTF_8.decode(bb).toString();
+                command.setSenderName(clientUserName);
             }
             else if (fieldCounter == 2)
-                command.setReceiveName(bb.toString());
+                command.setReceiveName(StandardCharsets.UTF_8.decode(bb).toString());
             else
-                command.setSendingDate(bb.toString());
+                command.setSendingDate(StandardCharsets.UTF_8.decode(bb).toString());
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
@@ -196,7 +196,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-            String userNamesString=bb.toString();
+            String userNamesString=StandardCharsets.UTF_8.decode(bb).toString();
 
             List<String> userNames = new LinkedList<>();
             String str = "";
@@ -224,7 +224,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-            command.setBlockedName(bb.toString());
+            command.setBlockedName(StandardCharsets.UTF_8.decode(bb).toString());
             command.setClientName(clientUserName);
         }
         else{
@@ -238,8 +238,19 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     }
 
     public byte[] encode(AckCommand command){
-        byte [] opCode = shortToBytes((short)command.getOpCode());
-        byte [] msgOpCode = shortToBytes((short)command.getMsgOpCode());
+        byte [] opCode = new byte[2];
+        opCode[0] = '1';
+        opCode[1] = '0';
+        byte [] msgOpCode = new byte[2];
+        if(command.getMsgOpCode() != 12){
+            msgOpCode[0] = '0';
+            String s = String.valueOf(command.getMsgOpCode());
+            msgOpCode[1] = (byte)s.charAt(0);
+        }
+        else{
+            msgOpCode[0] = '1';
+            msgOpCode[1] = '2';
+        }
         byte [] optional = (command.getOptionalData()+";").getBytes(StandardCharsets.UTF_8);
 
         byte [] result = addArray(opCode,msgOpCode);
@@ -248,8 +259,17 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     }
 
     public byte[] encode(ErrorCommand command){
-        byte [] opCode = shortToBytes((short)command.getOpCode());
-        byte [] msgOpCode = shortToBytes((short)command.getMsgOpCode());
+        byte [] opCode = new byte[2];
+        opCode[0] = '1';
+        opCode[1] = '1';
+        byte [] msgOpCode = new byte[2];
+        if(command.getMsgOpCode() != 12){
+            msgOpCode = shortToBytes((short)command.getMsgOpCode());
+        }
+        else{
+            msgOpCode[0] = '1';
+            msgOpCode[1] = '2';
+        }
         byte [] end = ";".getBytes(StandardCharsets.UTF_8);
 
         byte [] result = addArray(opCode,msgOpCode);
@@ -278,7 +298,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             if(i<first.length)
                 result[i] =first[i];
             else
-                result[i]=second[i];
+                result[i]=second[i-first.length];
         }
         return result;
     }

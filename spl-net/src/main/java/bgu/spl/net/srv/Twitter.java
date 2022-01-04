@@ -19,10 +19,12 @@ public class Twitter {
 
     public Twitter() {
         UserID = 0;
-        this.followers = new ConcurrentHashMap<>();
-        this.users = new ConcurrentHashMap<>();
+        followers = new ConcurrentHashMap<>();
+        users = new ConcurrentHashMap<>();
         privateMessages=new ConcurrentHashMap<>();
         blockedUsers= new ConcurrentHashMap<>();
+        loggedIn = new ConcurrentHashMap<>();
+        filteredWords = new Vector<>();
     }
 
     public Vector<ReturnCommand> Register(RegisterCommand cmd){
@@ -41,7 +43,6 @@ public class Twitter {
 
             AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
             ackcmd.setMsgOpCode(1);
-            ackcmd.setOptionalData("Register Successful");
             result.add(ackcmd);
         }
         return result;
@@ -85,7 +86,6 @@ public class Twitter {
             loggedIn.put(cmd.getName(),false);
             AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
             ackcmd.setMsgOpCode(3);
-            ackcmd.setOptionalData("Logout Successful");
             result.add(ackcmd);
         }
         else{

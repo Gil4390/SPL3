@@ -65,8 +65,8 @@ int main(int argc, char* argv[]) {
                 }
 
                 string decodedLine = encdec.decodeLine(answer);
-                len = answer.length();
-                std::cout << "Reply: " << answer << " " << len << " bytes " << std::endl << std::endl;
+                len = decodedLine.length();
+                std::cout << "Reply: " << decodedLine << " " << len << " bytes " << std::endl << std::endl;
             }
 
 

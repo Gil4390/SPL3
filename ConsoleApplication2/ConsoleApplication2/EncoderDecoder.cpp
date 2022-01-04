@@ -31,7 +31,7 @@ string EncoderDecoder::decodeLine(string line) {
     }
     else { //Error
         string msgOpCode = line.substr(2, 3);
-        result = "ACK " + msgOpCode;
+        result = "Error " + msgOpCode;
     }
     
     return result;
@@ -75,6 +75,9 @@ int EncoderDecoder::encode(string str, char* chararray)
             chararray[len] = birthdayarr[i];
             len++;
         }
+        chararray[len] = '\0';
+        len++;
+
     }
 
     else if (vecOfInput[0] == "LOGIN") {
