@@ -45,10 +45,9 @@ int EncoderDecoder::encode(string str, char* chararray)
     short opcode;
     int len = 0;
 
-    if (vecOfInput[0] == "REGISTER" || vecOfInput[0] == "PM") {
+    if (vecOfInput[0] == "REGISTER") {
         opcode = 1;
-        if(vecOfInput[0] == "PM")
-            opcode = 6;
+
         string username = vecOfInput[1];
         string password = vecOfInput[2];
         string birthday = vecOfInput[3];
@@ -79,8 +78,43 @@ int EncoderDecoder::encode(string str, char* chararray)
         }
         chararray[len] = '\0';
         len++;
-
     }
+
+    else if (vecOfInput[0] == "PM") {
+        opcode = 6;
+
+        string username = vecOfInput[1];
+
+        string content = "";
+        for (int i = 2; i < vecOfInput.size();i++) {
+            content += vecOfInput[i];
+        }
+
+        char const* usernamearr = username.c_str();
+        char const* contentarr = content.c_str();
+
+        char opchar[2];
+        shortToBytes(opcode, opchar);
+        len = 2;
+
+        chararray[0] = opchar[0];
+        chararray[1] = opchar[1];
+        for (int i = 0; i < username.size(); i++) {
+            chararray[len] = usernamearr[i];
+            len++;
+        }
+        chararray[len] = '\0';
+        len++;
+        for (int i = 0; i < content.size(); i++) {
+            chararray[len] = contentarr[i];
+            len++;
+        }
+        chararray[len] = '\0';
+        // need to send date
+        chararray[len] = '\0';
+        len++;
+    }
+
     else if (vecOfInput[0] == "LOGIN") {
         opcode = 2;
         string username = vecOfInput[1];
@@ -147,13 +181,41 @@ int EncoderDecoder::encode(string str, char* chararray)
         chararray[len] = '\0';
         len++;
     }
-    else if (vecOfInput[0] == "POST" || vecOfInput[0] == "STAT" || vecOfInput[0] == "BLOCK") {
-        opcode = 8;
-        if(vecOfInput[0] == "POST")
-            opcode = 5;
-        else if(vecOfInput[0] == "BLOCK")
-            opcode = 12;
-        string content = vecOfInput[1];
+
+    else if (vecOfInput[0] == "POST") {
+    opcode = 5;
+
+    string content = "";
+    for (int i = 1; i < vecOfInput.size();i++) {
+        content += vecOfInput[i];
+    }
+
+    char opchar[2];
+    shortToBytes(opcode, opchar);
+    len = 2;
+    chararray[0] = opchar[0];
+    chararray[1] = opchar[1];
+
+    char const* contentarr = content.c_str();
+    for (int i = 0; i < content.size(); i++) {
+        chararray[len] = contentarr[i];
+        len++;
+    }
+    chararray[len] = '\0';
+    len++;
+    }
+
+    if (len != 0) {
+        string end = ";";
+        chararray[len] = end.c_str()[0];
+        len++;
+    }
+    
+    else if (vecOfInput[0] == "STAT" || vecOfInput[0] == "BLOCK") {
+    opcode = 8;
+    if(vecOfInput[0] == "BLOCK")
+        opcode = 12;
+    string content = vecOfInput[1];
 
         char opchar[2];
         shortToBytes(opcode, opchar);
