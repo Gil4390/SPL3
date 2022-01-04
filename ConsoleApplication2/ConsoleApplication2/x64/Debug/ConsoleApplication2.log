@@ -1,3 +1,1 @@
-﻿  EncoderDecoder.cpp
-D:\Gil Khais\Documents\SPL3\ConsoleApplication2\ConsoleApplication2\EncoderDecoder.cpp(59,18): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-D:\Gil Khais\Documents\SPL3\ConsoleApplication2\ConsoleApplication2\EncoderDecoder.cpp(59): error C4700: uninitialized local variable 'usernamearr' used
+﻿  ConsoleApplication2.vcxproj -> D:\Amit Ganon\Software Engineering\semester C\System programming - SPL\HW3\spl3 gitWithGil\SPL3\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe

@@ -41,11 +41,12 @@ int EncoderDecoder::encode(string str, char* chararray)
 {
 	vector<string> vecOfInput = split(str, " ");
     short opcode;
-    //vector<char> result;
     int len = 0;
 
-    if (vecOfInput[0] == "REGISTER") {
+    if (vecOfInput[0] == "REGISTER" || vecOfInput[0] == "PM") {
         opcode = 1;
+        if(vecOfInput[0] == "PM")
+            opcode = 6;
         string username = vecOfInput[1];
         string password = vecOfInput[2];
         string birthday = vecOfInput[3];
@@ -56,112 +57,124 @@ int EncoderDecoder::encode(string str, char* chararray)
         shortToBytes(opcode, opchar);
         len = 2;
 
-        int size = (*(&usernamearr + 1) - usernamearr);
-
-        cout << size << endl;
-        cout << (sizeof(usernamearr[4])) << endl;
-        cout << sizeof(birthdayarr) << endl;
-
-
         chararray[0] = opchar[0];
         chararray[1] = opchar[1];
-        for (int i = 0; i < (sizeof(*usernamearr)/(2)); i++) {
+        for (int i = 0; i < username.size(); i++) {
             chararray[len] = usernamearr[i];
             len++;
         }
         chararray[len] = '\0';
         len++;
-        for (int i = 0; i < (sizeof(*passwordarr) / (2)); i++) {
+        for (int i = 0; i < password.size(); i++) {
             chararray[len] = passwordarr[i];
             len++;
         }
         chararray[len] = '\0';
         len++;
-        for (int i = 0; i < (sizeof(*birthdayarr) / (2)); i++) {
+        for (int i = 0; i < birthday.size(); i++) {
             chararray[len] = birthdayarr[i];
             len++;
         }
-        return len;
-    }/*
+    }
+
     else if (vecOfInput[0] == "LOGIN") {
         opcode = 2;
         string username = vecOfInput[1];
         string password = vecOfInput[2];
-        char captcha = '\1';
+
+        char const* usernamearr = username.c_str();
+        char const* passwordarr = password.c_str();
 
         char opchar[2];
         shortToBytes(opcode, opchar);
-        //result.push_back(opchar[0]);
-        //result.push_back(opchar[1]);
-        for (char c : username) {
-            result.push_back(c);
+        len = 2;
+
+        chararray[0] = opchar[0];
+        chararray[1] = opchar[1];
+        for (int i = 0; i < username.size(); i++) {
+            chararray[len] = usernamearr[i];
+            len++;
         }
-        result.push_back('\0');
-        for (char c : password) {
-            result.push_back(c);
+        chararray[len] = '\0';
+        len++;
+        for (int i = 0; i < password.size(); i++) {
+            chararray[len] = passwordarr[i];
+            len++;
         }
-        result.push_back('\0');
-        result.push_back('\1');
+        chararray[len] = '\0';
+        len++;
+        chararray[len] = '\1'; //TODO: captcha        
     }
     
-    else if (vecOfInput[0] == "LOGOUT") {
-        opcode = "03";
-
-        result = opcode;
+    else if (vecOfInput[0] == "LOGOUT" || vecOfInput[0] == "LOGSTAT") {
+        opcode = 3;
+        if(vecOfInput[0] == "LOGSTAT")
+            opcode = 7;
+        char opchar[2];
+        shortToBytes(opcode, opchar);
+        len = 2;
+        chararray[0] = opchar[0];
+        chararray[1] = opchar[1];
     }
+
+    
     else if (vecOfInput[0] == "FOLLOW") {
-        opcode = "04";
-        char follow = '\0';
-        string username = vecOfInput[1];
+        opcode = 4;
 
-        result = opcode + follow + username;
+        char opchar[2];
+        shortToBytes(opcode, opchar);
+        
+        chararray[0] = opchar[0];
+        chararray[1] = opchar[1];
+
+        if (vecOfInput[1] == "0")
+            chararray[2] = '\0';
+        else
+            chararray[2] = '\1';
+
+        len = 3;
+        string userName = vecOfInput[2];
+
+        char const* usernamearr = userName.c_str();
+        for (int i = 0; i < userName.size(); i++) {
+            chararray[len] = usernamearr[i];
+            len++;
+        }
+        chararray[len] = '\0';
+        len++;
     }
-    else if (vecOfInput[0] == "UNFOLLOW") {
-        opcode = "04";
-        char follow = '\1';
-        string username = vecOfInput[1];
 
-        result = opcode + follow + username;
+    
+    else if (vecOfInput[0] == "POST" || vecOfInput[0] == "STAT" || vecOfInput[0] == "BLOCK") {
+    opcode = 8;
+    if(vecOfInput[0] == "POST")
+        opcode = 5;
+    else if(vecOfInput[0] == "BLOCK")
+        opcode = 12;
+    string content = vecOfInput[1];
+
+    char opchar[2];
+    shortToBytes(opcode, opchar);
+    len = 2;
+    chararray[0] = opchar[0];
+    chararray[1] = opchar[1];
+
+    char const* contentarr = content.c_str();
+    for (int i = 0; i < content.size(); i++) {
+        chararray[len] = contentarr[i];
+        len++;
     }
-    else if (vecOfInput[0] == "POST") {
-        opcode = "05";
-        string content = vecOfInput[1];
-
-        result = opcode + content + zero;
+    chararray[len] = '\0';
+    len++;
     }
-    else if (vecOfInput[0] == "PM") {
-        opcode = "06";
-        string username = vecOfInput[1];
-        string content = vecOfInput[2];
-        string sendingDate = vecOfInput[3];
 
-        result = opcode + username + zero + content + zero + sendingDate + zero;;
+    if (len != 0) {
+        string end = ";";
+        chararray[len] = end.c_str()[0];
+        len++;
     }
-    else if (vecOfInput[0] == "LOGSTAT") {
-        opcode = "07";
 
-        result = opcode;
-    }
-    else if (vecOfInput[0] == "STAT") {
-        opcode = "08";
-        string listOfUsernames = vecOfInput[1];
-
-        result = opcode + listOfUsernames + zero;
-    }
-    else if (vecOfInput[0] == "BLOCK") {
-        opcode = "12";
-        string username = vecOfInput[1];
-
-        result = opcode + username + zero;
-    }
-    else {
-        cout << "illegal command";
-    }
-    */
-
-    //result.push_back(';');
-
-	return -1;
+	return len;
 }
 
 void EncoderDecoder::shortToBytes(short num, char* bytesArr)

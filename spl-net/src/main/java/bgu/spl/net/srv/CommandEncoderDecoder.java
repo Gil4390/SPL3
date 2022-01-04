@@ -71,6 +71,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             fieldBytes.add(nextByte);
         }
     }
+
     public void decodeNextByte(byte nextByte, LoginCommand command){
         if(nextByte == '\0' | fieldCounter == 3) {
             if(fieldCounter != 3) {
