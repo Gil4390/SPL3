@@ -42,7 +42,12 @@ public class PostCommand extends ReceivedCommand {
     }
 
     public Vector<String> getMentionedUsers(){
-        //todo
-        return null;
+        Vector<String> result = new Vector<>();
+        String [] split = content.split("@");
+        for (int i = 1; i < split.length; i++) {
+            String str = split[i];
+            result.add(str.substring(0,str.indexOf(' ')));
+        }
+        return result;
     }
 }
