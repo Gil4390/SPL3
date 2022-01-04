@@ -45,6 +45,7 @@ public class Protocol implements BidiMessagingProtocol<Command> {
                 processedMessage = twit.Post(((PostCommand)com));
                 break;
             case 6:
+
                 processedMessage = twit.PrivateMessage(((PrivateMessageCommand)com));
                 break;
             case 7:

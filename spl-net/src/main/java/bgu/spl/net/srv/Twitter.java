@@ -3,6 +3,8 @@ package bgu.spl.net.srv;
 import bgu.spl.net.srv.Objects.*;
 import bgu.spl.net.srv.Objects.RegisterCommand;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -64,7 +66,10 @@ public class Twitter {
                         User user = users.get(command.getName());
                         for (Message msg : user.getUnreadMsgAndReset()) {
                             NotificationCommand notificationCmd = new NotificationCommand(9);
-                            notificationCmd.setContent(msg.getContent());
+                            if(msg.getType() == 0)
+                                notificationCmd.setContent(msg.getContent()+" "+ msg.getSendingDate());
+                            else
+                                notificationCmd.setContent(msg.getContent());
                             notificationCmd.setPostingUserName(msg.getSenderName());
                             notificationCmd.setType(msg.getType());
                             result.add(notificationCmd);
@@ -182,6 +187,10 @@ public class Twitter {
     }
 
     public Vector<ReturnCommand> PrivateMessage(PrivateMessageCommand command){
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        command.setSendingDate(formatter.format(date));
+
         Vector<ReturnCommand> result = new Vector<>();
         if(checkLoggedIn(command.getSenderName())){
             if(users.containsKey(command.getReceiveName())){
@@ -189,7 +198,7 @@ public class Twitter {
                         || !BlockedUser(command.getReceiveName(),command.getSenderName())){
                     String filteredContent=command.getContent();
                     filteredContent=FilterString(filteredContent);
-                    Message m = new Message(0,filteredContent, command.getSenderName());
+                    Message m = new Message(0,filteredContent, command.getSenderName(), command.getSendingDate());
                     if(privateMessages.containsKey(command.getSendingDate()))
                         privateMessages.get(command.getSendingDate()).add(m);
                     else{
@@ -203,10 +212,10 @@ public class Twitter {
                     NotificationCommand notCommand = new NotificationCommand(command.getOpCode());
                     notCommand.setType(0);
                     notCommand.setPostingUserName(command.getSenderName());
-                    notCommand.setContent(command.getContent());
+                    notCommand.setContent(command.getContent()+" "+command.getSendingDate());
                     synchronized (users.get(command.getSenderName())) {
                         if (!checkLoggedIn(command.getReceiveName())) {
-                            Message mes = new Message(0, command.getContent(), command.getSenderName());
+                            Message mes = new Message(0, command.getContent(), command.getSenderName(), command.getSendingDate());
                             users.get(command.getReceiveName()).addUnreadMsg(mes);
                             notCommand.setDestUserID(users.get(command.getReceiveName()).getID());
                         }
