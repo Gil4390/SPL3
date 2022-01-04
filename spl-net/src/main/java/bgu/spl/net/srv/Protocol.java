@@ -6,7 +6,7 @@ import bgu.spl.net.srv.Objects.*;
 
 import java.util.Vector;
 
-public class Protocol implements BidiMessagingProtocol<Command> {
+public class Protocol implements BidiMessagingProtocol<ReceivedCommand> {
     private Twitter twit;
     private Connections connections;
     private boolean shouldTerminate;
@@ -24,8 +24,9 @@ public class Protocol implements BidiMessagingProtocol<Command> {
     }
 
     @Override
-    public void process(Command message) {
-        Command com = message;
+    public void process(ReceivedCommand message) {
+        ReceivedCommand com = message;
+        com.setSenderId(connectionId);
         Vector<ReturnCommand> processedMessage = new Vector<>();
         switch (com.getOpCode()){
             case 1:

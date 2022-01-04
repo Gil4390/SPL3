@@ -69,14 +69,16 @@ public class User {
     }
 
     public int getAge(){
-        LocalDate today = LocalDate.now();
-        LocalDate birthday = LocalDate.parse(Birthday);
-        Period p = Period.between(birthday, today);
-        return p.getYears();
+//        LocalDate today = LocalDate.now();
+//        LocalDate birthday = LocalDate.parse(Birthday);
+//
+//        Period p = Period.between(birthday, today);
+//        return p.getYears();
+        return 1;
     }
 
     public String getStats(){
-        return "" +  getAge() + numPostedPost + numOfFollowers + numOfFollowing;
+        return "" +  getAge() +" "+ numPostedPost +" "+ numOfFollowers +" "+ numOfFollowing;
     }
 
     public synchronized ConcurrentLinkedQueue<Message> getUnreadMsgAndReset() {
