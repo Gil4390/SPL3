@@ -39,6 +39,7 @@ int main(int argc, char* argv[]) {
     while (1) {
 
         string line = "";
+        answer = "";
 
         mutex.lock();
         if (sendList->size() != 0) {

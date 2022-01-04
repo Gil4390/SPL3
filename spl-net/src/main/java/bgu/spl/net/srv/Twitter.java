@@ -3,6 +3,8 @@ package bgu.spl.net.srv;
 import bgu.spl.net.srv.Objects.*;
 import bgu.spl.net.srv.Objects.RegisterCommand;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -58,13 +60,15 @@ public class Twitter {
                         loggedIn.put(command.getName(), true);
                         AckCommand ack = new AckCommand(10);
                         ack.setMsgOpCode(command.getOpCode());
-                        ack.setOptionalData("Login successful");
                         result.add(ack);
 
                         User user = users.get(command.getName());
                         for (Message msg : user.getUnreadMsgAndReset()) {
                             NotificationCommand notificationCmd = new NotificationCommand(9);
-                            notificationCmd.setContent(msg.getContent());
+                            if(msg.getType() == 0)
+                                notificationCmd.setContent(msg.getContent()+" "+ msg.getSendingDate());
+                            else
+                                notificationCmd.setContent(msg.getContent());
                             notificationCmd.setPostingUserName(msg.getSenderName());
                             notificationCmd.setType(msg.getType());
                             result.add(notificationCmd);
@@ -75,7 +79,7 @@ public class Twitter {
                 }
             }
         }
-        ErrorCommand errcmd = new ErrorCommand(11);
+        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
         errcmd.setMsgOpCode(2);
         result.add(errcmd);
         return result;
@@ -90,7 +94,7 @@ public class Twitter {
             result.add(ackcmd);
         }
         else{
-            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
             errcmd.setMsgOpCode(3);
             result.add(errcmd);
         }
@@ -113,7 +117,7 @@ public class Twitter {
                 }
             }
         }
-        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
         errcmd.setMsgOpCode(4);
         result.add(errcmd);
         return result;
@@ -133,7 +137,7 @@ public class Twitter {
                 return result;
             }
         }
-        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
         errcmd.setMsgOpCode(4);
         result.add(errcmd);
         return result;
@@ -166,7 +170,7 @@ public class Twitter {
                 else{//if the user mentioned someone that blocked them
                     user.setNumPostedPost((user.getNumPostedPost()-1));
                     result = new Vector<>();
-                    ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+                    ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
                     errcmd.setMsgOpCode(5);
                     result.add(errcmd);
                     break;
@@ -174,7 +178,7 @@ public class Twitter {
             }
         }
         else{
-            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
             errcmd.setMsgOpCode(5);
             result.add(errcmd);
         }
@@ -182,6 +186,10 @@ public class Twitter {
     }
 
     public Vector<ReturnCommand> PrivateMessage(PrivateMessageCommand command){
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        command.setSendingDate(formatter.format(date));
+
         Vector<ReturnCommand> result = new Vector<>();
         if(checkLoggedIn(command.getSenderName())){
             if(users.containsKey(command.getReceiveName())){
@@ -189,7 +197,7 @@ public class Twitter {
                         || !BlockedUser(command.getReceiveName(),command.getSenderName())){
                     String filteredContent=command.getContent();
                     filteredContent=FilterString(filteredContent);
-                    Message m = new Message(0,filteredContent, command.getSenderName());
+                    Message m = new Message(0,filteredContent, command.getSenderName(), command.getSendingDate());
                     if(privateMessages.containsKey(command.getSendingDate()))
                         privateMessages.get(command.getSendingDate()).add(m);
                     else{
@@ -203,10 +211,10 @@ public class Twitter {
                     NotificationCommand notCommand = new NotificationCommand(command.getOpCode());
                     notCommand.setType(0);
                     notCommand.setPostingUserName(command.getSenderName());
-                    notCommand.setContent(command.getContent());
+                    notCommand.setContent(command.getContent()+" "+command.getSendingDate());
                     synchronized (users.get(command.getSenderName())) {
                         if (!checkLoggedIn(command.getReceiveName())) {
-                            Message mes = new Message(0, command.getContent(), command.getSenderName());
+                            Message mes = new Message(0, command.getContent(), command.getSenderName(), command.getSendingDate());
                             users.get(command.getReceiveName()).addUnreadMsg(mes);
                             notCommand.setDestUserID(users.get(command.getReceiveName()).getID());
                         }
@@ -217,7 +225,7 @@ public class Twitter {
                 }
             }
         }
-        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
         errcmd.setMsgOpCode(6);
         result.add(errcmd);
         return result;
@@ -236,7 +244,7 @@ public class Twitter {
             }
         }
         else{
-            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
             errcmd.setMsgOpCode(7);
             result.add(errcmd);
         }
@@ -263,7 +271,7 @@ public class Twitter {
             }
         }
         else{
-            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
             errcmd.setMsgOpCode(8);
             result.add(errcmd);
         }
@@ -295,7 +303,7 @@ public class Twitter {
                 return result;
             }
         }
-        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
         errcmd.setMsgOpCode(12);
         result.add(errcmd);
         return result;
