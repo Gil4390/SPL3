@@ -69,8 +69,11 @@ public class User {
     }
 
     public int getAge(){
+        String [] split = Birthday.split("-");
+        String reversed = split[2] + "-" + split[1] + "-" + split[0];
+
         LocalDate today = LocalDate.now();
-        LocalDate birthday = LocalDate.parse(Birthday);
+        LocalDate birthday = LocalDate.parse(reversed);
         Period p = Period.between(birthday, today);
         return p.getYears();
     }
