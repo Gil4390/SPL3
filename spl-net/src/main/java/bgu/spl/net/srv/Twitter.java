@@ -158,16 +158,18 @@ public class Twitter {
         cmd.setSendingDate(formatter.format(date));
 
         Vector<ReturnCommand> result = new Vector<>();
-        if(loggedIn.containsKey(cmd.getName())){
+        if(checkRegister(UserID))
+            cmd.setName(userId.get(UserID).getName());
+        if(checkRegister(UserID) && loggedIn.containsKey(cmd.getName())){
             String filteredContent=cmd.getContent();
             filteredContent=FilterString(filteredContent);
             Message m = new Message(0,filteredContent, cmd.getName(), cmd.getSendingDate());
-            if(privateMessages.containsKey(cmd.getSendingDate()))
-                privateMessages.get(cmd.getSendingDate()).add(m);
+            if(postMessages.containsKey(cmd.getSendingDate()))
+                postMessages.get(cmd.getSendingDate()).add(m);
             else{
                 List<Message> temp = new LinkedList<>();
                 temp.add(m);
-                privateMessages.put(cmd.getSendingDate(),temp);
+                postMessages.put(cmd.getSendingDate(),temp);
             }
             AckCommand ack = new AckCommand(10);
             ack.setMsgOpCode(cmd.getOpCode());
@@ -223,7 +225,9 @@ public class Twitter {
         command.setSendingDate(formatter.format(date));
 
         Vector<ReturnCommand> result = new Vector<>();
-        if(checkLoggedIn(command.getSenderName())){
+        if(checkRegister(UserID))
+            command.setSenderName(userId.get(UserID).getName());
+        if(checkRegister(UserID) && checkLoggedIn(command.getSenderName())){
             if(users.containsKey(command.getReceiveName())){
                 if(followers.get(command.getSenderName()).contains(command.getReceiveName())
                         || !BlockedUser(command.getReceiveName(),command.getSenderName())){
