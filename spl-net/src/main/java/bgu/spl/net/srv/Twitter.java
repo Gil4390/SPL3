@@ -60,7 +60,6 @@ public class Twitter {
                         loggedIn.put(command.getName(), true);
                         AckCommand ack = new AckCommand(10);
                         ack.setMsgOpCode(command.getOpCode());
-                        ack.setOptionalData("Login successful");
                         result.add(ack);
 
                         User user = users.get(command.getName());
