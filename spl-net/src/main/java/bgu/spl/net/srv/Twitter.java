@@ -51,7 +51,7 @@ public class Twitter {
     public Vector<ReturnCommand> Login(LoginCommand command){
         //todo add if for captcha
         Vector<ReturnCommand> result = new Vector<>();
-        if(!checkLoggedIn(command.getName()) && !users.containsKey(command.getName())) {
+        if(!checkLoggedIn(command.getName()) && users.containsKey(command.getName())) {
             synchronized (users.get(command.getName())) {
                 if (users.get(command.getName()).getPassword().equals(command.getPassword())) {
                     if (!checkLoggedIn(command.getName())) {
@@ -75,7 +75,7 @@ public class Twitter {
                 }
             }
         }
-        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+        ErrorCommand errcmd = new ErrorCommand(11);
         errcmd.setMsgOpCode(2);
         result.add(errcmd);
         return result;
