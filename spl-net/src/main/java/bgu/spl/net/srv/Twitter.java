@@ -43,7 +43,7 @@ public class Twitter {
         else{ // todo need to be sync or atomic id counter
             User user = new User(UserID++, cmd.getName(), cmd.getPassword(), cmd.getBirthday());
             users.put(user.getName(), user);
-            userId.put(UserID,user);
+            userId.put(user.getID(),user);
             followers.put(user.getName(),new LinkedList<>());
             loggedIn.put(user.getName(),false);
             blockedUsers.put(user.getName(),new LinkedList<>());
@@ -115,8 +115,10 @@ public class Twitter {
             if (!followers.get(command.getClientName()).contains(command.getFollowName())) {
                 if (users.containsKey(command.getFollowName()) || !BlockedUser(command.getClientName(),command.getFollowName())) {
                     followers.get(command.getClientName()).add(command.getFollowName());
-                    User user = users.get(command.getClientName());
-                    user.setNumOfFollowers((user.getNumOfFollowers()+1));
+                    User user1 = users.get(command.getClientName());
+                    user1.setNumOfFollowing((user1.getNumOfFollowing()+1));
+                    User user2 = users.get(command.getFollowName());
+                    user2.setNumOfFollowers(user2.getNumOfFollowers()+1);
                     AckCommand ack = new AckCommand(10);
                     ack.setMsgOpCode(command.getOpCode());
                     ack.setOptionalData(command.getFollowName()+"0");//todo amen
