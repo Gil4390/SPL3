@@ -15,7 +15,6 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     private Vector <Byte> fieldBytes;
     private int opCodeCount=0;
     private int fieldCounter=1;
-    private String clientUserName;
 
     public CommandEncoderDecoder() {
         fieldBytes = new Vector<>();
@@ -24,12 +23,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
 
     @Override
     public ReceivedCommand decodeNextByte(byte nextByte) {
-        if(nextByte == ';') {
-            if(command instanceof FollowCommand) {
-                decodeNextByte(("0").getBytes()[0], ((FollowCommand) command));
-            }
+        if(nextByte == ';')
             return returnCommand();
-        }
         else if(command==null){
             if(opCodeCount==0) {
                 opCode[opCodeCount]=nextByte;
@@ -57,8 +52,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
             if (fieldCounter == 1) {
-                clientUserName=StandardCharsets.UTF_8.decode(bb).toString();
-                command.setName(clientUserName);
+                command.setName(StandardCharsets.UTF_8.decode(bb).toString());
             }
             else if (fieldCounter == 2)
                 command.setPassword(StandardCharsets.UTF_8.decode(bb).toString());
@@ -81,8 +75,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 }
                 ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
                 if (fieldCounter == 1) {
-                    clientUserName=StandardCharsets.UTF_8.decode(bb).toString();
-                    command.setName(clientUserName);
+                    command.setName(StandardCharsets.UTF_8.decode(bb).toString());
                 }
                 else if (fieldCounter == 2)
                     command.setPassword(StandardCharsets.UTF_8.decode(bb).toString());
@@ -128,7 +121,6 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 }
                 ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
                 command.setFollowName(StandardCharsets.UTF_8.decode(bb).toString());
-                command.setClientName(clientUserName);
             }
             else
                 fieldBytes.add(nextByte);
@@ -176,11 +168,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-            if (fieldCounter == 1) {
-                clientUserName=StandardCharsets.UTF_8.decode(bb).toString();
-                command.setSenderName(clientUserName);
-            }
-            else if (fieldCounter == 2)
+            if (fieldCounter == 2)
                 command.setReceiveName(StandardCharsets.UTF_8.decode(bb).toString());
             else
                 command.setSendingDate(StandardCharsets.UTF_8.decode(bb).toString());
@@ -227,8 +215,6 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-            command.setBlockedName(StandardCharsets.UTF_8.decode(bb).toString());
-            command.setClientName(clientUserName);
         }
         else{
             fieldBytes.add(nextByte);
@@ -333,6 +319,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         opCode=new byte[2];
         opCodeCount=0;
         fieldCounter=1;
+        fieldBytes = new Vector<>();
         return temp;
     }
 }

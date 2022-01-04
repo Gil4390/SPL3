@@ -142,7 +142,7 @@ int EncoderDecoder::encode(string str, char* chararray)
 
         len = 3;
         string userName = vecOfInput[2];
-
+        
         char const* usernamearr = userName.c_str();
         for (int i = 0; i < userName.size(); i++) {
             chararray[len] = usernamearr[i];

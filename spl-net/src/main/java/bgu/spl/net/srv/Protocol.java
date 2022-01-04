@@ -40,7 +40,10 @@ public class Protocol implements BidiMessagingProtocol<ReceivedCommand> {
                 //shouldTerminate=true; // todo check if this happened after client receive ack message
                 break;
             case 4:
-                processedMessage = twit.Follow(((FollowCommand)com));
+                if(!((FollowCommand)message).isUnFollow())
+                    processedMessage = twit.Follow(((FollowCommand)com));
+                else
+                    processedMessage = twit.UnFollow(((FollowCommand)com));
                 break;
             case 5:
                 processedMessage = twit.Post(((PostCommand)com));

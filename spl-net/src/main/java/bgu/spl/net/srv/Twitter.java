@@ -121,7 +121,7 @@ public class Twitter {
                     user2.setNumOfFollowers(user2.getNumOfFollowers()+1);
                     AckCommand ack = new AckCommand(10);
                     ack.setMsgOpCode(command.getOpCode());
-                    ack.setOptionalData(command.getFollowName()+"0");//todo amen
+                    ack.setOptionalData(command.getFollowName());//todo amen
                     result.add(ack);
                     return result;
                 }
@@ -141,10 +141,12 @@ public class Twitter {
             if (followers.get(command.getClientName()).contains(command.getFollowName())) {
                 followers.get(command.getClientName()).remove(command.getFollowName());
                 User user = users.get(command.getClientName());
-                user.setNumOfFollowers((user.getNumOfFollowers()-1));
+                user.setNumOfFollowing((user.getNumOfFollowing()-1));
+                User user2 = users.get(command.getFollowName());
+                user2.setNumOfFollowers(user2.getNumOfFollowers()-1);
                 AckCommand ack = new AckCommand(10);
                 ack.setMsgOpCode(command.getOpCode());
-                ack.setOptionalData(command.getFollowName()+"0");
+                ack.setOptionalData(command.getFollowName());
                 result.add(ack);
                 return result;
             }
