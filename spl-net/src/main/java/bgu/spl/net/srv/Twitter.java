@@ -16,6 +16,7 @@ public class Twitter {
     private ConcurrentHashMap<String, List<String>> followers;//all followers of a user
     private ConcurrentHashMap<String,Boolean>loggedIn;// if the user is loggedIn
     private ConcurrentHashMap<String,List<Message>> privateMessages;
+    private ConcurrentHashMap<String,List<Message>> postMessages;
     private ConcurrentHashMap<String,List<String>> blockedUsers;
     private List<String>filteredWords;
 
@@ -24,6 +25,7 @@ public class Twitter {
         followers = new ConcurrentHashMap<>();
         users = new ConcurrentHashMap<>();
         privateMessages=new ConcurrentHashMap<>();
+        postMessages = new ConcurrentHashMap<>();
         blockedUsers= new ConcurrentHashMap<>();
         loggedIn = new ConcurrentHashMap<>();
         filteredWords = new Vector<>();
@@ -143,12 +145,29 @@ public class Twitter {
     }
 
     public Vector<ReturnCommand> Post(PostCommand cmd){
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        cmd.setSendingDate(formatter.format(date));
+
         //todo save post message
         //todo only add the notification of the receiving user is logged in
-        //todo        add this     ackcmd.setDestUserID(user.getID());
         //todo sync users.get(senderName) with logIn and PM
         Vector<ReturnCommand> result = new Vector<>();
         if(loggedIn.containsKey(cmd.getName())){
+            String filteredContent=cmd.getContent();
+            filteredContent=FilterString(filteredContent);
+            Message m = new Message(0,filteredContent, cmd.getName(), cmd.getSendingDate());
+            if(privateMessages.containsKey(cmd.getSendingDate()))
+                privateMessages.get(cmd.getSendingDate()).add(m);
+            else{
+                List<Message> temp = new LinkedList<>();
+                temp.add(m);
+                privateMessages.put(cmd.getSendingDate(),temp);
+            }
+            AckCommand ack = new AckCommand(10);
+            ack.setMsgOpCode(cmd.getOpCode());
+            result.add(ack);
+
             User user = users.get(cmd.getName());
             user.setNumPostedPost((user.getNumPostedPost()+1));
 
@@ -164,6 +183,7 @@ public class Twitter {
                     notificationCommand.setType(1);
                     notificationCommand.setPostingUserName(cmd.getName());
                     notificationCommand.setContent(cmd.getContent());
+                    notificationCommand.setDestUserID(users.get(sUser).getID());
                     result.add(notificationCommand);
                 }
                 else{//if the user mentioned someone that blocked them
@@ -211,6 +231,7 @@ public class Twitter {
                     notCommand.setType(0);
                     notCommand.setPostingUserName(command.getSenderName());
                     notCommand.setContent(command.getContent()+" "+command.getSendingDate());
+                    notCommand.setDestUserID(users.get(command.getReceiveName()).getID());
                     synchronized (users.get(command.getSenderName())) {
                         if (!checkLoggedIn(command.getReceiveName())) {
                             Message mes = new Message(0, command.getContent(), command.getSenderName(), command.getSendingDate());
