@@ -32,7 +32,7 @@ public class Twitter {
     public Vector<ReturnCommand> Register(RegisterCommand cmd){
         Vector<ReturnCommand> result = new Vector<>();
         if(users.containsKey(cmd.getName())){ //already registered
-            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
             errcmd.setMsgOpCode(1);
             result.add(errcmd);
         }
@@ -51,9 +51,8 @@ public class Twitter {
     }
 
     public Vector<ReturnCommand> Login(LoginCommand command){
-        //todo add if for captcha
         Vector<ReturnCommand> result = new Vector<>();
-        if(!checkLoggedIn(command.getName()) && users.containsKey(command.getName())) {
+        if(!checkLoggedIn(command.getName()) && users.containsKey(command.getName()) && command.getCaptcha() == 1) {
             synchronized (users.get(command.getName())) {
                 if (users.get(command.getName()).getPassword().equals(command.getPassword())) {
                     if (!checkLoggedIn(command.getName())) {
