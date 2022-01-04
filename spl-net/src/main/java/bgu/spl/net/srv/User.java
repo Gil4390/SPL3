@@ -69,12 +69,13 @@ public class User {
     }
 
     public int getAge(){
-//        LocalDate today = LocalDate.now();
-//        LocalDate birthday = LocalDate.parse(Birthday);
-//
-//        Period p = Period.between(birthday, today);
-//        return p.getYears();
-        return 1;
+        String [] split = Birthday.split("-");
+        String reversed = split[2] + "-" + split[1] + "-" + split[0];
+
+        LocalDate today = LocalDate.now();
+        LocalDate birthday = LocalDate.parse(reversed);
+        Period p = Period.between(birthday, today);
+        return p.getYears();
     }
 
     public String getStats(){
