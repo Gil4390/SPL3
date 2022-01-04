@@ -51,7 +51,7 @@ public class Twitter {
     public Vector<ReturnCommand> Login(LoginCommand command){
         //todo add if for captcha
         Vector<ReturnCommand> result = new Vector<>();
-        if(!checkLoggedIn(command.getName()) && !users.containsKey(command.getName())) {
+        if(!checkLoggedIn(command.getName()) && users.containsKey(command.getName())) {
             synchronized (users.get(command.getName())) {
                 if (users.get(command.getName()).getPassword().equals(command.getPassword())) {
                     if (!checkLoggedIn(command.getName())) {
@@ -75,7 +75,7 @@ public class Twitter {
                 }
             }
         }
-        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
         errcmd.setMsgOpCode(2);
         result.add(errcmd);
         return result;
@@ -90,7 +90,7 @@ public class Twitter {
             result.add(ackcmd);
         }
         else{
-            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
             errcmd.setMsgOpCode(3);
             result.add(errcmd);
         }
@@ -113,7 +113,7 @@ public class Twitter {
                 }
             }
         }
-        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
         errcmd.setMsgOpCode(4);
         result.add(errcmd);
         return result;
@@ -133,7 +133,7 @@ public class Twitter {
                 return result;
             }
         }
-        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
         errcmd.setMsgOpCode(4);
         result.add(errcmd);
         return result;
@@ -166,7 +166,7 @@ public class Twitter {
                 else{//if the user mentioned someone that blocked them
                     user.setNumPostedPost((user.getNumPostedPost()-1));
                     result = new Vector<>();
-                    ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+                    ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
                     errcmd.setMsgOpCode(5);
                     result.add(errcmd);
                     break;
@@ -174,7 +174,7 @@ public class Twitter {
             }
         }
         else{
-            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
             errcmd.setMsgOpCode(5);
             result.add(errcmd);
         }
@@ -217,7 +217,7 @@ public class Twitter {
                 }
             }
         }
-        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
         errcmd.setMsgOpCode(6);
         result.add(errcmd);
         return result;
@@ -236,7 +236,7 @@ public class Twitter {
             }
         }
         else{
-            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
             errcmd.setMsgOpCode(7);
             result.add(errcmd);
         }
@@ -263,7 +263,7 @@ public class Twitter {
             }
         }
         else{
-            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
             errcmd.setMsgOpCode(8);
             result.add(errcmd);
         }
@@ -295,7 +295,7 @@ public class Twitter {
                 return result;
             }
         }
-        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+        ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
         errcmd.setMsgOpCode(12);
         result.add(errcmd);
         return result;
