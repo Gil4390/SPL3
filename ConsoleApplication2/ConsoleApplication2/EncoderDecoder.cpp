@@ -25,12 +25,14 @@ string EncoderDecoder::decodeLine(string line) {
         result = "NOTIFICATION " + msgType + " " + postingUser + " " + content;
     }
     else if (opCode == "10") { //ACK
-        string msgOpCode = line.substr(2, 3);
-        string optional = line.substr(4, line.size()-1);
+        string msgOpCode = line.substr(2, 2);
+        if (msgOpCode[0] == '0') msgOpCode = msgOpCode.substr(1);
+        string optional = line.substr(4, line.size()-5);
         result = "ACK " + msgOpCode + " " + optional;
     }
     else { //Error
-        string msgOpCode = line.substr(2, 3);
+        string msgOpCode = line.substr(2, 2);
+        if (msgOpCode[0] == '0') msgOpCode = msgOpCode.substr(1);
         result = "Error " + msgOpCode;
     }
     
@@ -84,6 +86,7 @@ int EncoderDecoder::encode(string str, char* chararray)
         opcode = 2;
         string username = vecOfInput[1];
         string password = vecOfInput[2];
+        string captcha = vecOfInput[3];
 
         char const* usernamearr = username.c_str();
         char const* passwordarr = password.c_str();
@@ -106,7 +109,9 @@ int EncoderDecoder::encode(string str, char* chararray)
         }
         chararray[len] = '\0';
         len++;
-        chararray[len] = '\1'; //TODO: captcha        
+        if (captcha == "0") chararray[len] = '\0';
+        else chararray[len] = '\1';
+        len++;
     }
     
     else if (vecOfInput[0] == "LOGOUT" || vecOfInput[0] == "LOGSTAT") {

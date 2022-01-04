@@ -86,6 +86,9 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 }
                 else if (fieldCounter == 2)
                     command.setPassword(StandardCharsets.UTF_8.decode(bb).toString());
+                else{
+                    command.setCaptcha(Integer.parseInt(StandardCharsets.UTF_8.decode(bb).toString()));
+                }
                 fieldCounter++;
                 fieldBytes = new Vector<>();
             }
@@ -264,7 +267,9 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
         opCode[1] = '1';
         byte [] msgOpCode = new byte[2];
         if(command.getMsgOpCode() != 12){
-            msgOpCode = shortToBytes((short)command.getMsgOpCode());
+            msgOpCode[0] = '0';
+            String s = String.valueOf(command.getMsgOpCode());
+            msgOpCode[1] = (byte)s.charAt(0);
         }
         else{
             msgOpCode[0] = '1';
@@ -278,8 +283,12 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     }
 
     public byte[] encode(NotificationCommand command){
-        byte [] opCode = shortToBytes((short)command.getOpCode());
-        byte [] type = shortToBytes((short)command.getType());
+        byte [] opCode = new byte[2];
+        opCode[0] = '9';
+        opCode[1] = '0';
+        byte [] type = new byte[1];
+        String s = String.valueOf(command.getType());
+        type[0] = (byte)s.charAt(0);
         byte [] PostingUserName = command.getPostingUserName().getBytes(StandardCharsets.UTF_8);
         byte [] content = command.getContent().getBytes(StandardCharsets.UTF_8);
         byte [] zero = shortToBytes((short)0);

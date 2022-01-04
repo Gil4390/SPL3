@@ -49,11 +49,12 @@ public class Twitter {
     }
 
     public Vector<ReturnCommand> Login(LoginCommand command){
+        //todo add if for captcha
         Vector<ReturnCommand> result = new Vector<>();
-        if(!checkLoggedIn(command.getName())) {
+        if(!checkLoggedIn(command.getName()) && !users.containsKey(command.getName())) {
             synchronized (users.get(command.getName())) {
                 if (users.get(command.getName()).getPassword().equals(command.getPassword())) {
-                    if (checkLoggedIn(command.getName())) {
+                    if (!checkLoggedIn(command.getName())) {
                         loggedIn.put(command.getName(), true);
                         AckCommand ack = new AckCommand(10);
                         ack.setMsgOpCode(command.getOpCode());
@@ -301,7 +302,7 @@ public class Twitter {
     }
 
     private boolean checkLoggedIn(String name){
-        if(!users.contains(name) || !loggedIn.get(name))
+        if(!users.containsKey(name) || !loggedIn.get(name))
             return false;
         return true;
     }
