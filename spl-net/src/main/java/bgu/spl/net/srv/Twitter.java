@@ -110,7 +110,7 @@ public class Twitter {
         if(checkRegister(command.getSenderId()))
             command.setClientName(userId.get(command.getSenderId()).getName());
         if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getClientName())){
-            if (!followers.get(command.getClientName()).contains(command.getFollowName())) {
+            if (!followers.get(command.getFollowName()).contains(command.getClientName())) {
                 if (users.containsKey(command.getFollowName()) || !BlockedUser(command.getClientName(),command.getFollowName())) {
                     followers.get(command.getFollowName()).add(command.getClientName());
                     User user1 = users.get(command.getClientName());
@@ -136,7 +136,7 @@ public class Twitter {
         if(checkRegister(command.getSenderId()))
             command.setClientName(userId.get(command.getSenderId()).getName());
         if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getClientName())) {
-            if (followers.get(command.getClientName()).contains(command.getFollowName())) {
+            if (followers.get(command.getFollowName()).contains(command.getClientName())) {
                 followers.get(command.getFollowName()).remove(command.getClientName());
                 User user = users.get(command.getClientName());
                 user.setNumOfFollowing((user.getNumOfFollowing()-1));
@@ -232,7 +232,7 @@ public class Twitter {
             command.setSenderName(userId.get(command.getSenderId()).getName());
         if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getSenderName())){
             if(users.containsKey(command.getReceiveName())){
-                if(followers.get(command.getSenderName()).contains(command.getReceiveName())
+                if(followers.get(command.getReceiveName()).contains(command.getSenderName())
                         || !BlockedUser(command.getReceiveName(),command.getSenderName())){
                     String filteredContent=command.getContent();
                     filteredContent=FilterString(filteredContent);
