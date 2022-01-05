@@ -114,7 +114,6 @@ int EncoderDecoder::encode(string str, char* chararray)
         else chararray[len] = '\1';
         len++;
     }
-    
     else if (vecOfInput[0] == "LOGOUT" || vecOfInput[0] == "LOGSTAT") {
         opcode = 3;
         if(vecOfInput[0] == "LOGSTAT")
@@ -125,8 +124,6 @@ int EncoderDecoder::encode(string str, char* chararray)
         chararray[0] = opchar[0];
         chararray[1] = opchar[1];
     }
-
-    
     else if (vecOfInput[0] == "FOLLOW") {
         opcode = 4;
 
@@ -143,7 +140,7 @@ int EncoderDecoder::encode(string str, char* chararray)
 
         len = 3;
         string userName = vecOfInput[2];
-        
+
         char const* usernamearr = userName.c_str();
         for (int i = 0; i < userName.size(); i++) {
             chararray[len] = usernamearr[i];
@@ -243,19 +240,19 @@ int EncoderDecoder::encode(string str, char* chararray)
         opcode = 12;
     string content = vecOfInput[1];
 
-    char opchar[2];
-    shortToBytes(opcode, opchar);
-    len = 2;
-    chararray[0] = opchar[0];
-    chararray[1] = opchar[1];
+        char opchar[2];
+        shortToBytes(opcode, opchar);
+        len = 2;
+        chararray[0] = opchar[0];
+        chararray[1] = opchar[1];
 
-    char const* contentarr = content.c_str();
-    for (int i = 0; i < content.size(); i++) {
-        chararray[len] = contentarr[i];
+        char const* contentarr = content.c_str();
+        for (int i = 0; i < content.size(); i++) {
+            chararray[len] = contentarr[i];
+            len++;
+        }
+        chararray[len] = '\0';
         len++;
-    }
-    chararray[len] = '\0';
-    len++;
     }
 
     if (len != 0) {

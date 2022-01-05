@@ -1,2 +1,17 @@
+<<<<<<< HEAD
 ﻿  EncoderDecoder.cpp
   ConsoleApplication2.vcxproj -> D:\Amit Ganon\Software Engineering\semester C\System programming - SPL\HW3\spl3 gitWithGil\SPL3\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe
+=======
+<<<<<<< HEAD
+﻿  echoClient.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+D:\Gil Khais\Documents\SPL3\ConsoleApplication2\ConsoleApplication2\echoClient.cpp(69,43): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Gil Khais\Documents\SPL3\ConsoleApplication2\ConsoleApplication2\echoClient.cpp(88,38): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  ConsoleApplication2.vcxproj -> D:\Gil Khais\Documents\SPL3\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe
+=======
+﻿  ConsoleApplication2.vcxproj -> D:\Amit Ganon\Software Engineering\semester C\System programming - SPL\HW3\spl3 gitWithGil\SPL3\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe
+>>>>>>> 3d0025820c49fe21894fdca1101c5ed8271f64c8
+>>>>>>> ab522c730c6b23f07713b95602c66f148eeef68f
