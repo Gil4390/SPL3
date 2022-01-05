@@ -40,8 +40,10 @@ int main(int argc, char* argv[]) {
     Listener listener(&connectionHandler);
     std::thread th2(&Listener::run, &listener);
 
+    
     while (1) {
-        string line = "";
+        string line = "";        
+        stringstream msg;
 
         mutex.lock();
         if (sendList->size() != 0) {
@@ -55,11 +57,13 @@ int main(int argc, char* argv[]) {
             int len = encdec.encode(line, encodedLine);
 
             if (!connectionHandler.sendBytes(encodedLine, len)) {
-                std::cout << "Disconnected. Exiting...\n" << std::endl;
-                bye = true;
+                msg << "Disconnected. Exiting...\n" << std::endl;
+                cout << msg.str();
                 break;
             }
-            std::cout << "Sent " << len + 1 << " bytes to server" << std::endl;
+
+            msg << "Sent " << len + 1 << " bytes to server" << std::endl;
+            cout << msg.str();
         }
 
         if (line == "LOGOUT") {

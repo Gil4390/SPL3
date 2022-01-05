@@ -10,20 +10,25 @@ Listener::Listener(ConnectionHandler* ch) : ch(ch) {
 void Listener::run()
 {
     EncoderDecoder encdec;
+    
     while (1) {
+        stringstream msg;
         std::string answer = "";
+
         if (!ch->getLine(answer)) {
-            std::cout << "Disconnected. Exiting...\n" << std::endl;
+            msg << "Disconnected. Exiting...\n" << std::endl;
+            cout << msg.str();            
             break;
         }
         std::string decodedLine;
         if (answer != "") {
             decodedLine = encdec.decodeLine(answer);
-            std::cout << decodedLine << std::endl;
+            msg << decodedLine << std::endl;
+            cout << msg.str();
         }
-
-        if (decodedLine == "ACK 3") {
-            std::cout << "Disconnected. Exiting...\n" << std::endl;
+        else if (decodedLine == "ACK 3") {
+            msg << "Disconnected. Exiting...\n" << std::endl;
+            cout << msg.str();
             break;
         }
     }
