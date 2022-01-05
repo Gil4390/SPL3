@@ -233,7 +233,7 @@ public class Twitter {
         if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getSenderName())){
             if(users.containsKey(command.getReceiveName())){
                 if(followers.get(command.getReceiveName()).contains(command.getSenderName())
-                        || !BlockedUser(command.getReceiveName(),command.getSenderName())){
+                        && !BlockedUser(command.getReceiveName(),command.getSenderName())){
                     String filteredContent=command.getContent();
                     filteredContent=FilterString(filteredContent);
                     Message m = new Message(0,filteredContent, command.getSenderName(), command.getSendingDate());
