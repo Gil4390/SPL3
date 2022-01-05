@@ -55,7 +55,7 @@ public class Twitter {
 
     public Vector<ReturnCommand> Login(LoginCommand command){
         Vector<ReturnCommand> result = new Vector<>();
-        if(!checkLoggedIn(command.getName()) && users.containsKey(command.getName()) && command.getCaptcha() == 1) {
+        if(users.containsKey(command.getName()) && !checkLoggedIn(command.getName()) && command.getCaptcha() == 1) {
             synchronized (users.get(command.getName())) {
                 if (users.get(command.getName()).getPassword().equals(command.getPassword())) {
                     if (!checkLoggedIn(command.getName())) {
@@ -91,7 +91,7 @@ public class Twitter {
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(cmd.getSenderId()))
             cmd.setName(userId.get(cmd.getSenderId()).getName());
-        if(checkRegister(cmd.getSenderId()) && loggedIn.contains(cmd.getName())){
+        if(checkRegister(cmd.getSenderId()) && checkLoggedIn(cmd.getName())){
             loggedIn.put(cmd.getName(),false);
             AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
             ackcmd.setMsgOpCode(3);
@@ -109,9 +109,10 @@ public class Twitter {
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(command.getSenderId()))
             command.setClientName(userId.get(command.getSenderId()).getName());
-        if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getClientName())){
-            if (!followers.get(command.getFollowName()).contains(command.getClientName())) {
-                if (users.containsKey(command.getFollowName()) && !BlockedUser(command.getClientName(),command.getFollowName())) {
+        System.out.println(checkRegister(command.getSenderId()) +" "+ checkLoggedIn(command.getClientName()) +" "+ !command.getFollowName().equals(command.getClientName()));
+        if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getClientName()) && !command.getFollowName().equals(command.getClientName())){
+            if (users.containsKey(command.getFollowName()) && !followers.get(command.getFollowName()).contains(command.getClientName())) {
+                if (!BlockedUser(command.getClientName(),command.getFollowName())) {
                     followers.get(command.getFollowName()).add(command.getClientName());
                     User user1 = users.get(command.getClientName());
                     user1.setNumOfFollowing((user1.getNumOfFollowing()+1));
@@ -223,14 +224,10 @@ public class Twitter {
     }
 
     public Vector<ReturnCommand> PrivateMessage(PrivateMessageCommand command){
-//        Date date = new Date();
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-//        command.setSendingDate(formatter.format(date));
-
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(command.getSenderId()))
             command.setSenderName(userId.get(command.getSenderId()).getName());
-        if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getSenderName())){
+        if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getSenderName()) && !command.getSenderName().equals(command.getReceiveName())){
             if(users.containsKey(command.getReceiveName())){
                 if(followers.get(command.getReceiveName()).contains(command.getSenderName())
                         && !BlockedUser(command.getReceiveName(),command.getSenderName())){
@@ -334,31 +331,33 @@ public class Twitter {
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(command.getSenderId()))
             command.setClientName(userId.get(command.getSenderId()).getName());
-        if(checkRegister(command.getSenderId()) && users.containsKey(command.getBlockedName())){
+        if(checkRegister(command.getSenderId()) && users.containsKey(command.getBlockedName()) && checkLoggedIn(command.getClientName())){
             User user_1 = users.get(command.getClientName()); // client
             User user_2 = users.get(command.getBlockedName()); // blocked user
-            if(followers.get(user_1.getName()).contains(user_2.getName())){
-                followers.get(user_1.getName()).remove(user_2.getName());
-                user_1.setNumOfFollowers(user_1.getNumOfFollowers()-1);
-                user_2.setNumOfFollowing(user_2.getNumOfFollowing()-1);
-            }
-            if(followers.get(user_2.getName()).contains(user_1.getName())){
-                followers.get(user_2.getName()).remove(user_1.getName());
-                user_2.setNumOfFollowers(user_2.getNumOfFollowers()-1);
-                user_1.setNumOfFollowing(user_1.getNumOfFollowing()-1);
-            }
-            if(!BlockedUser(command.getClientName(),command.getBlockedName())) {
-                if(!blockedUsers.containsKey(command.getClientName()))
-                    blockedUsers.put(command.getClientName(), new LinkedList<>());
-                if(!blockedUsers.containsKey(command.getBlockedName()))
-                    blockedUsers.put(command.getBlockedName(), new LinkedList<>());
+            if(!user_1.getName().equals(user_2.getName())) {
+                if (followers.get(user_1.getName()).contains(user_2.getName())) {
+                    followers.get(user_1.getName()).remove(user_2.getName());
+                    user_1.setNumOfFollowers(user_1.getNumOfFollowers() - 1);
+                    user_2.setNumOfFollowing(user_2.getNumOfFollowing() - 1);
+                }
+                if (followers.get(user_2.getName()).contains(user_1.getName())) {
+                    followers.get(user_2.getName()).remove(user_1.getName());
+                    user_2.setNumOfFollowers(user_2.getNumOfFollowers() - 1);
+                    user_1.setNumOfFollowing(user_1.getNumOfFollowing() - 1);
+                }
+                if (!BlockedUser(command.getClientName(), command.getBlockedName())) {
+                    if (!blockedUsers.containsKey(command.getClientName()))
+                        blockedUsers.put(command.getClientName(), new LinkedList<>());
+                    if (!blockedUsers.containsKey(command.getBlockedName()))
+                        blockedUsers.put(command.getBlockedName(), new LinkedList<>());
 
-                blockedUsers.get(command.getClientName()).add(command.getBlockedName());
-                blockedUsers.get(command.getBlockedName()).add(command.getClientName());
-                AckCommand ack = new AckCommand(10);
-                ack.setMsgOpCode(command.getOpCode());
-                result.add(ack);
-                return result;
+                    blockedUsers.get(command.getClientName()).add(command.getBlockedName());
+                    blockedUsers.get(command.getBlockedName()).add(command.getClientName());
+                    AckCommand ack = new AckCommand(10);
+                    ack.setMsgOpCode(command.getOpCode());
+                    result.add(ack);
+                    return result;
+                }
             }
         }
         ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
