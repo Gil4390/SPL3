@@ -1,5 +1,8 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "EncoderDecoder.h"
 #include <iostream>
+#include <ctime>
+using namespace std;
 
 EncoderDecoder::EncoderDecoder()
 {
@@ -76,41 +79,6 @@ int EncoderDecoder::encode(string str, char* chararray)
             chararray[len] = birthdayarr[i];
             len++;
         }
-        chararray[len] = '\0';
-        len++;
-    }
-
-    else if (vecOfInput[0] == "PM") {
-        opcode = 6;
-
-        string username = vecOfInput[1];
-
-        string content = "";
-        for (int i = 2; i < vecOfInput.size();i++) {
-            content += vecOfInput[i];
-        }
-
-        char const* usernamearr = username.c_str();
-        char const* contentarr = content.c_str();
-
-        char opchar[2];
-        shortToBytes(opcode, opchar);
-        len = 2;
-
-        chararray[0] = opchar[0];
-        chararray[1] = opchar[1];
-        for (int i = 0; i < username.size(); i++) {
-            chararray[len] = usernamearr[i];
-            len++;
-        }
-        chararray[len] = '\0';
-        len++;
-        for (int i = 0; i < content.size(); i++) {
-            chararray[len] = contentarr[i];
-            len++;
-        }
-        chararray[len] = '\0';
-        // need to send date
         chararray[len] = '\0';
         len++;
     }
@@ -212,6 +180,61 @@ int EncoderDecoder::encode(string str, char* chararray)
         string end = ";";
         chararray[len] = end.c_str()[0];
         len++;
+    }
+
+
+    else if (vecOfInput[0] == "PM") {
+        opcode = 6;
+
+        string username = vecOfInput[1];
+
+        string content = "";
+        for (int i = 2; i < vecOfInput.size();i++) {
+            content += vecOfInput[i];
+        }
+
+        char const* usernameArr = username.c_str();
+        char const* contentArr = content.c_str();
+
+
+        char opchar[2];
+        shortToBytes(opcode, opchar);
+        len = 2;
+
+        chararray[0] = opchar[0];
+        chararray[1] = opchar[1];
+        for (int i = 0; i < username.size(); i++) {
+            chararray[len] = usernameArr[i];
+            len++;
+        }
+        chararray[len] = '\0';
+        len++;
+        for (int i = 0; i < content.size(); i++) {
+            chararray[len] = contentArr[i];
+            len++;
+        }
+        chararray[len] = '\0';
+        len++;
+
+        time_t rawtime;
+        
+        tm* timeinfo;
+        char buffer[100];
+
+        time(&rawtime);
+        timeinfo = localtime(&rawtime);
+
+        strftime(buffer, 50, "%d-%m-%Y %H:%M:%S", timeinfo);
+
+        std::string dateStr(buffer);
+        char const* dateArr = dateStr.c_str();
+        for (int i = 0; i < dateStr.size(); i++) {
+            chararray[len] = dateArr[i];
+            len++;
+        }
+
+        chararray[len] = '\0';
+        len++;        
     }
     
     else if (vecOfInput[0] == "STAT" || vecOfInput[0] == "BLOCK") {
