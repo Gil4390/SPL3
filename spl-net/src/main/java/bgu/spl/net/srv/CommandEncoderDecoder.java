@@ -217,6 +217,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
+            command.setBlockedName(StandardCharsets.UTF_8.decode(bb).toString());
         }
         else{
             fieldBytes.add(nextByte);

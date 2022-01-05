@@ -335,8 +335,8 @@ public class Twitter {
         if(checkRegister(command.getSenderId()))
             command.setClientName(userId.get(command.getSenderId()).getName());
         if(checkRegister(command.getSenderId()) && users.containsKey(command.getBlockedName())){
-            User user_1 = users.get(command.getClientName());
-            User user_2 = users.get(command.getBlockedName());
+            User user_1 = users.get(command.getClientName()); // client
+            User user_2 = users.get(command.getBlockedName()); // blocked user
             if(followers.get(user_1.getName()).contains(user_2.getName())){
                 followers.get(user_1.getName()).remove(user_2.getName());
                 user_1.setNumOfFollowers(user_1.getNumOfFollowers()-1);
@@ -348,6 +348,10 @@ public class Twitter {
                 user_1.setNumOfFollowing(user_1.getNumOfFollowing()-1);
             }
             if(!BlockedUser(command.getClientName(),command.getBlockedName())) {
+                if(!blockedUsers.containsKey(command.getClientName()))
+                    blockedUsers.put(command.getClientName(), new LinkedList<>());
+                if(!blockedUsers.containsKey(command.getBlockedName()))
+                    blockedUsers.put(command.getBlockedName(), new LinkedList<>());
 
                 blockedUsers.get(command.getClientName()).add(command.getBlockedName());
                 blockedUsers.get(command.getBlockedName()).add(command.getClientName());
@@ -376,9 +380,11 @@ public class Twitter {
     }
 
     private boolean BlockedUser(String client, String client2){
-        for (String str : blockedUsers.get(client)) {
-            if(client2==str)
-                return true;
+        if(blockedUsers.containsKey(client)) {
+            for (String str : blockedUsers.get(client)) {
+                if (client2 == str)
+                    return true;
+            }
         }
         return false;
     }
