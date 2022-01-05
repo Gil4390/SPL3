@@ -111,7 +111,7 @@ public class Twitter {
             command.setClientName(userId.get(command.getSenderId()).getName());
         if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getClientName())){
             if (!followers.get(command.getFollowName()).contains(command.getClientName())) {
-                if (users.containsKey(command.getFollowName()) || !BlockedUser(command.getClientName(),command.getFollowName())) {
+                if (users.containsKey(command.getFollowName()) && !BlockedUser(command.getClientName(),command.getFollowName())) {
                     followers.get(command.getFollowName()).add(command.getClientName());
                     User user1 = users.get(command.getClientName());
                     user1.setNumOfFollowing((user1.getNumOfFollowing()+1));
@@ -382,7 +382,7 @@ public class Twitter {
     private boolean BlockedUser(String client, String client2){
         if(blockedUsers.containsKey(client)) {
             for (String str : blockedUsers.get(client)) {
-                if (client2 == str)
+                if (client2.equals(str))
                     return true;
             }
         }
