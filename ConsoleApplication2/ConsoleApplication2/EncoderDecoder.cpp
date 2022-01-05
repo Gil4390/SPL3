@@ -18,13 +18,20 @@ string EncoderDecoder::decodeLine(string line) {
     opCode = line.substr(0, 2);
     if (opCode == "09") { //Notification
         string msgType = "";
-        if (line[3] == '0') msgType = "PM";
+        if (line[3] == '\0') msgType = "PM";
         else msgType = "Public";
 
         line = line.substr(3);
-        vector<string> lineSplit = split(line, 0);
+        vector<string> lineSplit = split(line, " ");
         string postingUser = lineSplit[0];
-        string content = lineSplit[1];
+
+        string content = "";
+        for (int i = 1; i < lineSplit.size();i++) {
+            content += lineSplit[i] + " ";
+        }
+        content = content.substr(0, content.length() - 1);
+
+
         result = "NOTIFICATION " + msgType + " " + postingUser + " " + content;
     }
     else if (opCode == "10") { //ACK
@@ -155,8 +162,9 @@ int EncoderDecoder::encode(string str, char* chararray)
 
     string content = "";
     for (int i = 1; i < vecOfInput.size();i++) {
-        content += vecOfInput[i];
+        content += vecOfInput[i] + " ";
     }
+    content = content.substr(0, content.length() - 1);
 
     char opchar[2];
     shortToBytes(opcode, opchar);
@@ -187,8 +195,9 @@ int EncoderDecoder::encode(string str, char* chararray)
 
         string content = "";
         for (int i = 2; i < vecOfInput.size();i++) {
-            content += vecOfInput[i];
+            content += vecOfInput[i] +" ";
         }
+        content = content.substr(0, content.length() - 1);
 
         char const* usernameArr = username.c_str();
         char const* contentArr = content.c_str();

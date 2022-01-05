@@ -168,8 +168,10 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-            if (fieldCounter == 2)
+            if (fieldCounter == 1)
                 command.setReceiveName(StandardCharsets.UTF_8.decode(bb).toString());
+            else if(fieldCounter == 2)
+                command.setContent(StandardCharsets.UTF_8.decode(bb).toString());
             else
                 command.setSendingDate(StandardCharsets.UTF_8.decode(bb).toString());
             fieldCounter++;
@@ -270,20 +272,23 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
 
     public byte[] encode(NotificationCommand command){
         byte [] opCode = new byte[2];
-        opCode[0] = '9';
-        opCode[1] = '0';
+        opCode[0] = '0';
+        opCode[1] = '9';
+
         byte [] type = new byte[1];
         String s = String.valueOf(command.getType());
         type[0] = (byte)s.charAt(0);
-        byte [] PostingUserName = command.getPostingUserName().getBytes(StandardCharsets.UTF_8);
+
+        byte [] PostingUserName = (command.getPostingUserName()+" ").getBytes(StandardCharsets.UTF_8);
         byte [] content = command.getContent().getBytes(StandardCharsets.UTF_8);
         byte [] zero = shortToBytes((short)0);
-
+        byte [] end = ";".getBytes(StandardCharsets.UTF_8);
 
         byte [] result = addArray(opCode,type);
         result = addArray(result,PostingUserName);
         result = addArray(result,content);
         result = addArray(result,zero);
+        result = addArray(result,end);
         return result;
     }
 

@@ -11,7 +11,6 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Twitter {
-    private int UserID;
     private ConcurrentHashMap<String, User> users;//registered users
     private ConcurrentHashMap<String, List<String>> followers;//all followers of a user
     private ConcurrentHashMap<String,Boolean>loggedIn;// if the user is loggedIn
@@ -22,7 +21,6 @@ public class Twitter {
     private ConcurrentHashMap<Integer, User> userId; // all users by id
 
     public Twitter() {
-        UserID = 0;
         followers = new ConcurrentHashMap<>();
         users = new ConcurrentHashMap<>();
         privateMessages=new ConcurrentHashMap<>();
@@ -41,7 +39,7 @@ public class Twitter {
             result.add(errcmd);
         }
         else{ // todo need to be sync or atomic id counter
-            User user = new User(UserID++, cmd.getName(), cmd.getPassword(), cmd.getBirthday());
+            User user = new User(cmd.getSenderId(), cmd.getName(), cmd.getPassword(), cmd.getBirthday());
             users.put(user.getName(), user);
             userId.put(user.getID(),user);
             followers.put(user.getName(),new LinkedList<>());
@@ -225,9 +223,9 @@ public class Twitter {
     }
 
     public Vector<ReturnCommand> PrivateMessage(PrivateMessageCommand command){
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        command.setSendingDate(formatter.format(date));
+//        Date date = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+//        command.setSendingDate(formatter.format(date));
 
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(command.getSenderId()))
@@ -239,12 +237,12 @@ public class Twitter {
                     String filteredContent=command.getContent();
                     filteredContent=FilterString(filteredContent);
                     Message m = new Message(0,filteredContent, command.getSenderName(), command.getSendingDate());
-                    if(privateMessages.containsKey(command.getSendingDate()))
-                        privateMessages.get(command.getSendingDate()).add(m);
+                    if(privateMessages.containsKey(command.getSendingDate().substring(0,10)))
+                        privateMessages.get(command.getSendingDate().substring(0,10)).add(m);
                     else{
                         List <Message> temp = new LinkedList<>();
                         temp.add(m);
-                        privateMessages.put(command.getSendingDate(),temp);
+                        privateMessages.put(command.getSendingDate().substring(0,10),temp);
                     }
                     AckCommand ack = new AckCommand(10);
                     ack.setMsgOpCode(command.getOpCode());
