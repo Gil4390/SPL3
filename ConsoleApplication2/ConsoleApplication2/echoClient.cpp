@@ -2,6 +2,7 @@
 #include "connectionHandler.h"
 #include "InputReader.h"
 #include "EncoderDecoder.h"
+#include "Listener.h"
 using namespace std;
 
 /**
@@ -36,10 +37,11 @@ int main(int argc, char* argv[]) {
     std::string answer="";
     bool bye = false;
 
-    while (1) {
+    Listener listener(&connectionHandler);
+    std::thread th2(&Listener::run, &listener);
 
+    while (1) {
         string line = "";
-        answer = "";
 
         mutex.lock();
         if (sendList->size() != 0) {
@@ -57,43 +59,14 @@ int main(int argc, char* argv[]) {
                 bye = true;
                 break;
             }
-            else {
-                std::cout << "Sent " << len + 1 << " bytes to server" << std::endl;
-                if (!connectionHandler.getLine(answer)) {
-                    std::cout << "Disconnected. Exiting...\n" << std::endl;
-                    bye = true;
-                    break;
-                }
+            std::cout << "Sent " << len + 1 << " bytes to server" << std::endl;
+        }
 
-                string decodedLine = encdec.decodeLine(answer);
-                len = decodedLine.length();
-                std::cout << decodedLine << std::endl;
-            }
-
-
-            if (line == "LOGOUT") {
-                break;
-            }
+        if (line == "LOGOUT") {
+            break;
         }
     }
+
     inputReader.Terminate();
-    while (!bye)
-    {
-        if(encdec.decodeLine(answer) == "ACK 3"){
-            connectionHandler.close();
-            std::cout << "Exiting...\n" << std::endl;
-            bye = true;
-        }
-        else {
-            int len = answer.length();
-            std::cout << "Reply: " << answer << " " << len << " bytes " << std::endl << std::endl;
-        }
-
-        if (bye && !connectionHandler.getLine(answer)) {
-            std::cout << "Disconnected. Exiting...\n" << std::endl;
-            bye = true;
-        }
-    }
-
     return 0;
 }

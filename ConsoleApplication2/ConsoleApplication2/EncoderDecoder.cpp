@@ -29,7 +29,7 @@ string EncoderDecoder::decodeLine(string line) {
         for (int i = 1; i < lineSplit.size();i++) {
             content += lineSplit[i] + " ";
         }
-        content = content.substr(0, content.length() - 1);
+        content = content.substr(0, content.length() - 2);
 
 
         result = "NOTIFICATION " + msgType + " " + postingUser + " " + content;
