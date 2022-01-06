@@ -89,17 +89,18 @@ public class Twitter {
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(cmd.getSenderId()))
             cmd.setSenderName(userId.get(cmd.getSenderId()).getName());
-        if(checkRegister(cmd.getSenderId()) && checkLoggedIn(cmd.getSenderName())){
-            loggedIn.put(cmd.getSenderName(),false);
-            userId.remove(cmd.getSenderId());
-            AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
-            ackcmd.setMsgOpCode(3);
-            result.add(ackcmd);
-        }
-        else{
-            ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
-            errcmd.setMsgOpCode(3);
-            result.add(errcmd);
+        synchronized (users.get(cmd.getSenderName())) {
+            if (checkRegister(cmd.getSenderId()) && checkLoggedIn(cmd.getSenderName())) {
+                loggedIn.put(cmd.getSenderName(), false);
+                userId.remove(cmd.getSenderId());
+                AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
+                ackcmd.setMsgOpCode(3);
+                result.add(ackcmd);
+            } else {
+                ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
+                errcmd.setMsgOpCode(3);
+                result.add(errcmd);
+            }
         }
         return result;
     }
@@ -191,7 +192,7 @@ public class Twitter {
                     NotificationCommand notificationCommand = (NotificationCommand) CommandFactory.makeReturnCommand(9);
                     notificationCommand.setType(1);
                     notificationCommand.setPostingUserName(cmd.getSenderName());
-                    notificationCommand.setContent(cmd.getContent());
+                    notificationCommand.setContent(filteredContent);
                     notificationCommand.setDestUserID(users.get(sUser).getID());
                     synchronized (users.get(cmd.getSenderName())) {
                         if (!checkLoggedIn(sUser)) {
@@ -201,17 +202,9 @@ public class Twitter {
                             result.add(notificationCommand);
                         }
                     }
-                    return result;
-                }
-                else{//if the user mentioned someone that blocked them
-                    user.addPostedPost();
-                    result = new Vector<>();
-                    ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
-                    errcmd.setMsgOpCode(5);
-                    result.add(errcmd);
-                    break;
                 }
             }
+            return result;
         }
         else{
             ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
@@ -245,7 +238,7 @@ public class Twitter {
                     NotificationCommand notCommand = new NotificationCommand(command.getOpCode());
                     notCommand.setType(0);
                     notCommand.setPostingUserName(command.getSenderName());
-                    notCommand.setContent(command.getContent()+" "+command.getSendingDate());
+                    notCommand.setContent(filteredContent+" "+command.getSendingDate());
                     notCommand.setDestUserID(users.get(command.getReceiveName()).getID());
                     synchronized (users.get(command.getSenderName())) {
                         if (!checkLoggedIn(command.getReceiveName())) {
@@ -387,7 +380,8 @@ public class Twitter {
     }
 
     private String FilterString(String unFilteredStr){
-        String filteredString=unFilteredStr.toLowerCase();
+        String filteredString=unFilteredStr;
+        filteredString=filteredString.toLowerCase();
         for (String str:filteredWords) {
             str = str.toLowerCase();
             filteredString = filteredString.replace(str,"<filtered>");

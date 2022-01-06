@@ -18,11 +18,11 @@ string EncoderDecoder::decodeLine(string line) {
     opCode = line.substr(0, 2);
     if (opCode == "09") { //Notification
         string msgType = "";
-        if (line[3] == '1') msgType = "Public";
+        if (line[2] == '1') msgType = "Public";
         else msgType = "PM";
 
         line = line.substr(3);
-        vector<string> lineSplit = split(line, " "); // todo split by \0 and not " "
+        vector<string> lineSplit = split(line, " ");
         string postingUser = lineSplit[0];
 
         string content = "";
