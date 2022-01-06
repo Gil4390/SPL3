@@ -188,7 +188,6 @@ public class Twitter {
             }
             for(String sUser : usersToNotify){
                 if(users.containsKey(sUser) && !BlockedUser(cmd.getSenderName(), sUser)) {
-                    usersToNotify.remove(sUser);
                     NotificationCommand notificationCommand = (NotificationCommand) CommandFactory.makeReturnCommand(9);
                     notificationCommand.setType(1);
                     notificationCommand.setPostingUserName(cmd.getSenderName());
