@@ -27,7 +27,6 @@ public class Protocol implements BidiMessagingProtocol<ReceivedCommand> {
     @Override
     public void process(ReceivedCommand message) {
         ReceivedCommand com = message;
-        
         com.setSenderId(connectionId);
 
         Vector<ReturnCommand> processedMessage = new Vector<>();

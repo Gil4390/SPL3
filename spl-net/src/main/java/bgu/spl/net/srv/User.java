@@ -6,15 +6,16 @@ import java.time.Period;
 import java.util.Date;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {
     final private int ID;
     final private String name;
     final private String password;
     final private String Birthday;
-    private int numOfFollowing;
-    private int numOfFollowers; //todo atomic count
-    private int numPostedPost;
+    private AtomicInteger numOfFollowing;
+    private AtomicInteger numOfFollowers; //todo atomic count
+    private AtomicInteger numPostedPost;
     private ConcurrentLinkedQueue<Message> unreadMsg;
 
     public User(int id, String name, String password, String birthday) {
@@ -22,9 +23,9 @@ public class User {
         this.name = name;
         this.password = password;
         this.Birthday = birthday;
-        this.numOfFollowing = 0;
-        this.numOfFollowers = 0;
-        this.numPostedPost=0;
+        this.numOfFollowing = new AtomicInteger(0);
+        this.numOfFollowers = new AtomicInteger(0);
+        this.numPostedPost=new AtomicInteger(0);
         unreadMsg = new ConcurrentLinkedQueue<>();
     }
 
@@ -45,27 +46,36 @@ public class User {
     }
 
     public int getNumOfFollowing() {
-        return numOfFollowing;
+        return numOfFollowing.get();
     }
 
-    public void setNumOfFollowing(int numOfFollowing) {
-        this.numOfFollowing = numOfFollowing;
+    public void addFollowing() {
+        int val;
+        do{
+            val=this.numOfFollowing.get();
+        }while(!numOfFollowing.compareAndSet(val,val+1));
     }
 
     public int getNumOfFollowers() {
-        return numOfFollowers;
+        return numOfFollowers.get();
     }
 
-    public void setNumOfFollowers(int numOfFollowers) {
-        this.numOfFollowers = numOfFollowers;
+    public void addFollowers() {
+        int val;
+        do{
+            val=this.numOfFollowers.get();
+        }while(!this.numOfFollowers.compareAndSet(val,val+1));
     }
 
     public int getNumPostedPost() {
-        return numPostedPost;
+        return numPostedPost.get();
     }
 
-    public void setNumPostedPost(int numPostedPost) {
-        this.numPostedPost = numPostedPost;
+    public void addPostedPost() {
+        int val;
+        do{
+            val=this.numPostedPost.get();
+        }while(!this.numPostedPost.compareAndSet(val,val+1));
     }
 
     public int getAge(){

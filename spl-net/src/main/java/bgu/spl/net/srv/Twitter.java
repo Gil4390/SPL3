@@ -113,9 +113,9 @@ public class Twitter {
                 if (!BlockedUser(command.getSenderName(),command.getFollowName())) {
                     followers.get(command.getFollowName()).add(command.getSenderName());
                     User user1 = users.get(command.getSenderName());
-                    user1.setNumOfFollowing((user1.getNumOfFollowing()+1));
+                    user1.addFollowing();
                     User user2 = users.get(command.getFollowName());
-                    user2.setNumOfFollowers(user2.getNumOfFollowers()+1);
+                    user2.addFollowers();
                     AckCommand ack = new AckCommand(10);
                     ack.setMsgOpCode(command.getOpCode());
                     ack.setOptionalData(command.getFollowName());//todo amen
@@ -138,9 +138,9 @@ public class Twitter {
             if (followers.get(command.getFollowName()).contains(command.getSenderName())) {
                 followers.get(command.getFollowName()).remove(command.getSenderName());
                 User user = users.get(command.getSenderName());
-                user.setNumOfFollowing((user.getNumOfFollowing()-1));
-                User user2 = users.get(command.getFollowName());
-                user2.setNumOfFollowers(user2.getNumOfFollowers()-1);
+                user.addFollowing();
+                User user2 = users.get(command.getFollowName()); // todo atomic
+                user2.addFollowers();
                 AckCommand ack = new AckCommand(10);
                 ack.setMsgOpCode(command.getOpCode());
                 ack.setOptionalData(command.getFollowName());
@@ -178,7 +178,7 @@ public class Twitter {
             result.add(ack);
 
             User user = users.get(cmd.getSenderName());
-            user.setNumPostedPost((user.getNumPostedPost()+1));
+            user.addPostedPost();
 
             Vector<String> usersToNotify = cmd.getMentionedUsers();
             for(String sUser : followers.get(cmd.getSenderName())){
@@ -204,7 +204,7 @@ public class Twitter {
                     return result;
                 }
                 else{//if the user mentioned someone that blocked them
-                    user.setNumPostedPost((user.getNumPostedPost()-1));
+                    user.addPostedPost();
                     result = new Vector<>();
                     ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
                     errcmd.setMsgOpCode(5);
