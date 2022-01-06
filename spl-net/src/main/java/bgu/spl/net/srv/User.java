@@ -14,7 +14,7 @@ public class User {
     final private String password;
     final private String Birthday;
     private AtomicInteger numOfFollowing;
-    private AtomicInteger numOfFollowers; //todo atomic count
+    private AtomicInteger numOfFollowers;
     private AtomicInteger numPostedPost;
     private ConcurrentLinkedQueue<Message> unreadMsg;
 
@@ -89,12 +89,6 @@ public class User {
             val=this.numPostedPost.get();
         }while(!this.numPostedPost.compareAndSet(val,val+1));
     }
-    public void subPostedPost() {
-        int val;
-        do{
-            val=this.numPostedPost.get();
-        }while(!this.numPostedPost.compareAndSet(val,val-1));
-    }
 
     public int getAge(){
         String [] split = Birthday.split("-");
@@ -107,7 +101,7 @@ public class User {
     }
 
     public String getStats(){
-        return "" +  getAge() +" "+ numPostedPost +" "+ numOfFollowers +" "+ numOfFollowing;
+        return "" +  getAge() +" "+ numPostedPost.get() +" "+ numOfFollowers.get() +" "+ numOfFollowing.get();
     }
 
     public synchronized ConcurrentLinkedQueue<Message> getUnreadMsgAndReset() {
