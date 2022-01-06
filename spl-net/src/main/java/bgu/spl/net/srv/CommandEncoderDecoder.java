@@ -191,19 +191,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
             String userNamesString=StandardCharsets.UTF_8.decode(bb).toString();
 
-            List<String> userNames = new LinkedList<>();
-            String str = "";
-            for(int i=0; i<userNamesString.length();i++){
-                if(userNamesString.charAt(i) != '|'){
-                    str +=userNamesString.charAt(i);
-                }
-                else{
-                    userNames.add(str);
-                    i += str.length();
-                    str="";
-                }
-            }
-            command.setUserNameList(userNames);
+            String [] userNames = userNamesString.split("\\|");
+            command.setUserNameList(Arrays.asList(userNames));
         }
         else{
             fieldBytes.add(nextByte);

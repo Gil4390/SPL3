@@ -295,7 +295,7 @@ public class Twitter {
         if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getSenderName())){
             for (String user:command.getUserNameList()) {
                 if(!users.containsKey(user) || BlockedUser(command.getSenderName(),user)) {
-                    ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(10);
+                    ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
                     errcmd.setMsgOpCode(8);
                     result.add(errcmd);
                     return result;
