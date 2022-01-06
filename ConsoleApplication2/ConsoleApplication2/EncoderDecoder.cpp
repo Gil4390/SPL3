@@ -38,7 +38,10 @@ string EncoderDecoder::decodeLine(string line) {
         string msgOpCode = line.substr(2, 2);
         if (msgOpCode[0] == '0') msgOpCode = msgOpCode.substr(1);
         string optional = line.substr(4, line.size()-5);
-        result = "ACK " + msgOpCode + " " + optional;
+        if(optional.length() > 0)
+            result = "ACK " + msgOpCode + " " + optional;
+        else
+            result = "ACK " + msgOpCode;
     }
     else { //Error
         string msgOpCode = line.substr(2, 2);

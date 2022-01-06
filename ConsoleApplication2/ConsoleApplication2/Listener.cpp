@@ -4,14 +4,14 @@
 #include "EncoderDecoder.h"
 
 Listener::Listener(ConnectionHandler* ch) : ch(ch) {
-    
+    terminate = false;
 }
 
 void Listener::run()
 {
     EncoderDecoder encdec;
     
-    while (1) {
+    while (!terminate) {
         stringstream msg;
         std::string answer = "";
 
@@ -25,11 +25,18 @@ void Listener::run()
             decodedLine = encdec.decodeLine(answer);
             msg << decodedLine << std::endl;
             cout << msg.str();
-        }
-        else if (decodedLine == "ACK 3") {
-            msg << "Disconnected. Exiting...\n" << std::endl;
-            cout << msg.str();
-            break;
+
+            if (decodedLine.compare("ACK 3") == 0) {
+                stringstream msg2;
+                msg2 << "Exiting Listener..." << std::endl;
+                cout << msg2.str();
+                terminate = true;
+                break;
+            }
         }
     }
+}
+
+bool Listener::isTerminate() {
+    return terminate;
 }

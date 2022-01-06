@@ -35,7 +35,6 @@ int main(int argc, char* argv[]) {
     std::thread th1(&InputReader::run, &inputReader);
     EncoderDecoder encdec;
     std::string answer="";
-    bool bye = false;
 
     Listener listener(&connectionHandler);
     std::thread th2(&Listener::run, &listener);
@@ -66,11 +65,14 @@ int main(int argc, char* argv[]) {
             cout << msg.str();
         }
 
-        if (line == "LOGOUT") {
+        if (listener.isTerminate()) {
             break;
         }
     }
-
+    
     inputReader.Terminate();
+    th1.detach();
+    th2.join();
+
     return 0;
 }
