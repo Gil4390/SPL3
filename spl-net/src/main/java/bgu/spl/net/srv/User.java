@@ -55,6 +55,12 @@ public class User {
             val=this.numOfFollowing.get();
         }while(!numOfFollowing.compareAndSet(val,val+1));
     }
+    public void subFollowing() {
+        int val;
+        do{
+            val=this.numOfFollowing.get();
+        }while(!numOfFollowing.compareAndSet(val,val-1));
+    }
 
     public int getNumOfFollowers() {
         return numOfFollowers.get();
@@ -66,6 +72,12 @@ public class User {
             val=this.numOfFollowers.get();
         }while(!this.numOfFollowers.compareAndSet(val,val+1));
     }
+    public void subFollowers() {
+        int val;
+        do{
+            val=this.numOfFollowers.get();
+        }while(!this.numOfFollowers.compareAndSet(val,val-1));
+    }
 
     public int getNumPostedPost() {
         return numPostedPost.get();
@@ -76,6 +88,12 @@ public class User {
         do{
             val=this.numPostedPost.get();
         }while(!this.numPostedPost.compareAndSet(val,val+1));
+    }
+    public void subPostedPost() {
+        int val;
+        do{
+            val=this.numPostedPost.get();
+        }while(!this.numPostedPost.compareAndSet(val,val-1));
     }
 
     public int getAge(){

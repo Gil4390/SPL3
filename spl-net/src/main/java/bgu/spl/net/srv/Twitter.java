@@ -138,9 +138,9 @@ public class Twitter {
             if (followers.get(command.getFollowName()).contains(command.getSenderName())) {
                 followers.get(command.getFollowName()).remove(command.getSenderName());
                 User user = users.get(command.getSenderName());
-                user.addFollowing();
+                user.subFollowing();
                 User user2 = users.get(command.getFollowName()); // todo atomic
-                user2.addFollowers();
+                user2.subFollowers();
                 AckCommand ack = new AckCommand(10);
                 ack.setMsgOpCode(command.getOpCode());
                 ack.setOptionalData(command.getFollowName());
@@ -335,13 +335,13 @@ public class Twitter {
             if(!user_1.getName().equals(user_2.getName())) {
                 if (followers.get(user_1.getName()).contains(user_2.getName())) {
                     followers.get(user_1.getName()).remove(user_2.getName());
-                    user_1.setNumOfFollowers(user_1.getNumOfFollowers() - 1);
-                    user_2.setNumOfFollowing(user_2.getNumOfFollowing() - 1);
+                    user_1.subFollowers();
+                    user_2.subFollowing();
                 }
                 if (followers.get(user_2.getName()).contains(user_1.getName())) {
                     followers.get(user_2.getName()).remove(user_1.getName());
-                    user_2.setNumOfFollowers(user_2.getNumOfFollowers() - 1);
-                    user_1.setNumOfFollowing(user_1.getNumOfFollowing() - 1);
+                    user_2.subFollowers();
+                    user_1.subFollowing();
                 }
                 if (!BlockedUser(command.getClientName(), command.getBlockedName())) {
                     if (!blockedUsers.containsKey(command.getClientName()))
