@@ -34,7 +34,6 @@ int main(int argc, char* argv[]) {
     InputReader inputReader(sendList, mutex);
     std::thread th1(&InputReader::run, &inputReader);
     EncoderDecoder encdec;
-    std::string answer="";
 
     Listener listener(&connectionHandler);
     std::thread th2(&Listener::run, &listener);

@@ -4,6 +4,7 @@ import bgu.spl.net.api.bidi.BidiMessagingProtocol;
 import bgu.spl.net.api.bidi.Connections;
 import bgu.spl.net.srv.Objects.*;
 
+import java.rmi.registry.RegistryHandler;
 import java.util.Vector;
 
 public class Protocol implements BidiMessagingProtocol<ReceivedCommand> {
@@ -26,7 +27,9 @@ public class Protocol implements BidiMessagingProtocol<ReceivedCommand> {
     @Override
     public void process(ReceivedCommand message) {
         ReceivedCommand com = message;
+        
         com.setSenderId(connectionId);
+
         Vector<ReturnCommand> processedMessage = new Vector<>();
         switch (com.getOpCode()){
             case 1:

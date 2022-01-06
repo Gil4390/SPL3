@@ -40,7 +40,6 @@ public class Twitter {
         else{
             User user = new User(cmd.getSenderId(), cmd.getName(), cmd.getPassword(), cmd.getBirthday());
             users.put(user.getName(), user);
-            userId.put(user.getID(),user);
             followers.put(user.getName(),new LinkedList<>());
             loggedIn.put(user.getName(),false);
             blockedUsers.put(user.getName(),new LinkedList<>());
@@ -62,7 +61,7 @@ public class Twitter {
                         AckCommand ack = new AckCommand(10);
                         ack.setMsgOpCode(command.getOpCode());
                         result.add(ack);
-
+                        userId.put(command.getSenderId(),users.get(command.getSenderName()));
                         User user = users.get(command.getSenderName());
                         for (Message msg : user.getUnreadMsgAndReset()) {
                             NotificationCommand notificationCmd = new NotificationCommand(9);
@@ -92,6 +91,7 @@ public class Twitter {
             cmd.setSenderName(userId.get(cmd.getSenderId()).getName());
         if(checkRegister(cmd.getSenderId()) && checkLoggedIn(cmd.getSenderName())){
             loggedIn.put(cmd.getSenderName(),false);
+            userId.remove(cmd.getSenderId());
             AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
             ackcmd.setMsgOpCode(3);
             result.add(ackcmd);
@@ -165,7 +165,7 @@ public class Twitter {
         if(checkRegister(cmd.getSenderId()) && loggedIn.containsKey(cmd.getSenderName())){
             String filteredContent=cmd.getContent();
             filteredContent=FilterString(filteredContent);
-            Message m = new Message(0,filteredContent, cmd.getSenderName(), cmd.getSendingDate());
+            Message m = new Message(1,filteredContent, cmd.getSenderName(), cmd.getSendingDate());
             if(postMessages.containsKey(cmd.getSendingDate()))
                 postMessages.get(cmd.getSendingDate()).add(m);
             else{
@@ -393,5 +393,11 @@ public class Twitter {
             filteredString = filteredString.replace(str,"<filtered>");
         }
         return filteredString;
+    }
+
+    public int getClientID(String senderName) {
+        if(users.containsKey(senderName))
+            return users.get(senderName).getID();
+        return -1;
     }
 }

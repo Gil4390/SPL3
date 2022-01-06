@@ -278,11 +278,15 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
 
         byte [] type = new byte[1];
         String s = String.valueOf(command.getType());
-        type[0] = (byte)s.charAt(0);
+        if(command.getType()==1)
+            type[0] = '\1';
+        else{
+            type[0] = '\0';
+        }
 
         byte [] PostingUserName = (command.getPostingUserName()).getBytes(StandardCharsets.UTF_8);
         byte [] content = command.getContent().getBytes(StandardCharsets.UTF_8);
-        byte [] zero = shortToBytes((short)0);
+        byte [] zero = {'\0'};
         byte [] end = ";".getBytes(StandardCharsets.UTF_8);
 
         byte [] result = addArray(opCode,type);

@@ -80,6 +80,10 @@ bool ConnectionHandler::getFrameAscii(std::string& frame, char delimiter) {
     try {
         do {
             getBytes(&ch, 1);
+            if (ch == '\0')
+                ch = ' ';
+            if (ch == '\1')
+                ch = '1';
             frame.append(1, ch);
         } while (delimiter != ch);
     }

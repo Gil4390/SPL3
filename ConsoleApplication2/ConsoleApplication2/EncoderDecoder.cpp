@@ -18,8 +18,8 @@ string EncoderDecoder::decodeLine(string line) {
     opCode = line.substr(0, 2);
     if (opCode == "09") { //Notification
         string msgType = "";
-        if (line[3] == '\0') msgType = "PM";
-        else msgType = "Public";
+        if (line[3] == '1') msgType = "Public";
+        else msgType = "PM";
 
         line = line.substr(3);
         vector<string> lineSplit = split(line, " "); // todo split by \0 and not " "
@@ -29,10 +29,8 @@ string EncoderDecoder::decodeLine(string line) {
         for (int i = 1; i < lineSplit.size();i++) {
             content += lineSplit[i] + " ";
         }
-        content = content.substr(0, content.length() - 2);
 
-
-        result = "NOTIFICATION " + msgType + " " + postingUser + " " + content;
+        result = "NOTIFICATION " + msgType + " " + postingUser + " " + content.substr(0, content.length() - 2);
     }
     else if (opCode == "10") { //ACK
         string msgOpCode = line.substr(2, 2);
