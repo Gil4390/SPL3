@@ -22,7 +22,7 @@ string EncoderDecoder::decodeLine(string line) {
         else msgType = "Public";
 
         line = line.substr(3);
-        vector<string> lineSplit = split(line, " ");
+        vector<string> lineSplit = split(line, " "); // todo split by \0 and not " "
         string postingUser = lineSplit[0];
 
         string content = "";
