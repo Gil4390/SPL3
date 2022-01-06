@@ -4,11 +4,10 @@ import bgu.spl.net.srv.Objects.*;
 import bgu.spl.net.srv.Objects.RegisterCommand;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Twitter {
     private ConcurrentHashMap<String, User> users;//registered users
@@ -27,7 +26,7 @@ public class Twitter {
         postMessages = new ConcurrentHashMap<>();
         blockedUsers= new ConcurrentHashMap<>();
         loggedIn = new ConcurrentHashMap<>();
-        filteredWords = new Vector<>();
+        filteredWords = Stream.of("grade_less_then_100","corona","Alaadin","computer_science").collect(Collectors.toList());
         userId = new ConcurrentHashMap<>();
     }
 
@@ -38,7 +37,7 @@ public class Twitter {
             errcmd.setMsgOpCode(1);
             result.add(errcmd);
         }
-        else{ // todo need to be sync or atomic id counter
+        else{
             User user = new User(cmd.getSenderId(), cmd.getName(), cmd.getPassword(), cmd.getBirthday());
             users.put(user.getName(), user);
             userId.put(user.getID(),user);
@@ -55,16 +54,16 @@ public class Twitter {
 
     public Vector<ReturnCommand> Login(LoginCommand command){
         Vector<ReturnCommand> result = new Vector<>();
-        if(users.containsKey(command.getName()) && !checkLoggedIn(command.getName()) && command.getCaptcha() == 1) {
-            synchronized (users.get(command.getName())) {
-                if (users.get(command.getName()).getPassword().equals(command.getPassword())) {
-                    if (!checkLoggedIn(command.getName())) {
-                        loggedIn.put(command.getName(), true);
+        if(users.containsKey(command.getSenderName()) && !checkLoggedIn(command.getSenderName()) && command.getCaptcha() == 1) {
+            synchronized (users.get(command.getSenderName())) {
+                if (users.get(command.getSenderName()).getPassword().equals(command.getPassword())) {
+                    if (!checkLoggedIn(command.getSenderName())) {
+                        loggedIn.put(command.getSenderName(), true);
                         AckCommand ack = new AckCommand(10);
                         ack.setMsgOpCode(command.getOpCode());
                         result.add(ack);
 
-                        User user = users.get(command.getName());
+                        User user = users.get(command.getSenderName());
                         for (Message msg : user.getUnreadMsgAndReset()) {
                             NotificationCommand notificationCmd = new NotificationCommand(9);
                             if(msg.getType() == 0)
@@ -90,9 +89,9 @@ public class Twitter {
     public Vector<ReturnCommand> Logout(LogoutCommand cmd){
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(cmd.getSenderId()))
-            cmd.setName(userId.get(cmd.getSenderId()).getName());
-        if(checkRegister(cmd.getSenderId()) && checkLoggedIn(cmd.getName())){
-            loggedIn.put(cmd.getName(),false);
+            cmd.setSenderName(userId.get(cmd.getSenderId()).getName());
+        if(checkRegister(cmd.getSenderId()) && checkLoggedIn(cmd.getSenderName())){
+            loggedIn.put(cmd.getSenderName(),false);
             AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
             ackcmd.setMsgOpCode(3);
             result.add(ackcmd);
@@ -108,13 +107,12 @@ public class Twitter {
     public Vector<ReturnCommand> Follow(FollowCommand command){
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(command.getSenderId()))
-            command.setClientName(userId.get(command.getSenderId()).getName());
-        System.out.println(checkRegister(command.getSenderId()) +" "+ checkLoggedIn(command.getClientName()) +" "+ !command.getFollowName().equals(command.getClientName()));
-        if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getClientName()) && !command.getFollowName().equals(command.getClientName())){
-            if (users.containsKey(command.getFollowName()) && !followers.get(command.getFollowName()).contains(command.getClientName())) {
-                if (!BlockedUser(command.getClientName(),command.getFollowName())) {
-                    followers.get(command.getFollowName()).add(command.getClientName());
-                    User user1 = users.get(command.getClientName());
+            command.setSenderName(userId.get(command.getSenderId()).getName());
+        if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getSenderName()) && !command.getFollowName().equals(command.getSenderName())){
+            if (users.containsKey(command.getFollowName()) && !followers.get(command.getFollowName()).contains(command.getSenderName())) {
+                if (!BlockedUser(command.getSenderName(),command.getFollowName())) {
+                    followers.get(command.getFollowName()).add(command.getSenderName());
+                    User user1 = users.get(command.getSenderName());
                     user1.setNumOfFollowing((user1.getNumOfFollowing()+1));
                     User user2 = users.get(command.getFollowName());
                     user2.setNumOfFollowers(user2.getNumOfFollowers()+1);
@@ -135,11 +133,11 @@ public class Twitter {
     public Vector<ReturnCommand> UnFollow(FollowCommand command){
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(command.getSenderId()))
-            command.setClientName(userId.get(command.getSenderId()).getName());
-        if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getClientName())) {
-            if (followers.get(command.getFollowName()).contains(command.getClientName())) {
-                followers.get(command.getFollowName()).remove(command.getClientName());
-                User user = users.get(command.getClientName());
+            command.setSenderName(userId.get(command.getSenderId()).getName());
+        if(checkRegister(command.getSenderId()) && checkLoggedIn(command.getSenderName())) {
+            if (followers.get(command.getFollowName()).contains(command.getSenderName())) {
+                followers.get(command.getFollowName()).remove(command.getSenderName());
+                User user = users.get(command.getSenderName());
                 user.setNumOfFollowing((user.getNumOfFollowing()-1));
                 User user2 = users.get(command.getFollowName());
                 user2.setNumOfFollowers(user2.getNumOfFollowers()-1);
@@ -163,11 +161,11 @@ public class Twitter {
 
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(cmd.getSenderId()))
-            cmd.setName(userId.get(cmd.getSenderId()).getName());
-        if(checkRegister(cmd.getSenderId()) && loggedIn.containsKey(cmd.getName())){
+            cmd.setSenderName(userId.get(cmd.getSenderId()).getName());
+        if(checkRegister(cmd.getSenderId()) && loggedIn.containsKey(cmd.getSenderName())){
             String filteredContent=cmd.getContent();
             filteredContent=FilterString(filteredContent);
-            Message m = new Message(0,filteredContent, cmd.getName(), cmd.getSendingDate());
+            Message m = new Message(0,filteredContent, cmd.getSenderName(), cmd.getSendingDate());
             if(postMessages.containsKey(cmd.getSendingDate()))
                 postMessages.get(cmd.getSendingDate()).add(m);
             else{
@@ -179,23 +177,23 @@ public class Twitter {
             ack.setMsgOpCode(cmd.getOpCode());
             result.add(ack);
 
-            User user = users.get(cmd.getName());
+            User user = users.get(cmd.getSenderName());
             user.setNumPostedPost((user.getNumPostedPost()+1));
 
             Vector<String> usersToNotify = cmd.getMentionedUsers();
-            for(String sUser : followers.get(cmd.getName())){
+            for(String sUser : followers.get(cmd.getSenderName())){
                 if(!usersToNotify.contains(sUser))
                     usersToNotify.add(sUser);
             }
             for(String sUser : usersToNotify){
-                if(users.containsKey(sUser) && !BlockedUser(cmd.getName(), sUser)) {
+                if(users.containsKey(sUser) && !BlockedUser(cmd.getSenderName(), sUser)) {
                     usersToNotify.remove(sUser);
                     NotificationCommand notificationCommand = (NotificationCommand) CommandFactory.makeReturnCommand(9);
                     notificationCommand.setType(1);
-                    notificationCommand.setPostingUserName(cmd.getName());
+                    notificationCommand.setPostingUserName(cmd.getSenderName());
                     notificationCommand.setContent(cmd.getContent());
                     notificationCommand.setDestUserID(users.get(sUser).getID());
-                    synchronized (users.get(cmd.getName())) {
+                    synchronized (users.get(cmd.getSenderName())) {
                         if (!checkLoggedIn(sUser)) {
                             users.get(sUser).addUnreadMsg(m);
                         }
@@ -270,12 +268,12 @@ public class Twitter {
     public Vector<ReturnCommand> LogStat(LogStatCommand cmd){
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(cmd.getSenderId()))
-            cmd.setName(userId.get(cmd.getSenderId()).getName());
-        if(checkRegister(cmd.getSenderId()) && loggedIn.containsKey(cmd.getName())){
+            cmd.setSenderName(userId.get(cmd.getSenderId()).getName());
+        if(checkRegister(cmd.getSenderId()) && loggedIn.containsKey(cmd.getSenderName())){
             int ackSendCounter =0;
             for(User user : users.values()){
                 if(user.getName() != userId.get(cmd.getSenderId()).getName() && loggedIn.get(user.getName())) {
-                    if (!blockedUsers.get(user.getName()).contains(cmd.getName())) {
+                    if (!blockedUsers.get(user.getName()).contains(cmd.getSenderName())) {
                         AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
                         ackcmd.setMsgOpCode(7);
                         ackcmd.setOptionalData(user.getStats());
@@ -389,14 +387,11 @@ public class Twitter {
     }
 
     private String FilterString(String unFilteredStr){
-        String filteredString=unFilteredStr;
+        String filteredString=unFilteredStr.toLowerCase();
         for (String str:filteredWords) {
+            str = str.toLowerCase();
             filteredString = filteredString.replace(str,"<filtered>");
         }
         return filteredString;
-    }
-
-    public User getUserByName(String name){
-        return users.get(name);
     }
 }

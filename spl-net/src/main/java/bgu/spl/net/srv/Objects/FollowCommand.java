@@ -5,7 +5,6 @@ import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class FollowCommand extends ReceivedCommand {
     private String followName;
-    private String clientName;
     private boolean isUnFollow;
     public FollowCommand(int opCode) {
         super(opCode);
@@ -29,13 +28,5 @@ public class FollowCommand extends ReceivedCommand {
 
     public void setFollowName(String followName) {
         this.followName = followName;
-    }
-
-    public String getClientName() {
-        return clientName;
-    }
-
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
     }
 }

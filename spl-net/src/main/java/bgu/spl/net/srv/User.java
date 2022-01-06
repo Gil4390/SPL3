@@ -13,7 +13,7 @@ public class User {
     final private String password;
     final private String Birthday;
     private int numOfFollowing;
-    private int numOfFollowers; //todo
+    private int numOfFollowers; //todo atomic count
     private int numPostedPost;
     private ConcurrentLinkedQueue<Message> unreadMsg;
 

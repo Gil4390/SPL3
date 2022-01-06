@@ -75,7 +75,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 }
                 ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
                 if (fieldCounter == 1) {
-                    command.setName(StandardCharsets.UTF_8.decode(bb).toString());
+                    command.setSenderName(StandardCharsets.UTF_8.decode(bb).toString());
                 }
                 else if (fieldCounter == 2)
                     command.setPassword(StandardCharsets.UTF_8.decode(bb).toString());
@@ -99,7 +99,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-            command.setName(StandardCharsets.UTF_8.decode(bb).toString());
+            command.setSenderName(StandardCharsets.UTF_8.decode(bb).toString());
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
@@ -134,7 +134,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-            command.setName(StandardCharsets.UTF_8.decode(bb).toString());
+            command.setSenderName(StandardCharsets.UTF_8.decode(bb).toString());
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
@@ -152,7 +152,7 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             if (fieldCounter == 1)
                 command.setContent(StandardCharsets.UTF_8.decode(bb).toString());
             else
-                command.setName(StandardCharsets.UTF_8.decode(bb).toString());
+                command.setSenderName(StandardCharsets.UTF_8.decode(bb).toString());
             fieldCounter++;
             fieldBytes=new Vector<>();
         }

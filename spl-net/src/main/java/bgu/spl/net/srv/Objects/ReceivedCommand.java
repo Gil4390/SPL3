@@ -5,6 +5,15 @@ import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public abstract class ReceivedCommand extends Command {
     private int senderId;
+    private String senderName;
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
 
     public ReceivedCommand(int opCode) {
         super(opCode);

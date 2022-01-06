@@ -4,7 +4,6 @@ import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class LoginCommand extends ReceivedCommand {
-    private String name;
     private String password;
     private int Captcha;
 
@@ -16,16 +15,8 @@ public class LoginCommand extends ReceivedCommand {
         c.decodeNextByte(nextByte,this);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setPassword(String password) {

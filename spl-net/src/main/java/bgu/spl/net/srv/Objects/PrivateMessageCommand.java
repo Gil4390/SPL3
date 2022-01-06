@@ -4,7 +4,6 @@ import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class PrivateMessageCommand extends ReceivedCommand {
-    private String senderName;
     private String receiveName;
     private String sendingDate;
     private String content;
@@ -14,14 +13,6 @@ public class PrivateMessageCommand extends ReceivedCommand {
     }
     public PrivateMessageCommand(int opCode) {
         super(opCode);
-    }
-
-    public String getSenderName() {
-        return senderName;
-    }
-
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
     }
 
     public String getReceiveName() {

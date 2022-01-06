@@ -7,23 +7,14 @@ import java.util.List;
 
 public class StatsCommand extends ReceivedCommand {
 
-    private String senderName;
     private List<String> userNameList;
 
     public StatsCommand(int opCode) {
         super(opCode);
     }
 
-    public String getSenderName() {
-        return senderName;
-    }
-
     public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
         c.decodeNextByte(nextByte,this);
-    }
-
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
     }
 
     public List<String> getUserNameList() {

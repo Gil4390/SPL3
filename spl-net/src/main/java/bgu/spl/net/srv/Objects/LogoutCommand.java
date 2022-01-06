@@ -4,19 +4,11 @@ import bgu.spl.net.srv.Command;
 import bgu.spl.net.srv.CommandEncoderDecoder;
 
 public class LogoutCommand extends ReceivedCommand {
-    private String name;
 
     public LogoutCommand(int opCode) {
         super(opCode);
     }
     public void decodeNextByte(byte nextByte, CommandEncoderDecoder c) {
         c.decodeNextByte(nextByte,this);
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

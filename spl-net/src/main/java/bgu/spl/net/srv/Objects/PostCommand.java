@@ -9,7 +9,6 @@ import java.util.Vector;
 public class PostCommand extends ReceivedCommand {
     private String content;
     private String sendingDate;
-    private String name;
 
     public PostCommand(int opCode) {
         super(opCode);
@@ -21,16 +20,8 @@ public class PostCommand extends ReceivedCommand {
         return content;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSendingDate() {
