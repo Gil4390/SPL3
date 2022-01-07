@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <chrono>
+#include <thread>
 
 InputReader::InputReader(std::vector<std::string>* sendQueue, std::mutex& mutex) : _mutex(mutex), _terminate(false), _sendQueue(sendQueue), checkIfError(false) {}
 
@@ -17,10 +18,8 @@ void InputReader::run()
         _mutex.unlock();
         if (line.compare("LOGOUT") == 0) {
             while (!checkIfError) {
-                int x = 3;
             }
             checkIfError = false;
-            unsigned int microseconds = 25;
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     }
