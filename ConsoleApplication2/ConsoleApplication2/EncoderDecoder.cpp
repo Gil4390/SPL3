@@ -18,6 +18,7 @@ string EncoderDecoder::decodeLine(string line) {
     opCode = line.substr(0, 2);
     if (opCode == "09") { //Notification
         string msgType = "";
+
         if (line[2] == '1') msgType = "Public";
         else msgType = "PM";
 
@@ -29,7 +30,6 @@ string EncoderDecoder::decodeLine(string line) {
         for (int i = 1; i < lineSplit.size();i++) {
             content += lineSplit[i] + " ";
         }
-
         result = "NOTIFICATION " + msgType + " " + postingUser + " " + content.substr(0, content.length() - 2);
     }
     else if (opCode == "10") { //ACK
@@ -45,8 +45,7 @@ string EncoderDecoder::decodeLine(string line) {
         string msgOpCode = line.substr(2, 2);
         if (msgOpCode[0] == '0') msgOpCode = msgOpCode.substr(1);
         result = "Error " + msgOpCode;
-    }
-    
+    }    
     return result;
 }
 
@@ -62,9 +61,11 @@ int EncoderDecoder::encode(string str, char* chararray)
         string username = vecOfInput[1];
         string password = vecOfInput[2];
         string birthday = vecOfInput[3];
+
         char const* usernamearr = username.c_str();
         char const* passwordarr = password.c_str();
         char const* birthdayarr = birthday.c_str();
+
         char opchar[2];
         shortToBytes(opcode, opchar);
         len = 2;

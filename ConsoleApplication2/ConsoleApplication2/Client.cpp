@@ -9,19 +9,13 @@ using namespace std;
 * This code assumes that the server replies the exact text the client sent it (as opposed to the practical session example)
 */
 int main(int argc, char* argv[]) {
-
-    /*  
-        if (argc < 3) {
-            std::cerr << "Usage: " << argv[0] << " host port" << std::endl << std::endl;
-            return -1;
-        }
-        std::string host = argv[1];
-        short port = atoi(argv[2]);
-        */
-
-        //remove at the end.
-    int port = 7777;
-    std::string host = "127.0.0.1";
+         
+    if (argc < 3) {
+        std::cerr << "Usage: " << argv[0] << " host port" << std::endl << std::endl;
+        return -1;
+    }
+    std::string host = argv[1]; // int port = 7777;
+    short port = atoi(argv[2]); // std::string host = "127.0.0.1";
 
     ConnectionHandler connectionHandler(host, port);
     if (!connectionHandler.connect()) {
@@ -38,11 +32,9 @@ int main(int argc, char* argv[]) {
     Listener listener(&connectionHandler);
     std::thread th2(&Listener::run, &listener);
 
-    
     while (1) {
         string line = "";        
         stringstream msg;
-
         mutex.lock();
         if (sendList->size() != 0) {
             line = sendList->at(0);
@@ -59,7 +51,6 @@ int main(int argc, char* argv[]) {
                 cout << msg.str();
                 break;
             }
-
             msg << "Sent " << len + 1 << " bytes to server" << std::endl;
             cout << msg.str();
         }
@@ -72,6 +63,5 @@ int main(int argc, char* argv[]) {
     inputReader.Terminate();
     th1.detach();
     th2.join();
-
     return 0;
 }

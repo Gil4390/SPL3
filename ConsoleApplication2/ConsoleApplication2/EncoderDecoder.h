@@ -9,6 +9,7 @@ public:
 	EncoderDecoder();
 	string decodeLine(string line);
 	int encode(string str, char* chararray);
+
 private:
 	void shortToBytes(short num, char* bytesArr);
 	short bytesToShort(char* bytesArr);
@@ -19,6 +20,4 @@ private:
 	string opCode;
 	string msgOpCode;
 	string optional;
-
-
 };

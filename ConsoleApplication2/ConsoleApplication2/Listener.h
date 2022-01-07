@@ -8,6 +8,7 @@ public:
 	void run();
 	bool isTerminate();
 	bool terminate;
+
 private:
 	ConnectionHandler* ch;
 };
