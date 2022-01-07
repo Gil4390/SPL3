@@ -4,7 +4,7 @@ LDFLAGS:=-lboost_system
 all: Client
 	g++ -o bin/BGSclient bin/connectionHandler.o bin/EncoderDecoder.o bin/InputReader.o bin/Listener.o bin/Client.o $(LDFLAGS) 
 
-Client: bin/connectionHandler.o bin/echoClient.o
+Client: bin/connectionHandler.o bin/EncoderDecoder.o bin/InputReader.o bin/Listener.o bin/Client.o
 	
 bin/connectionHandler.o: src/connectionHandler.cpp
 	g++ $(CFLAGS) -o bin/connectionHandler.o src/connectionHandler.cpp
