@@ -2,9 +2,7 @@
 #include <string>
 #include <iostream>
 
-InputReader::InputReader(std::vector<std::string>* sendQueue, std::mutex& mutex) : _sendQueue(sendQueue), _mutex(mutex) {
-    _terminate = false;
-}
+InputReader::InputReader(std::vector<std::string>* sendQueue, std::mutex& mutex) : _mutex(mutex), _terminate(false), _sendQueue(sendQueue) {}
 
 void InputReader::run()
 {
