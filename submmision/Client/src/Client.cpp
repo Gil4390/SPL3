@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
     std::thread th2(&Listener::run, &listener);
 
     while (1) {
-        string line = "";        
+        string line = "";
         stringstream msg;
         mutex.lock();
         if (sendList->size() != 0) {
@@ -58,12 +58,15 @@ int main(int argc, char* argv[]) {
         if (listener.isTerminate()) {
             break;
         }
-    }
-
-    delete sendList;
-    
+        if (connectionHandler.checkIfError) {
+            inputReader.checkIfError = true;
+        }
+    }    
     inputReader.Terminate();
-    th1.detach();
+    delete sendList;
+    th1.join();    
     th2.join();
+
     return 0;
 }
+

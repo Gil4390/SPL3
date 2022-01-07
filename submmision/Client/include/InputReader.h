@@ -13,5 +13,6 @@ public:
 	std::vector<std::string>* _sendQueue;
 	void run();
 	void Terminate();
+	bool checkIfError;
 };
 

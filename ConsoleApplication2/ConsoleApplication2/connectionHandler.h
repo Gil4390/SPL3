@@ -14,7 +14,7 @@ private:
     boost::asio::io_service io_service_;   // Provides core I/O functionality
     tcp::socket socket_;
 
-public:
+public:    
     ConnectionHandler(std::string host, short port);
     virtual ~ConnectionHandler();
 
@@ -47,6 +47,7 @@ public:
 
     // Close down the connection properly.
     void close();
+    bool checkIfError;
 
 }; //class ConnectionHandler
 

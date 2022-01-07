@@ -3,7 +3,7 @@
 #include <iostream>
 #include "EncoderDecoder.h"
 
-Listener::Listener(ConnectionHandler* ch) : terminate(false), ch(ch){}
+Listener::Listener(ConnectionHandler* ch) : terminate(false), ch(ch) {}
 
 void Listener::run()
 {
@@ -29,12 +29,13 @@ void Listener::run()
                 msg2 << "Exiting Listener..." << std::endl;
                 cout << msg2.str();
                 terminate = true;
+                ch->checkIfError = true;
                 break;
             }
+            if (decodedLine.compare("ERROR 3") == 0)
+                ch->checkIfError = true;
         }
     }
-
-    delete ch;
 }
 
 bool Listener::isTerminate() {
