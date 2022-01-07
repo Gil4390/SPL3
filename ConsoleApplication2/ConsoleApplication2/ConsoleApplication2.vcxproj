@@ -142,7 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="connectionHandler.cpp" />
-    <ClCompile Include="echoClient.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="EncoderDecoder.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="InputReader.cpp" />

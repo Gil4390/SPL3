@@ -38,7 +38,6 @@ public class Protocol implements BidiMessagingProtocol<ReceivedCommand> {
                 break;
             case 3:
                 processedMessage = twit.Logout(((LogoutCommand)com));
-                //shouldTerminate=true; // todo check if this happened after client receive ack message
                 break;
             case 4:
                 if(!((FollowCommand)message).isUnFollow())
@@ -76,7 +75,6 @@ public class Protocol implements BidiMessagingProtocol<ReceivedCommand> {
                 }
             }
         }
-
     }
 
     @Override

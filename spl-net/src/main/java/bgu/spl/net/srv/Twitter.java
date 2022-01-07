@@ -26,7 +26,7 @@ public class Twitter {
         postMessages = new ConcurrentHashMap<>();
         blockedUsers= new ConcurrentHashMap<>();
         loggedIn = new ConcurrentHashMap<>();
-        filteredWords = Stream.of("grade_less_than_100","corona","Alaadin","computer_science").collect(Collectors.toList());
+        filteredWords = Stream.of("grade_less_than_100","corona","alaadin","computer_science").collect(Collectors.toList());
         userId = new ConcurrentHashMap<>();
     }
 
@@ -74,7 +74,6 @@ public class Twitter {
                             notificationCmd.setType(msg.getType());
                             result.add(notificationCmd);
                         }
-
                         return result;
                     }
                 }
@@ -97,7 +96,8 @@ public class Twitter {
                 AckCommand ackcmd = (AckCommand) CommandFactory.makeReturnCommand(10);
                 ackcmd.setMsgOpCode(3);
                 result.add(ackcmd);
-            } else {
+            }
+            else {
                 ErrorCommand errcmd = (ErrorCommand) CommandFactory.makeReturnCommand(11);
                 errcmd.setMsgOpCode(3);
                 result.add(errcmd);
@@ -120,7 +120,7 @@ public class Twitter {
                     user2.addFollowers();
                     AckCommand ack = new AckCommand(10);
                     ack.setMsgOpCode(command.getOpCode());
-                    ack.setOptionalData(command.getFollowName());//todo amen
+                    ack.setOptionalData(command.getFollowName());
                     result.add(ack);
                     return result;
                 }
@@ -141,7 +141,7 @@ public class Twitter {
                 followers.get(command.getFollowName()).remove(command.getSenderName());
                 User user = users.get(command.getSenderName());
                 user.subFollowing();
-                User user2 = users.get(command.getFollowName()); // todo atomic
+                User user2 = users.get(command.getFollowName());
                 user2.subFollowers();
                 AckCommand ack = new AckCommand(10);
                 ack.setMsgOpCode(command.getOpCode());
@@ -160,7 +160,6 @@ public class Twitter {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         cmd.setSendingDate(formatter.format(date));
-
         Vector<ReturnCommand> result = new Vector<>();
         if(checkRegister(cmd.getSenderId()))
             cmd.setSenderName(userId.get(cmd.getSenderId()).getName());
@@ -181,7 +180,6 @@ public class Twitter {
 
             User user = users.get(cmd.getSenderName());
             user.addPostedPost();
-
             Vector<String> usersToNotify = cmd.getMentionedUsers();
             for(String sUser : followers.get(cmd.getSenderName())){
                 if(!usersToNotify.contains(sUser))
@@ -241,12 +239,10 @@ public class Twitter {
                     notCommand.setContent(filteredContent+" "+command.getSendingDate());
                     notCommand.setDestUserID(users.get(command.getReceiveName()).getID());
                     synchronized (users.get(command.getSenderName())) {
-                        if (!checkLoggedIn(command.getReceiveName())) {
+                        if (!checkLoggedIn(command.getReceiveName()))
                             users.get(command.getReceiveName()).addUnreadMsg(m);
-                        }
-                        else{
+                        else
                             result.add(notCommand);
-                        }
                     }
                     return result;
                 }
@@ -380,18 +376,11 @@ public class Twitter {
     }
 
     private String FilterString(String unFilteredStr){
-        String filteredString=unFilteredStr;
-        filteredString=filteredString.toLowerCase();
+        String filteredString = unFilteredStr;
         for (String str:filteredWords) {
-            str = str.toLowerCase();
-            filteredString = filteredString.replace(str,"<filtered>");
+            str = "(?i)"+str.toLowerCase();
+            filteredString =filteredString.replaceAll(str,"<filtered>");
         }
         return filteredString;
-    }
-
-    public int getClientID(String senderName) {
-        if(users.containsKey(senderName))
-            return users.get(senderName).getID();
-        return -1;
     }
 }

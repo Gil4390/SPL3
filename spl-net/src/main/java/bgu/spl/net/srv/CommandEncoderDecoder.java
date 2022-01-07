@@ -2,7 +2,6 @@ package bgu.spl.net.srv;
 
 import bgu.spl.net.api.MessageEncoderDecoder;
 import bgu.spl.net.srv.Objects.*;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
@@ -19,7 +18,6 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
     public CommandEncoderDecoder() {
         fieldBytes = new Vector<>();
     }
-
 
     @Override
     public ReceivedCommand decodeNextByte(byte nextByte) {
@@ -51,9 +49,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                 temp[i]=fieldBytes.elementAt(i);
             }
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-            if (fieldCounter == 1) {
+            if (fieldCounter == 1)
                 command.setName(StandardCharsets.UTF_8.decode(bb).toString());
-            }
             else if (fieldCounter == 2)
                 command.setPassword(StandardCharsets.UTF_8.decode(bb).toString());
             else
@@ -61,9 +58,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
-        else{
+        else
             fieldBytes.add(nextByte);
-        }
     }
 
     public void decodeNextByte(byte nextByte, LoginCommand command){
@@ -74,24 +70,22 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
                     temp[i] = fieldBytes.elementAt(i);
                 }
                 ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
-                if (fieldCounter == 1) {
+                if (fieldCounter == 1)
                     command.setSenderName(StandardCharsets.UTF_8.decode(bb).toString());
-                }
                 else if (fieldCounter == 2)
                     command.setPassword(StandardCharsets.UTF_8.decode(bb).toString());
-                else{
+                else
                     command.setCaptcha(Integer.parseInt(StandardCharsets.UTF_8.decode(bb).toString()));
-                }
                 fieldCounter++;
                 fieldBytes = new Vector<>();
             }
             else
                 command.setCaptcha(nextByte);
         }
-        else{
+        else
             fieldBytes.add(nextByte);
-        }
     }
+
     public void decodeNextByte(byte nextByte, LogoutCommand command){
         if(nextByte == '\0') {
             byte [] temp = new byte[fieldBytes.size()];
@@ -103,9 +97,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
-        else{
+        else
             fieldBytes.add(nextByte);
-        }
     }
 
     public void decodeNextByte(byte nextByte, FollowCommand command){
@@ -138,9 +131,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
-        else{
+        else
             fieldBytes.add(nextByte);
-        }
     }
     public void decodeNextByte(byte nextByte, PostCommand command){
         if(nextByte == '\0') {
@@ -156,9 +148,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
-        else{
+        else
             fieldBytes.add(nextByte);
-        }
     }
 
     public void decodeNextByte(byte nextByte, PrivateMessageCommand command){
@@ -177,9 +168,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             fieldCounter++;
             fieldBytes=new Vector<>();
         }
-        else{
+        else
             fieldBytes.add(nextByte);
-        }
     }
 
     public void decodeNextByte(byte nextByte, StatsCommand command){
@@ -194,9 +184,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             String [] userNames = userNamesString.split("\\|");
             command.setUserNameList(Arrays.asList(userNames));
         }
-        else{
+        else
             fieldBytes.add(nextByte);
-        }
     }
 
     public void decodeNextByte(byte nextByte, BlockCommand command){
@@ -208,9 +197,8 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             ByteBuffer bb = ByteBuffer.wrap(temp).order(ByteOrder.BIG_ENDIAN);
             command.setBlockedName(StandardCharsets.UTF_8.decode(bb).toString());
         }
-        else{
+        else
             fieldBytes.add(nextByte);
-        }
     }
 
     @Override
@@ -295,21 +283,6 @@ public class CommandEncoderDecoder implements MessageEncoderDecoder {
             else
                 result[i]=second[i-first.length];
         }
-        return result;
-    }
-
-    public byte[] shortToBytes(short num)
-    {
-        byte[] bytesArr = new byte[2];
-        bytesArr[0] = (byte)((num >> 8) & 0xFF);
-        bytesArr[1] = (byte)(num & 0xFF);
-        return bytesArr;
-    }
-
-    public short bytesToShort(byte[] byteArr)
-    {
-        short result = (short)((byteArr[0] & 0xff) << 8);
-        result += (short)(byteArr[1] & 0xff);
         return result;
     }
 
