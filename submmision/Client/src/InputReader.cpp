@@ -10,8 +10,7 @@ void InputReader::run()
         const short bufsize = 1024;
         char buf[bufsize];
         std::cin.getline(buf, bufsize);
-        std::string line(buf);
-        int len = line.length();        
+        std::string line(buf);       
         _mutex.lock();
         _sendQueue->emplace_back(line);
         _mutex.unlock(); 

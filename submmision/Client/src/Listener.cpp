@@ -3,7 +3,7 @@
 #include <iostream>
 #include "EncoderDecoder.h"
 
-Listener::Listener(ConnectionHandler* ch) : ch(ch), terminate(false) {}
+Listener::Listener(ConnectionHandler* ch) : terminate(false), ch(ch){}
 
 void Listener::run()
 {
