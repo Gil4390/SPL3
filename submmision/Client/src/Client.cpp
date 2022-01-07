@@ -52,7 +52,6 @@ int main(int argc, char* argv[]) {
                 cout << msg.str();
                 break;
             }
-            msg << "Sent " << len + 1 << " bytes to server" << std::endl;
             cout << msg.str();
         }
 
@@ -60,6 +59,8 @@ int main(int argc, char* argv[]) {
             break;
         }
     }
+
+    delete sendList;
     
     inputReader.Terminate();
     th1.detach();
