@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {
-    final private int ID;
+    private int ID;
     final private String name;
     final private String password;
     final private String Birthday;
@@ -27,6 +27,10 @@ public class User {
         this.numOfFollowers = new AtomicInteger(0);
         this.numPostedPost=new AtomicInteger(0);
         unreadMsg = new ConcurrentLinkedQueue<>();
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getName() {

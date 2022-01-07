@@ -26,7 +26,7 @@ public class Twitter {
         postMessages = new ConcurrentHashMap<>();
         blockedUsers= new ConcurrentHashMap<>();
         loggedIn = new ConcurrentHashMap<>();
-        filteredWords = Stream.of("grade_less_then_100","corona","Alaadin","computer_science").collect(Collectors.toList());
+        filteredWords = Stream.of("grade_less_than_100","corona","Alaadin","computer_science").collect(Collectors.toList());
         userId = new ConcurrentHashMap<>();
     }
 
@@ -61,6 +61,7 @@ public class Twitter {
                         AckCommand ack = new AckCommand(10);
                         ack.setMsgOpCode(command.getOpCode());
                         result.add(ack);
+                        users.get(command.getSenderName()).setID(command.getSenderId());
                         userId.put(command.getSenderId(),users.get(command.getSenderName()));
                         User user = users.get(command.getSenderName());
                         for (Message msg : user.getUnreadMsgAndReset()) {
