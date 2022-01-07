@@ -33,6 +33,8 @@ void Listener::run()
             }
         }
     }
+
+    delete ch;
 }
 
 bool Listener::isTerminate() {
